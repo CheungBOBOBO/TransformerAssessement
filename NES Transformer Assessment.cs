@@ -34,10 +34,7 @@ namespace TransformerAssessment
             updateNormsListLB();
         }
 
-        private void menu_Quit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
+        private void menu_Quit_Click(object sender, EventArgs e) { Application.Exit(); }
 
         private void menu_FolderSettings_Click(object sender, EventArgs e)
         {
@@ -53,30 +50,31 @@ namespace TransformerAssessment
 
         private void button_TOAExportsFolder_Click(object sender, EventArgs e)
         {
-            chooseExportsFolder();
-            TransformerAssessment.exportsDir = openFolderDia.SelectedPath;
+            TransformerAssessment.exportsDir = chooseExportsFolder();
             Exports.updateTOAExports(TransformerAssessment.exportsDir);
-            updateNormsListLB();
+            chooseExportsFolder();
         }
 
         #region [Methods] - form support methods
+        // brings up folder selection for location of Norm csv's
         public string chooseNormFolder()
         {
             DialogResult dr = openFolderDia.ShowDialog();
             if (dr == DialogResult.OK && validFolder(openFolderDia.SelectedPath))
                 tb_NormsFolder_BG.Text = openFolderDia.SelectedPath;
             else
-                tb_NormsFolder_BG.Text = tb_NormsFolder_BG.Text;
+                tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
             return tb_NormsFolder_BG.Text;
         }
 
+        // brings up folder selection for location of TOA Exports csv's
         public string chooseExportsFolder()
         {
             DialogResult dr = openFolderDia.ShowDialog();
             if (dr == DialogResult.OK && validFolder(openFolderDia.SelectedPath))
                 tb_ExportsFolder_BG.Text = openFolderDia.SelectedPath;
             else
-                tb_ExportsFolder_BG.Text = tb_ExportsFolder_BG.Text;
+                tb_ExportsFolder_BG.Text = TransformerAssessment.exportsDir;
             return tb_ExportsFolder_BG.Text;
         }
 
@@ -85,7 +83,10 @@ namespace TransformerAssessment
         {
             string[] files = Directory.GetFiles(selectedPath, "*.csv");
             if (files.Length == 0)
+            {
+                MessageBox.Show("Selected folder does not contain any .csv files");
                 return false;
+            }
             return true;
         }
 
@@ -99,16 +100,9 @@ namespace TransformerAssessment
         // update Norm List Box in Config tab
         private void updateNormsListLB()
         {
-            if (Norms.getFileNameList().Length == 0)
-            {
-                MessageBox.Show("Selected folder does not contain any .csv files");
-                chooseNormFolder();
-            }
             lb_NormSelect.Items.Clear();
             for (int i = 0; i < Norms.getFileNameList().Length; i++)
-            {
                 lb_NormSelect.Items.Add(Norms.getFileNameList()[i]);
-            }
             _norms = Norms.getNorms();
         }
 

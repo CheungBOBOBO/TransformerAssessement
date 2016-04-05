@@ -20,8 +20,6 @@ namespace TransformerAssessment.Core.Managers
 
         public Norm(string path)
         {
-            Console.WriteLine("creating norm: {0}", Path.GetFileNameWithoutExtension(path));
-            
             char[] delimiters = new char[] { ',' };
             using (StreamReader reader = new StreamReader(path))
             {
@@ -42,22 +40,13 @@ namespace TransformerAssessment.Core.Managers
                             rawNorm.Add(splitRow);  // add row array into rawNorm
                     }
                 }
-                //Console.WriteLine("rows: {0}\ncols: {1}", rawNorm.Count, rawNorm[0].Length);
                 parseRawNorm();
             }
         }
 
-        static string ConvertStringArrayToString(string[] array)
-        {
-            string result = string.Join(".", array);
-            return result;
-        }
+        static string ConvertStringArrayToString(string[] array) { return string.Join(".", array); }
 
-        static string ConvertStringArrayToString(double[] array)
-        {
-            string result = string.Join(".", Convert.ToString(array));
-            return result;
-        }
+        static string ConvertStringArrayToString(double[] array) { return string.Join(".", Convert.ToString(array)); }
 
         private void parseRawNorm()
         {

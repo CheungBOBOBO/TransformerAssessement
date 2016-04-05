@@ -45,6 +45,15 @@ namespace TransformerAssessment.Core.Helpers
         {
             exportsDirectory = folder;
             exportsPathList = Directory.GetFiles(exportsDirectory, "*.csv");
+            fileNameList = new string[exportsPathList.Length];
+            for (int i = 0; i < exportsPathList.Length; i++)
+                fileNameList[i] = Path.GetFileNameWithoutExtension(exportsPathList[i]);
+            //createTOAExports();
+        }
+
+        private static void createTOAExports()
+        {
+            throw new NotImplementedException();
         }
 
         private static void createTestData()
@@ -68,6 +77,8 @@ namespace TransformerAssessment.Core.Helpers
         public static string[] getTOAExportsList() { return exportsPathList; }
 
         public static string getExportsDir() { return exportsDirectory; }
+
+        public static string[] getFileNameList() { return fileNameList; }
 
         public static TestData[] getTestData() { return testData; }
 
