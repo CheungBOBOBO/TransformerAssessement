@@ -1,0 +1,25 @@
+[NORMS]
+Name:,LTC_NONDIVERTER_A
+Description:,"TLH, 550 (M Sampson)"
+Rules:,TC_OIL
+Fluidtype:,OIL
+Normal_dga_interval:,365
+Alert_dga_interval:,90
+Warn_dga_interval:,30
+Alarm_dga_interval:,7
+Normal_fq_interval:,365
+Baseline_interval:,30
+Short_term_interval:,7
+
+variable,min_interp,low_alert,low_warn,low_alarm,high_alert,high_warn,high_alarm,inc_alert,inc_warn,inc_alarm,inc_relative,rate_alert,rate_warn,rate_alarm
+c2h2,,,,,12000,,,,,,False,,,
+c2h4/c2h2,,,,,0.333333,2.5,9,,,,False,,,
+c2h6/ch4,,,,,0.5,1,,,,,False,,,
+color,,,,,2,,,,,,False,,,
+d877,,25,,,,,,,,,False,,,
+ift,,25,,,,,,,,,False,,,
+o2/n2,,0.3,,,,,,,,,False,,,
+pf25,,,,,1,,,,,,False,,,
+totalpcb,,,,,50,500,10000,,,,False,,,
+
+
