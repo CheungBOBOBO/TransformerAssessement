@@ -37,7 +37,7 @@ namespace TransformerAssessment.Core.Helpers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("EXCEPTION:\t" + e.Message);
             }
         }
 
