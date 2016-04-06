@@ -18,6 +18,8 @@ namespace TransformerAssessment.Core.Helpers
         private static TestData[] testData;     // list of TestData objects, each representing an individual test
         private static Equipment[] equipment;   // list of Equipment objects, each representing an individual piece of equipment
                                                 //  (one transformer and respective LTC/SEL/DIV
+        private static List<TestData> rawTestData;      // raw TestData read from 'test data.csv'
+        private static List<Equipment> rawEquipment;    // raw Equipment read from 'equipment.csv'
 
         public static void initializeTOAExports()
         {
@@ -27,13 +29,12 @@ namespace TransformerAssessment.Core.Helpers
             {
                 exportsDirectory = Path.Combine(PROG_PATH, @"TOAExports");
                 exportsPathList = Directory.GetFiles(exportsDirectory, "*.csv");
-                fileNameList = new string[exportsPathList.Length];
+                /*fileNameList = new string[exportsPathList.Length];
                 for (int i = 0; i < exportsPathList.Length; i++)
-                {
                     fileNameList[i] = Path.GetFileNameWithoutExtension(exportsPathList[i]);
-                }
-                createEquipment();
-                createTestData();
+                * */
+                createRawEquipment();
+                createRawTestData();
             }
             catch (Exception e)
             {
@@ -45,9 +46,10 @@ namespace TransformerAssessment.Core.Helpers
         {
             exportsDirectory = folder;
             exportsPathList = Directory.GetFiles(exportsDirectory, "*.csv");
-            fileNameList = new string[exportsPathList.Length];
-            for (int i = 0; i < exportsPathList.Length; i++)
-                fileNameList[i] = Path.GetFileNameWithoutExtension(exportsPathList[i]);
+            /*fileNameList = new string[exportsPathList.Length];
+                for (int i = 0; i < exportsPathList.Length; i++)
+                    fileNameList[i] = Path.GetFileNameWithoutExtension(exportsPathList[i]);
+            * */
             //createTOAExports();
         }
 
@@ -56,16 +58,13 @@ namespace TransformerAssessment.Core.Helpers
             throw new NotImplementedException();
         }
 
-        private static void createTestData()
+        private static void createRawTestData()
         {
-            // create list of Norm objects from normsPathList
-            /*testData = new Norm[normsPathList.Length];
-            for (int i = 0; i < norms.Length; i++)
-                testData[i] = new Norm(normsPathList[i]);
-             */
+            // create list of TestData objects from 'test data.csv' and put in rawTestData
+            
         }
 
-        private static void createEquipment()
+        private static void createRawEquipment()
         {
             // create list of Norm objects from normsPathList
             /*norms = new Norm[normsPathList.Length];

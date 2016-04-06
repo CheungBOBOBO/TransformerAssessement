@@ -27,9 +27,7 @@ namespace TransformerAssessment.Core.Helpers
                 normsPathList = Directory.GetFiles(normsDirectory, "*.csv");
                 fileNameList = new string[normsPathList.Length];
                 for (int i = 0; i < normsPathList.Length; i++)
-                {
                     fileNameList[i] = Path.GetFileNameWithoutExtension(normsPathList[i]);
-                }
                 createNorms(); 
             }
             catch (Exception e)

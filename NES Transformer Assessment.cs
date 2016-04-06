@@ -60,7 +60,7 @@ namespace TransformerAssessment
         public string chooseNormFolder()
         {
             DialogResult dr = openFolderDia.ShowDialog();
-            if (dr == DialogResult.OK && validFolder(openFolderDia.SelectedPath))
+            if (dr == DialogResult.OK && validNormFolder(openFolderDia.SelectedPath))
                 tb_NormsFolder_BG.Text = openFolderDia.SelectedPath;
             else
                 tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
@@ -71,7 +71,7 @@ namespace TransformerAssessment
         public string chooseExportsFolder()
         {
             DialogResult dr = openFolderDia.ShowDialog();
-            if (dr == DialogResult.OK && validFolder(openFolderDia.SelectedPath))
+            if (dr == DialogResult.OK && validExportsFolder(openFolderDia.SelectedPath))
                 tb_ExportsFolder_BG.Text = openFolderDia.SelectedPath;
             else
                 tb_ExportsFolder_BG.Text = TransformerAssessment.exportsDir;
@@ -79,7 +79,7 @@ namespace TransformerAssessment
         }
 
         // returns false if no .csv files from selected folder
-        public bool validFolder(string selectedPath)
+        public bool validNormFolder(string selectedPath)
         {
             string[] files = Directory.GetFiles(selectedPath, "*.csv");
             if (files.Length == 0)
@@ -88,6 +88,24 @@ namespace TransformerAssessment
                 return false;
             }
             return true;
+        }
+
+        public bool validExportsFolder(string selectedPath)
+        {
+            string[] files = Directory.GetFiles(selectedPath, "*.csv");
+            if (files.Length < 2)
+            {
+                MessageBox.Show("Selected folder does not contain the required files\n   equipment.csv\n   test files.csv");
+                return false;
+            }
+            for (int i = 0; i < files.Length; i++)
+                files[i] = Path.GetFileNameWithoutExtension(files[i]);
+            if (!files.Contains("equipment") || !files.Contains("test data"))
+            {
+                MessageBox.Show("Selected folder does not contain the required files\n   equipment.csv\n   test files.csv");
+                return false;
+            }
+                return true;
         }
 
         private void bringContentToFront(Panel p)
