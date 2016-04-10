@@ -52,7 +52,7 @@ namespace TransformerAssessment
         {
             TransformerAssessment.exportsDir = chooseExportsFolder();
             Exports.updateTOAExports(TransformerAssessment.exportsDir);
-            chooseExportsFolder();
+            //chooseExportsFolder();
         }
 
         #region [Methods] - form support methods
