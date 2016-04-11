@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using E = TransformerAssessment.Core.Helpers.TOAExportLoader;
+
 namespace TransformerAssessment.Core.Managers
 {
     class Equipment
     {
-        public int equipID;
-        public string substn_name;
-        public string designation;
-
+        private int equipID;
+        private string substn_name;
+        private string designation;
 
         public List<string[]> xfmrHeaders = null;
         public List<string[]> xfmrData = null;
@@ -23,9 +24,15 @@ namespace TransformerAssessment.Core.Managers
         public List<string[]> divHeaders = null;
         public List<string[]> divData = null;
 
-        public Equipment()
+        public Equipment(int id)
         {
-            
+            equipID = id;
         }
+
+        #region [Methods] Getters
+        public int getID() { return equipID; }
+        public string getLocation() { return substn_name; }
+        public string getDesignation() { return designation; }
+        #endregion
     }
 }
