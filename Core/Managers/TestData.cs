@@ -5,14 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TransformerAssessment.Core.Managers
-{
-    class TestData
-    {
+namespace TransformerAssessment.Core.Managers {
+    class TestData {
 
 
-        public TestData(string path)
-        {
+        public TestData(string path) {
             
         }
     }

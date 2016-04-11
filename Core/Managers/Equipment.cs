@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 using E = TransformerAssessment.Core.Helpers.TOAExportLoader;
 
-namespace TransformerAssessment.Core.Managers
-{
-    class Equipment
-    {
+namespace TransformerAssessment.Core.Managers {
+    class Equipment {
         private int equipID;
         private string substn_name;
         private string designation;
@@ -24,8 +22,7 @@ namespace TransformerAssessment.Core.Managers
         public List<string[]> divHeaders = null;
         public List<string[]> divData = null;
 
-        public Equipment(int id)
-        {
+        public Equipment(int id) {
             equipID = id;
         }
 

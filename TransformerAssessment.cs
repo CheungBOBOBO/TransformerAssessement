@@ -8,18 +8,15 @@ using System.Windows.Forms;
 using Norms = TransformerAssessment.Core.Helpers.NormLoader;
 using Exp = TransformerAssessment.Core.Helpers.TOAExportLoader;
 
-namespace TransformerAssessment
-{
-    static class TransformerAssessment
-    {
+namespace TransformerAssessment {
+    static class TransformerAssessment {
         public static string normDir;
         public static string exportsDir;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
-        {
+        static void Main() {
             string PROGRAM_PATH = Application.StartupPath;
             
             // Get list of files in Sub-folders

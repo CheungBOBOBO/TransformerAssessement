@@ -8,22 +8,21 @@ using System.Windows.Forms;
 
 using TransformerAssessment.Core.Managers;
 
-namespace TransformerAssessment.Core.Helpers
-{
-    class TOAExportLoader
-    {
+namespace TransformerAssessment.Core.Helpers {
+    class TOAExportLoader {
+        #region [Variables] Class variables
         private static string[] exportsPathList;// array of file name + extention ("equipment.csv")
         private static string exportsDirectory; // folder location selected by default or by user
         private static string[] fileNameList;   // file names without extention ("equipment", "test data")
         private static TestData[] testData;     // list of TestData objects, each representing an individual test
-        private static Equipment[] equipment;   // list of Equipment objects, each representing an individual piece of equipment
-                                                //  (one transformer and respective LTC/SEL/DIV
+        private static List<Equipment> equipment = new List<Equipment>();   // list of Equipment objects, each representing an individual piece of equipment
+                                                                            //  (one transformer and respective LTC/SEL/DIV
         private static List<TestData> rawTestData;      // raw TestData read from 'test data.csv'
         private static List<string[]> equipmentToParse = new List<string[]>();    // raw Equipment read from 'equipment.csv'
 
         public static List<string> headerNames = new List<string>(); // list of header names from 'equipment.csv' (row 1 values)
 
-        // variables to separate equipment types before combining into Equipment objects
+        // vars to separate equipment types before combining into Equipment objects
         public static List<string[]> xfmrs = new List<string[]>();
         public static List<string[]> divs = new List<string[]>();
         public static List<string[]> sels = new List<string[]>();
@@ -37,29 +36,23 @@ namespace TransformerAssessment.Core.Helpers
         private static int designationIndex = 0;
         private static int substn_nameIndex = 0;
 
-        public static void initializeTOAExports()
-        {
+        // vars used for index of variables in Norms
+        private static List<int> normVarIndixes = new List<int>();
+        #endregion
+
+        public static void initializeTOAExports() {
             // try to load TOA Exports from default path "PROG_PATH/TOAExports"
             string PROG_PATH = Application.StartupPath;
-            try
-            {
+            try {
                 exportsDirectory = Path.Combine(PROG_PATH, @"TOAExports");
                 exportsPathList = Directory.GetFiles(exportsDirectory, "*.csv");
-                /*fileNameList = new string[exportsPathList.Length];
-                for (int i = 0; i < exportsPathList.Length; i++)
-                    fileNameList[i] = Path.GetFileNameWithoutExtension(exportsPathList[i]);
-                * */
                 createEquipmentToParse(exportsDirectory + @"\equipment.csv");
-                //createRawTestData();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Console.WriteLine("EXCEPTION:\t" + e.Message);
             }
         }
 
-        public static void updateTOAExports(string folder)
-        {
+        public static void updateTOAExports(string folder) {
             exportsDirectory = folder;
             exportsPathList = Directory.GetFiles(exportsDirectory, "*.csv");
             /*fileNameList = new string[exportsPathList.Length];
@@ -69,34 +62,27 @@ namespace TransformerAssessment.Core.Helpers
             //createTOAExports();
         }
 
-        private static void createTOAExports()
-        {
+        private static void createTOAExports() {
             throw new NotImplementedException();
         }
 
-        private static void createRawTestData()
-        {
+        private static void createRawTestData() {
             // create list of TestData objects from 'test data.csv' and put in rawTestData
             
         }
 
-        private static void createEquipmentToParse(string filePath)
-        {
+        private static void createEquipmentToParse(string filePath) {
             // create list of string[] and add them to the list to parse after file is read
             bool isFirstLine = true;
             char[] delimiters = new char[] { ',' };
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                while (true)
-                {
+            using (StreamReader reader = new StreamReader(filePath)) {
+                while (true) {
                     string line = reader.ReadLine();
                     if (line == null)
                         break;
-                    if (!string.IsNullOrWhiteSpace(line))
-                    {
+                    if (!string.IsNullOrWhiteSpace(line)) {
                         string[] splitRow = line.Split(delimiters); // split csv row into array
-                        if (isFirstLine)
-                        {
+                        if (isFirstLine) {
                             foreach (string header in splitRow) // add header values into List headerNames
                                 headerNames.Add(header);
                             equipnumIndex = headerNames.IndexOf("equipnum");
@@ -125,8 +111,7 @@ namespace TransformerAssessment.Core.Helpers
             parseRawEquiment();
         }
 
-        private static bool isValidEquipment(string[] equipmentRow)
-        {
+        private static bool isValidEquipment(string[] equipmentRow) {
             return (equipmentRow[region_nameIndex].Equals("OLTC") || equipmentRow[region_nameIndex].Equals("161/69"))
                     && !equipmentRow[owner_nameIndex].Equals("Customer")
                     && !equipmentRow[apprtypeIndex].Equals("OLTC REACTOR")
@@ -135,8 +120,7 @@ namespace TransformerAssessment.Core.Helpers
                     && !equipmentRow[substn_nameIndex].Contains("DISPOSED");
         }
 
-        private static void parseRawEquiment()
-        {
+        private static void parseRawEquiment() {
             /*Console.WriteLine("Number of rows added to 'xfmrs' = " + xfmrs.Count);
             Console.WriteLine("Number of rows added to 'ltcs' = " + ltcs.Count);
             Console.WriteLine("Number of rows added to 'sels' = " + sels.Count);
@@ -155,8 +139,7 @@ namespace TransformerAssessment.Core.Helpers
             }
         }
 
-        private static void checkForMissingEquipment()
-        {
+        private static void checkForMissingEquipment() {
             for (int i = 0; i < ltcs.Count; i++)
                 if (!xfmrsContains(ltcs[i][equipnumIndex]))
                     Console.WriteLine("{0} {1} LTC ({2}) does not have corresponding XFMR", ltcs[i][substn_nameIndex]
@@ -174,8 +157,7 @@ namespace TransformerAssessment.Core.Helpers
                                                                                           , divs[i][equipnumIndex]);
         }
 
-        private static bool xfmrsContains(string id)
-        {
+        private static bool xfmrsContains(string id) {
             for (int i = 0; i < xfmrs.Count; i++)
                 if (xfmrs[i][equipnumIndex].Equals(id))
                     return true;
@@ -187,7 +169,7 @@ namespace TransformerAssessment.Core.Helpers
         public static string getExportsDir() { return exportsDirectory; }
         public static string[] getFileNameList() { return fileNameList; }
         public static TestData[] getTestData() { return testData; }
-        public static Equipment[] getEquipment() { return equipment; }
+        public static List<Equipment> getEquipment() { return equipment; }
         #endregion
     }
 }

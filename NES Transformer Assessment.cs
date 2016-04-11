@@ -14,21 +14,17 @@ using Exports = TransformerAssessment.Core.Helpers.TOAExportLoader;
 using TransformerAssessment.Core.Managers;
 using System.IO;
 
-namespace TransformerAssessment
-{
-    public partial class FormHome : Form
-    {
+namespace TransformerAssessment {
+    public partial class FormHome : Form {
         // DATA_SOURCES
         Norm[] _norms = Norms.getNorms();
         DataTable dt_Norms = new DataTable();
 
-        public FormHome()
-        {
+        public FormHome() {
             InitializeComponent();
         }
 
-        private void FormHome_Load(object sender, EventArgs e)
-        {
+        private void FormHome_Load(object sender, EventArgs e) {
             tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
             tb_ExportsFolder_BG.Text = TransformerAssessment.exportsDir;
             updateNormsListLB();
@@ -36,20 +32,17 @@ namespace TransformerAssessment
 
         private void menu_Quit_Click(object sender, EventArgs e) { Application.Exit(); }
 
-        private void menu_FolderSettings_Click(object sender, EventArgs e)
-        {
+        private void menu_FolderSettings_Click(object sender, EventArgs e) {
             bringContentToFront(panel_Config);
         }
 
-        private void button_NormsFolder_Click(object sender, EventArgs e)
-        {
+        private void button_NormsFolder_Click(object sender, EventArgs e) {
             TransformerAssessment.normDir = chooseNormFolder();
             Norms.updateNorms(TransformerAssessment.normDir);
             updateNormsListLB();
         }
 
-        private void button_TOAExportsFolder_Click(object sender, EventArgs e)
-        {
+        private void button_TOAExportsFolder_Click(object sender, EventArgs e) {
             TransformerAssessment.exportsDir = chooseExportsFolder();
             Exports.updateTOAExports(TransformerAssessment.exportsDir);
             //chooseExportsFolder();
@@ -57,8 +50,7 @@ namespace TransformerAssessment
 
         #region [Methods] - form support methods
         // brings up folder selection for location of Norm csv's
-        public string chooseNormFolder()
-        {
+        public string chooseNormFolder() {
             DialogResult dr = openFolderDia.ShowDialog();
             if (dr == DialogResult.OK && validNormFolder(openFolderDia.SelectedPath))
                 tb_NormsFolder_BG.Text = openFolderDia.SelectedPath;
@@ -68,8 +60,7 @@ namespace TransformerAssessment
         }
 
         // brings up folder selection for location of TOA Exports csv's
-        public string chooseExportsFolder()
-        {
+        public string chooseExportsFolder()  {
             DialogResult dr = openFolderDia.ShowDialog();
             if (dr == DialogResult.OK && validExportsFolder(openFolderDia.SelectedPath))
                 tb_ExportsFolder_BG.Text = openFolderDia.SelectedPath;
@@ -79,71 +70,60 @@ namespace TransformerAssessment
         }
 
         // returns false if no .csv files from selected folder
-        public bool validNormFolder(string selectedPath)
-        {
+        public bool validNormFolder(string selectedPath) {
             string[] files = Directory.GetFiles(selectedPath, "*.csv");
-            if (files.Length == 0)
-            {
+            if (files.Length == 0) {
                 MessageBox.Show("Selected folder does not contain any .csv files");
                 return false;
             }
             return true;
         }
 
-        public bool validExportsFolder(string selectedPath)
-        {
+        public bool validExportsFolder(string selectedPath) {
             string[] files = Directory.GetFiles(selectedPath, "*.csv");
-            if (files.Length < 2)
-            {
+            if (files.Length < 2) {
                 MessageBox.Show("Selected folder does not contain the required files\n   equipment.csv\n   test files.csv");
                 return false;
             }
             for (int i = 0; i < files.Length; i++)
                 files[i] = Path.GetFileNameWithoutExtension(files[i]);
-            if (!files.Contains("equipment") || !files.Contains("test data"))
-            {
+            if (!files.Contains("equipment") || !files.Contains("test data")) {
                 MessageBox.Show("Selected folder does not contain the required files\n   equipment.csv\n   test files.csv");
                 return false;
             }
                 return true;
         }
 
-        private void bringContentToFront(Panel p)
-        {
+        private void bringContentToFront(Panel p) {
             p.BringToFront();
             for (int i = 0; i < p.Controls.Count; i++)
                 p.Controls[i].BringToFront();
         }
 
         // update Norm List Box in Config tab
-        private void updateNormsListLB()
-        {
+        private void updateNormsListLB() {
             lb_NormSelect.Items.Clear();
             for (int i = 0; i < Norms.getFileNameList().Length; i++)
                 lb_NormSelect.Items.Add(Norms.getFileNameList()[i]);
             _norms = Norms.getNorms();
         }
 
-        static string ConvertStringArrayToString(string[] array)
-        {
+        static string ConvertStringArrayToString(string[] array) {
             string result = string.Join("\t", array);
             return result;
         }
 
-        static string ConvertStringArrayToString(double[] array)
-        {
+        static string ConvertStringArrayToString(double[] array) {
             string result = string.Join("\t", array);
             return result;
         }
         #endregion
 
-        private void menu_Analyze_Click(object sender, EventArgs e)
-        {
+        private void menu_Analyze_Click(object sender, EventArgs e) {
             bringContentToFront(panel_Analyze);
         }
 
-        private void lb_NormSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void lb_NormSelect_SelectedIndexChanged(object sender, EventArgs e) {
             int selectedIndex = lb_NormSelect.SelectedIndex;
             string selectedNormName = _norms[selectedIndex].name;
             Norm selectedNorm = _norms[selectedIndex];
@@ -152,13 +132,11 @@ namespace TransformerAssessment
             dt_Norms.Columns.Clear();
             dt_Norms.Rows.Clear();
             dt_Norms.Clear();
-            for (int row = 0; row < selectedNorm.rawNorm.Count; row++)
-            {
+            for (int row = 0; row < selectedNorm.rawNorm.Count; row++) {
                 if (row == 0)
                     for (int col = 1; col < selectedNorm.rawNorm[row].Length; col++)
                         dt_Norms.Columns.Add(selectedNorm.rawNorm[row][col]);
-                else
-                {
+                else {
                     string[] temp = new string[selectedNorm.rawNorm[row].Length - 1];
                     for (int i = 1; i < selectedNorm.rawNorm[row].Length; i++)
                         temp[i - 1] = selectedNorm.rawNorm[row][i];
