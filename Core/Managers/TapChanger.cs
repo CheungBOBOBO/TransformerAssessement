@@ -8,7 +8,7 @@ namespace TransformerAssessment.Core.Managers {
     class TapChanger {
         public List<TestData> data = new List<TestData>();
 
-        TapChanger(string[] ltc) {
+        public TapChanger(string[] ltc) {
 
         }
     }

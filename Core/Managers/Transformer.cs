@@ -56,12 +56,12 @@ namespace TransformerAssessment.Core.Managers {
         }
 
         public void addSEL(string[] equipment) {
-            ltc = new Selector(equipment)
+            sel = new Selector(equipment);
             hasSEL = true;
         }
 
         public void addDIV(string[] equipment) {
-            ltc = new Diverter(equipment)
+            div = new Diverter(equipment);
             hasDIV = true;
         }
 

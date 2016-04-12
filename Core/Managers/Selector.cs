@@ -8,7 +8,7 @@ namespace TransformerAssessment.Core.Managers {
     class Selector {
         public List<TestData> data = new List<TestData>();
 
-        Selector(string[] sel) {
+        public Selector(string[] sel) {
 
         }
     }
