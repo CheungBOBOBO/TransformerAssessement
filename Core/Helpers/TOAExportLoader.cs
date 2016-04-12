@@ -15,14 +15,14 @@ namespace TransformerAssessment.Core.Helpers {
         private static string exportsDirectory; // folder location selected by default or by user
         private static string[] fileNameList;   // file names without extention ("equipment", "test data")
         private static TestData[] testData;     // list of TestData objects, each representing an individual test
-        private static List<Equipment> equipment = new List<Equipment>();   // list of Equipment objects, each representing an individual piece of equipment
+        private static List<Transformer> equipment = new List<Transformer>();   // list of Equipment objects, each representing an individual piece of equipment
                                                                             //  (one transformer and respective LTC/SEL/DIV
         private static List<TestData> rawTestData;      // raw TestData read from 'test data.csv'
         private static List<string[]> equipmentToParse = new List<string[]>();    // raw Equipment read from 'equipment.csv'
 
         public static List<string> headerNames = new List<string>(); // list of header names from 'equipment.csv' (row 1 values)
 
-        // vars to separate equipment types before combining into Equipment objects
+        // vars to separate equipment types before combining into Tranformer objects
         public static List<string[]> xfmrs = new List<string[]>();
         public static List<string[]> divs = new List<string[]>();
         public static List<string[]> sels = new List<string[]>();
@@ -49,6 +49,7 @@ namespace TransformerAssessment.Core.Helpers {
                 createEquipmentToParse(exportsDirectory + @"\equipment.csv");
             } catch (Exception e) {
                 Console.WriteLine("EXCEPTION:\t" + e.Message);
+                throw;
             }
         }
 
@@ -130,12 +131,27 @@ namespace TransformerAssessment.Core.Helpers {
             //checkForMissingEquipment(); // cycle through LTCs, SELs, & DIVs and make sure all have a corresponding XFMR (for Debugging)
 
             // cycle through XFMRs and compare equimentID to those in LTCs, SELs, & DIVs to know what to use when creating Equipment object
-            string[] LTC = new string[0];    // create empty strings for use in Equipment object creation
-            string[] SEL = new string[0];
-            string[] DIV = new string[0];
+            string[] LTC;    // create empty strings for use in Tranformer object creation
+            string[] SEL;
+            string[] DIV;
             for (int i = 0; i < xfmrs.Count; i++) {
-                equipment.Add(new Equipment(xfmrs[i]));
-                //foreach (string[] )
+                // reset LTC equipment strings[][]
+                LTC = null;
+                SEL = null;
+                DIV = null;
+                // if there is LTC from 'equipment.csv', add to Transformer obj
+                for (int j = 0; j < ltcs.Count; j++)
+                    if (xfmrs[i][equipnumIndex] == ltcs[j][equipnumIndex])
+                        LTC = ltcs[j];
+                // if there is SEL from 'equipment.csv', add to Transformer obj
+                for (int j = 0; j < sels.Count; j++)
+                    if (xfmrs[i][equipnumIndex] == sels[j][equipnumIndex])
+                        SEL = sels[j];
+                // if there is DIV from 'equipment.csv', add to Transformer obj
+                for (int j = 0; j < divs.Count; j++)
+                    if (xfmrs[i][equipnumIndex] == divs[j][equipnumIndex])
+                        DIV = divs[j];
+                equipment.Add(new Transformer(xfmrs[i], LTC, SEL, DIV));
             }
         }
 
@@ -169,7 +185,7 @@ namespace TransformerAssessment.Core.Helpers {
         public static string getExportsDir() { return exportsDirectory; }
         public static string[] getFileNameList() { return fileNameList; }
         public static TestData[] getTestData() { return testData; }
-        public static List<Equipment> getEquipment() { return equipment; }
+        public static List<Transformer> getEquipment() { return equipment; }
         #endregion
     }
 }

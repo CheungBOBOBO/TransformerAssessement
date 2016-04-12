@@ -49,8 +49,11 @@
   <ItemGroup>
     <Compile Include="Core\Helpers\NormLoader.cs" />
     <Compile Include="Core\Helpers\TOAExportLoader.cs" />
+    <Compile Include="Core\Managers\Diverter.cs" />
+    <Compile Include="Core\Managers\TapChanger.cs" />
     <Compile Include="Core\Managers\Norm.cs" />
-    <Compile Include="Core\Managers\Equipment.cs" />
+    <Compile Include="Core\Managers\Selector.cs" />
+    <Compile Include="Core\Managers\Transformer.cs" />
     <Compile Include="Core\Managers\TestData.cs" />
     <Compile Include="NES Transformer Assessment.cs">
       <SubType>Form</SubType>
