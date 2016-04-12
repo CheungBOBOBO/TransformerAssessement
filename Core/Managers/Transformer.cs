@@ -12,6 +12,7 @@ namespace TransformerAssessment.Core.Managers {
         private string equipID;
         private string substn_name;
         private string designation;
+        public string norm;
 
         public List<string> equipmentHeaders = null;
         public List<TestData> data = null;
@@ -47,7 +48,22 @@ namespace TransformerAssessment.Core.Managers {
         /// <param name="data">string[] from 'data.csv' row</param>
         /// </summary>
         public void addData(string[] data) {
-            
+            // if data is LTC, add to ltc
+            if (hasLTC && data[TOAExportLoader.apprtypeIndex].Equals("LTC"))
+                ltc.addData(data);
+            // if data is SEL, add to sel
+            else if (hasSEL && data[TOAExportLoader.apprtypeIndex].Equals("SEL"))
+                sel.addData(data);
+            // if data is DIV, add to div
+            else if (hasDIV && data[TOAExportLoader.apprtypeIndex].Equals("DIV"))
+                div.addData(data);
+            else if (data[TOAExportLoader.apprtypeIndex].Equals("XFMR"))
+                addXFMRData(data);
+
+        }
+
+        private static void addXFMRData(string[] data) {
+
         }
 
         public void addLTC(string[] equipment) {

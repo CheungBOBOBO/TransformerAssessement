@@ -36,6 +36,8 @@ namespace TransformerAssessment.Core.Helpers {
         public static int designationIndex = 0;
         public static int substn_nameIndex = 0;
 
+        public static int sampledateIndex = 0;
+
         // vars used for index of variables in Norms
         private static List<int> normVarIndixes = new List<int>();
         #endregion

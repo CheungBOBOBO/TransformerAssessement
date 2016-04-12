@@ -8,7 +8,13 @@ namespace TransformerAssessment.Core.Managers {
     class Diverter {
         public List<TestData> data = new List<TestData>();
 
+        public string norm;
+
         public Diverter(string[] div) {
+
+        }
+
+        public void addData(string[] data) {
 
         }
     }
