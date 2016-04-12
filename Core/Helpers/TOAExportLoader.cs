@@ -20,7 +20,7 @@ namespace TransformerAssessment.Core.Helpers {
         private static List<TestData> rawTestData;      // raw TestData read from 'test data.csv'
         private static List<string[]> equipmentToParse = new List<string[]>();    // raw Equipment read from 'equipment.csv'
 
-        public static List<string> headerNames = new List<string>(); // list of header names from 'equipment.csv' (row 1 values)
+        public static List<string> headerNames = new List<string>();    // list of header names from 'equipment.csv' (row 1 values)
 
         // vars to separate equipment types before combining into Tranformer objects
         public static List<string[]> xfmrs = new List<string[]>();
@@ -29,15 +29,28 @@ namespace TransformerAssessment.Core.Helpers {
         public static List<string[]> ltcs = new List<string[]>();
         
         // vars used to improve performance
-        public static int equipnumIndex = 0;
-        public static int region_nameIndex = 0;
-        public static int owner_nameIndex = 0;
-        public static int apprtypeIndex = 0;
-        public static int designationIndex = 0;
-        public static int substn_nameIndex = 0;
+        public static int equipnumIndex;
+        public static int region_nameIndex;
+        public static int owner_nameIndex;
+        public static int apprtypeIndex;
+        public static int designationIndex;
+        public static int substn_nameIndex;
+        public static int mfrIndex;
+        public static int norm_nameIndex;
+
+        public static int sampledateIndex = 0;
 
         // vars used for index of variables in Norms
         private static List<int> normVarIndixes = new List<int>();
+
+        #region [Instance Variables] Vars used for test data
+        public static List<string> dataHeaders = new List<string>();    // list of header names from 'test data.csv'
+        public static List<string[] > rawData = new List<string[]>();   // list of unparsed data rows
+
+        public static int data_equipnumIndex;
+        public static int data_apprtypeIndex;
+        public static int data_norm_nameIndex;
+        #endregion
         #endregion
 
         public static void initializeTOAExports() {
@@ -67,9 +80,33 @@ namespace TransformerAssessment.Core.Helpers {
             throw new NotImplementedException();
         }
 
-        private static void createRawTestData() {
+        private static void createRawTestData(string filePath) {
             // create list of TestData objects from 'test data.csv' and put in rawTestData
-            
+            bool isFirstLine = true;
+            char[] delimiters = new char[] { ',' };
+            using (StreamReader reader = new StreamReader(filePath)) {
+                while (true) {
+                    string line = reader.ReadLine();
+                    if (line == null)
+                        break;
+                    if (!string.IsNullOrWhiteSpace(line)) {
+                        string[] splitRow = line.Split(delimiters); // split csv row into array
+                        if (isFirstLine) {
+                            foreach (string header in splitRow) // add header values into List headerNames
+                                dataHeaders.Add(header);
+                            data_equipnumIndex = dataHeaders.IndexOf("equipnum");
+                            data_apprtypeIndex = dataHeaders.IndexOf("apprtype");
+                            data_norm_nameIndex = dataHeaders.IndexOf("norm_name");
+                            
+                            isFirstLine = false;
+                        }
+                        if (isValidData(splitRow))
+                            rawData.Add(splitRow);
+                        else
+                            Console.WriteLine("EQUIPMENT apprtype doesn't match:]\t{0}", splitRow[apprtypeIndex]);
+                    }
+                }
+            }
         }
 
         private static void createEquipmentToParse(string filePath) {
@@ -92,6 +129,8 @@ namespace TransformerAssessment.Core.Helpers {
                             apprtypeIndex = headerNames.IndexOf("apprtype");
                             designationIndex = headerNames.IndexOf("designation");
                             substn_nameIndex = headerNames.IndexOf("substn_name");
+                            norm_nameIndex = headerNames.IndexOf("norm_name");
+                            mfrIndex = headerNames.IndexOf("mfr");
 
                             isFirstLine = false;
                         }
@@ -121,6 +160,10 @@ namespace TransformerAssessment.Core.Helpers {
                     && !equipmentRow[substn_nameIndex].Contains("DISPOSED");
         }
 
+        private static bool isValidData(string[] dataRow) {
+            return xfmrsContains(dataRow[data_equipnumIndex]);
+        }
+
         private static void parseRawEquiment() {
             /*Console.WriteLine("Number of rows added to 'xfmrs' = " + xfmrs.Count);
             Console.WriteLine("Number of rows added to 'ltcs' = " + ltcs.Count);
@@ -136,9 +179,9 @@ namespace TransformerAssessment.Core.Helpers {
             string[] DIV;
             for (int i = 0; i < xfmrs.Count; i++) {
                 // reset LTC equipment strings[][]
-                LTC = null;
-                SEL = null;
-                DIV = null;
+                LTC = new string[] { };
+                SEL = new string[] { };
+                DIV = new string[] { };
                 // if there is LTC from 'equipment.csv', add to Transformer obj
                 for (int j = 0; j < ltcs.Count; j++)
                     if (xfmrs[i][equipnumIndex] == ltcs[j][equipnumIndex])

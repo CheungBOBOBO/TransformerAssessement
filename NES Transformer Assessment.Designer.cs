@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.button_NormsFolder = new System.Windows.Forms.Button();
             this.button_TOAExportsFolder = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -44,27 +44,28 @@
             this.tp_Main = new System.Windows.Forms.TabControl();
             this.tp_Analyze = new System.Windows.Forms.TabPage();
             this.tp_Config = new System.Windows.Forms.TabPage();
-            this.lb_NormSelect = new System.Windows.Forms.ListBox();
-            this.lab_Norms = new System.Windows.Forms.Label();
-            this.tb_ExportsFolder_BG = new System.Windows.Forms.TextBox();
-            this.tb_NormsFolder_BG = new System.Windows.Forms.TextBox();
-            this.dg_NormDisplay = new System.Windows.Forms.DataGridView();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tlp_Config_bg = new System.Windows.Forms.TableLayoutPanel();
             this.tlp_Config_folderSelect = new System.Windows.Forms.TableLayoutPanel();
+            this.tb_ExportsFolder_BG = new System.Windows.Forms.TextBox();
+            this.tb_NormsFolder_BG = new System.Windows.Forms.TextBox();
             this.tlp_Config_normSelect = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lb_NormSelect = new System.Windows.Forms.ListBox();
+            this.lab_Norms = new System.Windows.Forms.Label();
+            this.dg_NormDisplay = new System.Windows.Forms.DataGridView();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.tp_Equipment = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
             this.panel_Config.SuspendLayout();
             this.panel_Analyze.SuspendLayout();
             this.tp_Main.SuspendLayout();
             this.tp_Config.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dg_NormDisplay)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.tlp_Config_bg.SuspendLayout();
             this.tlp_Config_folderSelect.SuspendLayout();
             this.tlp_Config_normSelect.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_NormDisplay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // button_NormsFolder
@@ -73,7 +74,7 @@
             this.button_NormsFolder.ForeColor = System.Drawing.SystemColors.WindowText;
             this.button_NormsFolder.Location = new System.Drawing.Point(3, 3);
             this.button_NormsFolder.Name = "button_NormsFolder";
-            this.button_NormsFolder.Size = new System.Drawing.Size(125, 23);
+            this.button_NormsFolder.Size = new System.Drawing.Size(124, 23);
             this.button_NormsFolder.TabIndex = 0;
             this.button_NormsFolder.Text = "Norms Folder";
             this.button_NormsFolder.UseVisualStyleBackColor = true;
@@ -84,7 +85,7 @@
             this.button_TOAExportsFolder.ForeColor = System.Drawing.SystemColors.WindowText;
             this.button_TOAExportsFolder.Location = new System.Drawing.Point(3, 32);
             this.button_TOAExportsFolder.Name = "button_TOAExportsFolder";
-            this.button_TOAExportsFolder.Size = new System.Drawing.Size(125, 23);
+            this.button_TOAExportsFolder.Size = new System.Drawing.Size(124, 23);
             this.button_TOAExportsFolder.TabIndex = 1;
             this.button_TOAExportsFolder.Text = "TOAExports Folder";
             this.button_TOAExportsFolder.UseVisualStyleBackColor = true;
@@ -142,6 +143,7 @@
             // 
             this.tp_Main.Controls.Add(this.tp_Analyze);
             this.tp_Main.Controls.Add(this.tp_Config);
+            this.tp_Main.Controls.Add(this.tp_Equipment);
             this.tp_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tp_Main.Location = new System.Drawing.Point(0, 0);
             this.tp_Main.Name = "tp_Main";
@@ -172,92 +174,7 @@
             this.tp_Config.Size = new System.Drawing.Size(876, 512);
             this.tp_Config.TabIndex = 1;
             this.tp_Config.Text = "Config";
-            // 
-            // lb_NormSelect
-            // 
-            this.lb_NormSelect.FormattingEnabled = true;
-            this.lb_NormSelect.Location = new System.Drawing.Point(3, 22);
-            this.lb_NormSelect.Name = "lb_NormSelect";
-            this.lb_NormSelect.Size = new System.Drawing.Size(192, 186);
-            this.lb_NormSelect.TabIndex = 9;
-            this.lb_NormSelect.SelectedIndexChanged += new System.EventHandler(this.lb_NormSelect_SelectedIndexChanged);
-            // 
-            // lab_Norms
-            // 
-            this.lab_Norms.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lab_Norms.AutoSize = true;
-            this.lab_Norms.Location = new System.Drawing.Point(3, 3);
-            this.lab_Norms.Name = "lab_Norms";
-            this.lab_Norms.Size = new System.Drawing.Size(127, 13);
-            this.lab_Norms.TabIndex = 8;
-            this.lab_Norms.Text = "Norms Currently Compiled";
-            // 
-            // tb_ExportsFolder_BG
-            // 
-            this.tb_ExportsFolder_BG.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.tb_ExportsFolder_BG.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.tb_ExportsFolder_BG.CausesValidation = false;
-            this.tb_ExportsFolder_BG.Enabled = false;
-            this.tb_ExportsFolder_BG.Location = new System.Drawing.Point(153, 33);
-            this.tb_ExportsFolder_BG.Name = "tb_ExportsFolder_BG";
-            this.tb_ExportsFolder_BG.Size = new System.Drawing.Size(704, 20);
-            this.tb_ExportsFolder_BG.TabIndex = 5;
-            this.tb_ExportsFolder_BG.Text = "TOA Exports Folder";
-            // 
-            // tb_NormsFolder_BG
-            // 
-            this.tb_NormsFolder_BG.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.tb_NormsFolder_BG.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.tb_NormsFolder_BG.CausesValidation = false;
-            this.tb_NormsFolder_BG.Enabled = false;
-            this.tb_NormsFolder_BG.Location = new System.Drawing.Point(153, 4);
-            this.tb_NormsFolder_BG.Name = "tb_NormsFolder_BG";
-            this.tb_NormsFolder_BG.ReadOnly = true;
-            this.tb_NormsFolder_BG.Size = new System.Drawing.Size(704, 20);
-            this.tb_NormsFolder_BG.TabIndex = 4;
-            this.tb_NormsFolder_BG.Text = "Norms Folder";
-            // 
-            // dg_NormDisplay
-            // 
-            this.dg_NormDisplay.AllowUserToAddRows = false;
-            this.dg_NormDisplay.AllowUserToDeleteRows = false;
-            this.dg_NormDisplay.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dg_NormDisplay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dg_NormDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dg_NormDisplay.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dg_NormDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dg_NormDisplay.Location = new System.Drawing.Point(201, 0);
-            this.dg_NormDisplay.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.dg_NormDisplay.Name = "dg_NormDisplay";
-            this.dg_NormDisplay.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dg_NormDisplay.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dg_NormDisplay.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dg_NormDisplay.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dg_NormDisplay.Size = new System.Drawing.Size(656, 429);
-            this.dg_NormDisplay.TabIndex = 11;
+            this.tp_Config.UseVisualStyleBackColor = true;
             // 
             // tlp_Config_bg
             // 
@@ -292,6 +209,31 @@
             this.tlp_Config_folderSelect.Size = new System.Drawing.Size(860, 58);
             this.tlp_Config_folderSelect.TabIndex = 0;
             // 
+            // tb_ExportsFolder_BG
+            // 
+            this.tb_ExportsFolder_BG.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tb_ExportsFolder_BG.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tb_ExportsFolder_BG.CausesValidation = false;
+            this.tb_ExportsFolder_BG.Enabled = false;
+            this.tb_ExportsFolder_BG.Location = new System.Drawing.Point(133, 33);
+            this.tb_ExportsFolder_BG.Name = "tb_ExportsFolder_BG";
+            this.tb_ExportsFolder_BG.Size = new System.Drawing.Size(704, 20);
+            this.tb_ExportsFolder_BG.TabIndex = 5;
+            this.tb_ExportsFolder_BG.Text = "TOA Exports Folder";
+            // 
+            // tb_NormsFolder_BG
+            // 
+            this.tb_NormsFolder_BG.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tb_NormsFolder_BG.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tb_NormsFolder_BG.CausesValidation = false;
+            this.tb_NormsFolder_BG.Enabled = false;
+            this.tb_NormsFolder_BG.Location = new System.Drawing.Point(133, 4);
+            this.tb_NormsFolder_BG.Name = "tb_NormsFolder_BG";
+            this.tb_NormsFolder_BG.ReadOnly = true;
+            this.tb_NormsFolder_BG.Size = new System.Drawing.Size(704, 20);
+            this.tb_NormsFolder_BG.TabIndex = 4;
+            this.tb_NormsFolder_BG.Text = "Norms Folder";
+            // 
             // tlp_Config_normSelect
             // 
             this.tlp_Config_normSelect.ColumnCount = 2;
@@ -323,6 +265,78 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(198, 432);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // lb_NormSelect
+            // 
+            this.lb_NormSelect.FormattingEnabled = true;
+            this.lb_NormSelect.Location = new System.Drawing.Point(3, 22);
+            this.lb_NormSelect.Name = "lb_NormSelect";
+            this.lb_NormSelect.Size = new System.Drawing.Size(192, 186);
+            this.lb_NormSelect.TabIndex = 9;
+            this.lb_NormSelect.SelectedIndexChanged += new System.EventHandler(this.lb_NormSelect_SelectedIndexChanged);
+            // 
+            // lab_Norms
+            // 
+            this.lab_Norms.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lab_Norms.AutoSize = true;
+            this.lab_Norms.Location = new System.Drawing.Point(3, 3);
+            this.lab_Norms.Name = "lab_Norms";
+            this.lab_Norms.Size = new System.Drawing.Size(127, 13);
+            this.lab_Norms.TabIndex = 8;
+            this.lab_Norms.Text = "Norms Currently Compiled";
+            // 
+            // dg_NormDisplay
+            // 
+            this.dg_NormDisplay.AllowUserToAddRows = false;
+            this.dg_NormDisplay.AllowUserToDeleteRows = false;
+            this.dg_NormDisplay.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dg_NormDisplay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dg_NormDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dg_NormDisplay.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dg_NormDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dg_NormDisplay.Location = new System.Drawing.Point(201, 0);
+            this.dg_NormDisplay.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.dg_NormDisplay.Name = "dg_NormDisplay";
+            this.dg_NormDisplay.ReadOnly = true;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dg_NormDisplay.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.dg_NormDisplay.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dg_NormDisplay.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            this.dg_NormDisplay.Size = new System.Drawing.Size(656, 429);
+            this.dg_NormDisplay.TabIndex = 11;
+            // 
+            // tp_Equipment
+            // 
+            this.tp_Equipment.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.tp_Equipment.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tp_Equipment.Location = new System.Drawing.Point(4, 22);
+            this.tp_Equipment.Name = "tp_Equipment";
+            this.tp_Equipment.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Equipment.Size = new System.Drawing.Size(876, 512);
+            this.tp_Equipment.TabIndex = 2;
+            this.tp_Equipment.Text = "Equipment";
+            // 
             // FormHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -341,14 +355,14 @@
             this.panel_Analyze.ResumeLayout(false);
             this.tp_Main.ResumeLayout(false);
             this.tp_Config.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dg_NormDisplay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.tlp_Config_bg.ResumeLayout(false);
             this.tlp_Config_folderSelect.ResumeLayout(false);
             this.tlp_Config_folderSelect.PerformLayout();
             this.tlp_Config_normSelect.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_NormDisplay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -377,6 +391,7 @@
         private System.Windows.Forms.TableLayoutPanel tlp_Config_folderSelect;
         private System.Windows.Forms.TableLayoutPanel tlp_Config_normSelect;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TabPage tp_Equipment;
 
     }
 }

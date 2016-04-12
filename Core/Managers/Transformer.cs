@@ -12,6 +12,8 @@ namespace TransformerAssessment.Core.Managers {
         private string equipID;
         private string substn_name;
         private string designation;
+        public string norm;
+        public string manufacturer;
 
         public List<string> equipmentHeaders = null;
         public List<TestData> data = null;
@@ -27,6 +29,7 @@ namespace TransformerAssessment.Core.Managers {
             equipID = transformer[TOAExportLoader.equipnumIndex];
             substn_name = transformer[TOAExportLoader.substn_nameIndex];
             designation = transformer[TOAExportLoader.designationIndex];
+            manufacturer = transformer[TOAExportLoader.mfrIndex];
             equipmentHeaders = TOAExportLoader.headerNames;
         }
 
@@ -34,20 +37,43 @@ namespace TransformerAssessment.Core.Managers {
             equipID = transformer[TOAExportLoader.equipnumIndex];
             substn_name = transformer[TOAExportLoader.substn_nameIndex];
             designation = transformer[TOAExportLoader.designationIndex];
+            manufacturer = transformer[TOAExportLoader.mfrIndex];
             equipmentHeaders = TOAExportLoader.headerNames;
-            if (ltc != null)
+            //Console.WriteLine("Creating transformer: {0}, {1} {2}", equipID, substn_name, designation);
+            if (ltc.Length > 0) { 
+                //Console.WriteLine("\t-adding LTC (row length: {0})", ltc.Length);
                 addLTC(ltc);
-            if (sel != null)
-                addSEL(ltc);
-            if (div != null)
+            }
+            if (sel.Length > 0) {
+                //Console.WriteLine("\t-adding SEL (row length: {0})", sel.Length);
+                addSEL(sel);
+            }
+            if (div.Length > 0) {
+                //Console.WriteLine("\t-adding DIV (row length: {0})", div.Length);
                 addDIV(div);
+            }
         }
 
         /// <summary>Adds data[] to Tranformer instance.
         /// <param name="data">string[] from 'data.csv' row</param>
         /// </summary>
         public void addData(string[] data) {
-            
+            // if data is LTC, add to ltc
+            if (hasLTC && data[TOAExportLoader.apprtypeIndex].Equals("LTC"))
+                ltc.addData(data);
+            // if data is SEL, add to sel
+            else if (hasSEL && data[TOAExportLoader.apprtypeIndex].Equals("SEL"))
+                sel.addData(data);
+            // if data is DIV, add to div
+            else if (hasDIV && data[TOAExportLoader.apprtypeIndex].Equals("DIV"))
+                div.addData(data);
+            else if (data[TOAExportLoader.apprtypeIndex].Equals("XFMR"))
+                addXFMRData(data);
+
+        }
+
+        private static void addXFMRData(string[] data) {
+
         }
 
         public void addLTC(string[] equipment) {
