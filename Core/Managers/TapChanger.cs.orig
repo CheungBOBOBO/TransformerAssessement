@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using TransformerAssessment.Core.Helpers;
+
+namespace TransformerAssessment.Core.Managers {
+    class TapChanger {
+        public List<TestData> data = new List<TestData>();
+
+        public string norm;
+<<<<<<< HEAD
+        public string manufacturer;
+=======
+>>>>>>> 9da191b3b72721a0f7a0e161ee4f94748c0a4fd1
+
+        public TapChanger(string[] ltc) {
+            norm = ltc[TOAExportLoader.norm_nameIndex];
+            manufacturer = ltc[TOAExportLoader.mfrIndex];
+        }
+
+        public void addData(string[] data) {
+
+        }
+
+        public void addData(string[] data) {
+
+        }
+    }
+}
