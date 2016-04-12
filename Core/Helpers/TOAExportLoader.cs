@@ -29,12 +29,12 @@ namespace TransformerAssessment.Core.Helpers {
         public static List<string[]> ltcs = new List<string[]>();
         
         // vars used to improve performance
-        private static int equipnumIndex = 0;
-        private static int region_nameIndex = 0;
-        private static int owner_nameIndex = 0;
-        private static int apprtypeIndex = 0;
-        private static int designationIndex = 0;
-        private static int substn_nameIndex = 0;
+        public static int equipnumIndex = 0;
+        public static int region_nameIndex = 0;
+        public static int owner_nameIndex = 0;
+        public static int apprtypeIndex = 0;
+        public static int designationIndex = 0;
+        public static int substn_nameIndex = 0;
 
         // vars used for index of variables in Norms
         private static List<int> normVarIndixes = new List<int>();
@@ -97,14 +97,14 @@ namespace TransformerAssessment.Core.Helpers {
                         if (isValidEquipment(splitRow))
                                 if (splitRow[apprtypeIndex].Equals("XFMR"))
                                     xfmrs.Add(splitRow);
-                                else if (splitRow[headerNames.IndexOf("apprtype")].Equals("LTC"))
+                                else if (splitRow[apprtypeIndex].Equals("LTC"))
                                     ltcs.Add(splitRow);
-                                else if (splitRow[headerNames.IndexOf("apprtype")].Equals("SEL"))
+                                else if (splitRow[apprtypeIndex].Equals("SEL"))
                                     sels.Add(splitRow);
-                                else if (splitRow[headerNames.IndexOf("apprtype")].Equals("DIV"))
+                                else if (splitRow[apprtypeIndex].Equals("DIV"))
                                     divs.Add(splitRow);
                                 else
-                                    Console.WriteLine("EQUIPMENT apprtype doesn't match:]\t{0}", splitRow[headerNames.IndexOf("apprtype")]);
+                                    Console.WriteLine("EQUIPMENT apprtype doesn't match:]\t{0}", splitRow[apprtypeIndex]);
                     }
                 }
             }
@@ -133,9 +133,9 @@ namespace TransformerAssessment.Core.Helpers {
             string[] LTC = new string[0];    // create empty strings for use in Equipment object creation
             string[] SEL = new string[0];
             string[] DIV = new string[0];
-            for (int i = 0; i < xfmrs.Count; i++)
-            {
-
+            for (int i = 0; i < xfmrs.Count; i++) {
+                equipment.Add(new Equipment(xfmrs[i]));
+                //foreach (string[] )
             }
         }
 
