@@ -107,6 +107,15 @@ namespace TransformerAssessment.Core.Helpers {
                     }
                 }
             }
+            // add rawData to the transformers
+            addDataToTransformers();
+        }
+
+        private static void addDataToTransformers() {
+            // cycle through transformer list and for each one, go through rawData and add it to the xfmr
+            for (int i = 0; i < equipment.Count; i++) {
+
+            }
         }
 
         private static void createEquipmentToParse(string filePath) {
