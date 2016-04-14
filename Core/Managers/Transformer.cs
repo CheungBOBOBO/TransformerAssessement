@@ -17,7 +17,7 @@ namespace TransformerAssessment.Core.Managers {
         public string[] rawXFMR;
 
         public List<string> equipmentHeaders = null;
-        public List<TestData> data = new List<TestData>();;
+        public List<TestData> data = new List<TestData>();
         public TapChanger ltc;
         public Selector sel;
         public Diverter div;
