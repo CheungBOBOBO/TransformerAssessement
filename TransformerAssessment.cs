@@ -5,8 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Norms = TransformerAssessment.Core.Helpers.NormLoader;
-using Exp = TransformerAssessment.Core.Helpers.TOAExportLoader;
+using TransformerAssessment.Core.Helpers;
 
 namespace TransformerAssessment {
     static class TransformerAssessment {
@@ -20,13 +19,13 @@ namespace TransformerAssessment {
             string PROGRAM_PATH = Application.StartupPath;
             
             // Get list of files in Sub-folders
-            Norms.initializeNorms();
-            Exp.initializeTOAExports();
+            NormLoader.initializeNorms();
+            TOAExportLoader.initializeTOAExports();
 
-            normDir = Norms.getNormsDir();
-            string[] normList = Norms.getNormsPathList();
-            exportsDir = Exp.getExportsDir();
-            string[] toaExportsList = Exp.getTOAExportsList();
+            normDir = NormLoader.getNormsDir();
+            string[] normList = NormLoader.getNormsPathList();
+            exportsDir = TOAExportLoader.getExportsDir();
+            string[] toaExportsList = TOAExportLoader.getTOAExportsList();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

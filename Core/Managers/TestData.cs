@@ -33,7 +33,7 @@ namespace TransformerAssessment.Core.Managers {
         public double o2_n2;    // oxygen to nitrogen ratio
         #endregion
 
-        public TestData(string path) {
+        public TestData(string[] raw) {
             
         }
     }

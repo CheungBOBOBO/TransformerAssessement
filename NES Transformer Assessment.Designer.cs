@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.button_NormsFolder = new System.Windows.Forms.Button();
             this.button_TOAExportsFolder = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -55,6 +55,13 @@
             this.dg_NormDisplay = new System.Windows.Forms.DataGridView();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tp_Equipment = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.l_chooseXFMR = new System.Windows.Forms.Label();
+            this.l_chooseXFMREquip = new System.Windows.Forms.Label();
+            this.cb_xfmrSelection = new System.Windows.Forms.ComboBox();
+            this.cb_xfmrEquipSelect = new System.Windows.Forms.ComboBox();
+            this.dg_EquipDisplay = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.panel_Config.SuspendLayout();
             this.panel_Analyze.SuspendLayout();
@@ -66,6 +73,10 @@
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_NormDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            this.tp_Equipment.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_EquipDisplay)).BeginInit();
             this.SuspendLayout();
             // 
             // button_NormsFolder
@@ -289,40 +300,40 @@
             this.dg_NormDisplay.AllowUserToAddRows = false;
             this.dg_NormDisplay.AllowUserToDeleteRows = false;
             this.dg_NormDisplay.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dg_NormDisplay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dg_NormDisplay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dg_NormDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dg_NormDisplay.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dg_NormDisplay.DefaultCellStyle = dataGridViewCellStyle14;
             this.dg_NormDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dg_NormDisplay.Location = new System.Drawing.Point(201, 0);
             this.dg_NormDisplay.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.dg_NormDisplay.Name = "dg_NormDisplay";
             this.dg_NormDisplay.ReadOnly = true;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dg_NormDisplay.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dg_NormDisplay.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.dg_NormDisplay.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dg_NormDisplay.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dg_NormDisplay.RowsDefaultCellStyle = dataGridViewCellStyle16;
             this.dg_NormDisplay.Size = new System.Drawing.Size(656, 429);
             this.dg_NormDisplay.TabIndex = 11;
             // 
@@ -330,12 +341,103 @@
             // 
             this.tp_Equipment.BackColor = System.Drawing.SystemColors.ControlLight;
             this.tp_Equipment.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tp_Equipment.Controls.Add(this.tableLayoutPanel2);
             this.tp_Equipment.Location = new System.Drawing.Point(4, 22);
             this.tp_Equipment.Name = "tp_Equipment";
             this.tp_Equipment.Padding = new System.Windows.Forms.Padding(3);
             this.tp_Equipment.Size = new System.Drawing.Size(876, 512);
             this.tp_Equipment.TabIndex = 2;
             this.tp_Equipment.Text = "Equipment";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.dg_EquipDisplay, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(866, 502);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 252F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.l_chooseXFMR, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.l_chooseXFMREquip, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.cb_xfmrSelection, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.cb_xfmrEquipSelect, 1, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.61404F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54.38596F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(866, 57);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // l_chooseXFMR
+            // 
+            this.l_chooseXFMR.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.l_chooseXFMR.AutoSize = true;
+            this.l_chooseXFMR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_chooseXFMR.Location = new System.Drawing.Point(67, 6);
+            this.l_chooseXFMR.Name = "l_chooseXFMR";
+            this.l_chooseXFMR.Size = new System.Drawing.Size(78, 13);
+            this.l_chooseXFMR.TabIndex = 0;
+            this.l_chooseXFMR.Text = "Transformer:";
+            // 
+            // l_chooseXFMREquip
+            // 
+            this.l_chooseXFMREquip.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.l_chooseXFMREquip.AutoSize = true;
+            this.l_chooseXFMREquip.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_chooseXFMREquip.Location = new System.Drawing.Point(4, 35);
+            this.l_chooseXFMREquip.Name = "l_chooseXFMREquip";
+            this.l_chooseXFMREquip.Size = new System.Drawing.Size(141, 13);
+            this.l_chooseXFMREquip.TabIndex = 1;
+            this.l_chooseXFMREquip.Text = "Transformer Equipment:";
+            // 
+            // cb_xfmrSelection
+            // 
+            this.cb_xfmrSelection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cb_xfmrSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_xfmrSelection.FormattingEnabled = true;
+            this.cb_xfmrSelection.Location = new System.Drawing.Point(151, 3);
+            this.cb_xfmrSelection.Name = "cb_xfmrSelection";
+            this.cb_xfmrSelection.Size = new System.Drawing.Size(246, 21);
+            this.cb_xfmrSelection.TabIndex = 2;
+            this.cb_xfmrSelection.SelectedIndexChanged += new System.EventHandler(this.cb_xfmrSelection_SelectedIndexChanged);
+            // 
+            // cb_xfmrEquipSelect
+            // 
+            this.cb_xfmrEquipSelect.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cb_xfmrEquipSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_xfmrEquipSelect.FormattingEnabled = true;
+            this.cb_xfmrEquipSelect.Location = new System.Drawing.Point(151, 31);
+            this.cb_xfmrEquipSelect.Name = "cb_xfmrEquipSelect";
+            this.cb_xfmrEquipSelect.Size = new System.Drawing.Size(246, 21);
+            this.cb_xfmrEquipSelect.TabIndex = 3;
+            this.cb_xfmrEquipSelect.SelectedIndexChanged += new System.EventHandler(this.cb_xfmrEquipSelect_SelectedIndexChanged);
+            // 
+            // dg_EquipDisplay
+            // 
+            this.dg_EquipDisplay.AllowUserToAddRows = false;
+            this.dg_EquipDisplay.AllowUserToDeleteRows = false;
+            this.dg_EquipDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_EquipDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dg_EquipDisplay.Location = new System.Drawing.Point(3, 60);
+            this.dg_EquipDisplay.Name = "dg_EquipDisplay";
+            this.dg_EquipDisplay.Size = new System.Drawing.Size(860, 439);
+            this.dg_EquipDisplay.TabIndex = 1;
             // 
             // FormHome
             // 
@@ -363,6 +465,11 @@
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_NormDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            this.tp_Equipment.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_EquipDisplay)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -392,6 +499,13 @@
         private System.Windows.Forms.TableLayoutPanel tlp_Config_normSelect;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TabPage tp_Equipment;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Label l_chooseXFMR;
+        private System.Windows.Forms.Label l_chooseXFMREquip;
+        private System.Windows.Forms.ComboBox cb_xfmrSelection;
+        private System.Windows.Forms.ComboBox cb_xfmrEquipSelect;
+        private System.Windows.Forms.DataGridView dg_EquipDisplay;
 
     }
 }

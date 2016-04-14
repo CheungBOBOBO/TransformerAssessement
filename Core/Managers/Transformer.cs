@@ -14,9 +14,10 @@ namespace TransformerAssessment.Core.Managers {
         private string designation;
         public string norm;
         public string manufacturer;
+        public string[] rawXFMR;
 
         public List<string> equipmentHeaders = null;
-        public List<TestData> data = null;
+        public List<TestData> data = new List<TestData>();;
         public TapChanger ltc;
         public Selector sel;
         public Diverter div;
@@ -39,6 +40,8 @@ namespace TransformerAssessment.Core.Managers {
             designation = transformer[TOAExportLoader.designationIndex];
             manufacturer = transformer[TOAExportLoader.mfrIndex];
             equipmentHeaders = TOAExportLoader.headerNames;
+
+            rawXFMR = transformer;
             //Console.WriteLine("Creating transformer: {0}, {1} {2}", equipID, substn_name, designation);
             if (ltc.Length > 0) { 
                 //Console.WriteLine("\t-adding LTC (row length: {0})", ltc.Length);
@@ -58,6 +61,7 @@ namespace TransformerAssessment.Core.Managers {
         /// <param name="data">string[] from 'data.csv' row</param>
         /// </summary>
         public void addData(string[] data) {
+            Console.WriteLine("Adding data to {0} {1} {2}", substn_name, designation, data[TOAExportLoader.data_apprtypeIndex]);
             // if data is LTC, add to ltc
             if (hasLTC && data[TOAExportLoader.apprtypeIndex].Equals("LTC"))
                 ltc.addData(data);
@@ -69,11 +73,10 @@ namespace TransformerAssessment.Core.Managers {
                 div.addData(data);
             else if (data[TOAExportLoader.apprtypeIndex].Equals("XFMR"))
                 addXFMRData(data);
-
         }
 
-        private static void addXFMRData(string[] data) {
-
+        private void addXFMRData(string[] data) {
+            this.data.Add(new TestData(data));
         }
 
         public void addLTC(string[] equipment) {

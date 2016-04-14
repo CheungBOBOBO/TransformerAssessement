@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using TransformerAssessment.Core.Managers;
+using F = TransformerAssessment;
 
 namespace TransformerAssessment.Core.Helpers {
     class TOAExportLoader {
         #region [Variables] Class variables
         private static string[] exportsPathList;// array of file name + extention ("equipment.csv")
         private static string exportsDirectory; // folder location selected by default or by user
-        private static string[] fileNameList;   // file names without extention ("equipment", "test data")
+        private static string[] xfmrNameList;   // file names without extention ("equipment", "test data")
         private static TestData[] testData;     // list of TestData objects, each representing an individual test
         private static List<Transformer> equipment = new List<Transformer>();   // list of Equipment objects, each representing an individual piece of equipment
-                                                                            //  (one transformer and respective LTC/SEL/DIV
+                                                                                //  (one transformer and respective LTC/SEL/DIV
         private static List<TestData> rawTestData;      // raw TestData read from 'test data.csv'
         private static List<string[]> equipmentToParse = new List<string[]>();    // raw Equipment read from 'equipment.csv'
 
@@ -60,6 +61,7 @@ namespace TransformerAssessment.Core.Helpers {
                 exportsDirectory = Path.Combine(PROG_PATH, @"TOAExports");
                 exportsPathList = Directory.GetFiles(exportsDirectory, "*.csv");
                 createEquipmentToParse(exportsDirectory + @"\equipment.csv");
+                createRawTestData(exportsDirectory + @"\test data.csv");
             } catch (Exception e) {
                 Console.WriteLine("EXCEPTION:\t" + e.Message);
                 throw;
@@ -102,8 +104,6 @@ namespace TransformerAssessment.Core.Helpers {
                         }
                         if (isValidData(splitRow))
                             rawData.Add(splitRow);
-                        else
-                            Console.WriteLine("EQUIPMENT apprtype doesn't match:]\t{0}", splitRow[apprtypeIndex]);
                     }
                 }
             }
@@ -112,9 +112,14 @@ namespace TransformerAssessment.Core.Helpers {
         }
 
         private static void addDataToTransformers() {
-            // cycle through transformer list and for each one, go through rawData and add it to the xfmr
-            for (int i = 0; i < equipment.Count; i++) {
-
+            // cycle through rawData list and for each one, go through equipment and add it to the xfmr
+            for (int i = 0; i < rawData.Count; i++) {
+                for (int j = 0; j < equipment.Count; j++) {
+                    if (rawData[i][data_equipnumIndex] == equipment[j].getID()) {
+                        equipment[j].addData(rawData[i]);
+                        break;
+                    }
+                }
             }
         }
 
@@ -205,6 +210,10 @@ namespace TransformerAssessment.Core.Helpers {
                         DIV = divs[j];
                 equipment.Add(new Transformer(xfmrs[i], LTC, SEL, DIV));
             }
+            // creat xfmrNameList (array of XFMR locations & designations)
+            xfmrNameList = new string[equipment.Count];
+            for (int i = 0; i < equipment.Count; i++)
+                xfmrNameList[i] = equipment[i].getLocation() + " " + equipment[i].getPosition();
         }
 
         private static void checkForMissingEquipment() {
@@ -235,9 +244,9 @@ namespace TransformerAssessment.Core.Helpers {
         #region [Methods] Getters
         public static string[] getTOAExportsList() { return exportsPathList; }
         public static string getExportsDir() { return exportsDirectory; }
-        public static string[] getFileNameList() { return fileNameList; }
+        public static string[] getXFMRNameList() { return xfmrNameList; }
         public static TestData[] getTestData() { return testData; }
-        public static List<Transformer> getEquipment() { return equipment; }
+        public static List<Transformer> getTransformers() { return equipment; }
         #endregion
     }
 }

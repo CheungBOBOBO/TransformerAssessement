@@ -9,16 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using TransformerAssessment;
-using Norms = TransformerAssessment.Core.Helpers.NormLoader;
-using Exports = TransformerAssessment.Core.Helpers.TOAExportLoader;
+using TransformerAssessment.Core.Helpers;
 using TransformerAssessment.Core.Managers;
 using System.IO;
 
 namespace TransformerAssessment {
     public partial class FormHome : Form {
         // DATA_SOURCES
-        Norm[] _norms = Norms.getNorms();
+        Norm[] _norms = NormLoader.getNorms();
+        List<Transformer> _xfmrs = TOAExportLoader.getTransformers();
+
         DataTable dt_Norms = new DataTable();
+        DataTable dt_Equipment = new DataTable();
 
         public FormHome() {
             InitializeComponent();
@@ -28,9 +30,13 @@ namespace TransformerAssessment {
             tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
             tb_ExportsFolder_BG.Text = TransformerAssessment.exportsDir;
             updateNormsListLB();
+            updateXFMR_CB();
         }
 
-        private void menu_Quit_Click(object sender, EventArgs e) { Application.Exit(); }
+        private void menu_Quit_Click(object sender, EventArgs e) { 
+
+            Application.Exit();
+        }
 
         private void menu_FolderSettings_Click(object sender, EventArgs e) {
             bringContentToFront(panel_Config);
@@ -38,13 +44,13 @@ namespace TransformerAssessment {
 
         private void button_NormsFolder_Click(object sender, EventArgs e) {
             TransformerAssessment.normDir = chooseNormFolder();
-            Norms.updateNorms(TransformerAssessment.normDir);
+            NormLoader.updateNorms(TransformerAssessment.normDir);
             updateNormsListLB();
         }
 
         private void button_TOAExportsFolder_Click(object sender, EventArgs e) {
             TransformerAssessment.exportsDir = chooseExportsFolder();
-            Exports.updateTOAExports(TransformerAssessment.exportsDir);
+            TOAExportLoader.updateTOAExports(TransformerAssessment.exportsDir);
             //chooseExportsFolder();
         }
 
@@ -103,9 +109,19 @@ namespace TransformerAssessment {
         // update Norm List Box in Config tab
         private void updateNormsListLB() {
             lb_NormSelect.Items.Clear();
-            for (int i = 0; i < Norms.getFileNameList().Length; i++)
-                lb_NormSelect.Items.Add(Norms.getFileNameList()[i]);
-            _norms = Norms.getNorms();
+            for (int i = 0; i < NormLoader.getFileNameList().Length; i++)
+                lb_NormSelect.Items.Add(NormLoader.getFileNameList()[i]);
+            _norms = NormLoader.getNorms();
+        }
+
+        // update Transformer selection Combo Boxes in Equipment tab
+        private void updateXFMR_CB() {
+            cb_xfmrSelection.Items.Clear();
+            for (int i = 0; i < TOAExportLoader.getXFMRNameList().Length; i++)
+                cb_xfmrSelection.Items.Add(TOAExportLoader.getXFMRNameList()[i]);
+            _xfmrs = TOAExportLoader.getTransformers();
+            if (cb_xfmrSelection.Items.Count > 0)
+                cb_xfmrSelection.SelectedIndex = 0;
         }
 
         static string ConvertStringArrayToString(string[] array) {
@@ -147,5 +163,67 @@ namespace TransformerAssessment {
             foreach (DataGridViewRow row in dg_NormDisplay.Rows)
                 row.HeaderCell.Value = selectedNorm.rawNorm[row.Index+1][0];
         }
+
+        // when new XFMR is selected on Equipment tab, clear the XFMR Equipment combo box
+        // and populate with the selected XFMR's equipment
+        private void cb_xfmrSelection_SelectedIndexChanged(object sender, EventArgs e) {
+            cb_xfmrEquipSelect.Items.Clear();
+            int selectedIndex = cb_xfmrSelection.SelectedIndex;
+
+            List<string> xfmrEquipment = new List<string>();
+            cb_xfmrEquipSelect.Items.Add("XFMR");
+            if (_xfmrs[selectedIndex].hasLTC)
+                cb_xfmrEquipSelect.Items.Add("LTC");
+            if (_xfmrs[selectedIndex].hasSEL)
+                cb_xfmrEquipSelect.Items.Add("SEL");
+            if (_xfmrs[selectedIndex].hasDIV)
+                cb_xfmrEquipSelect.Items.Add("DIV");
+
+            // reset xfmr equipment index to zero
+            if (cb_xfmrEquipSelect.Items.Count > 0)
+                cb_xfmrEquipSelect.SelectedIndex = 0;
+
+            // update the data table
+            updateEquipmentDataTable(cb_xfmrSelection.SelectedIndex, cb_xfmrEquipSelect.SelectedIndex);
+        }
+
+        private void cb_xfmrEquipSelect_SelectedIndexChanged(object sender, EventArgs e) {
+            // update the data table
+            updateEquipmentDataTable(cb_xfmrSelection.SelectedIndex, cb_xfmrEquipSelect.SelectedIndex);
+        }
+
+        private void updateEquipmentDataTable(int xfmrIndex, int xfmrEquipIndex) {
+            Transformer selectedXFMR = _xfmrs[xfmrIndex];
+
+            // edit GataGridView
+            dt_Equipment.Columns.Clear();
+            dt_Equipment.Rows.Clear();
+            dt_Equipment.Clear();
+            /*for (int row = 0; row < selectedXFMR.rawNorm.Count; row++) {
+                if (row == 0)
+                    for (int col = 1; col < selectedXFMR.equipmentHeaders.Count; col++)
+                        dt_Equipment.Columns.Add(selectedXFMR.equipmentHeaders[col]);
+                else {
+                    string[] temp = new string[selectedXFMR.rawNorm[row].Length - 1];
+                    for (int i = 1; i < selectedXFMR.rawNorm[row].Length; i++)
+                        temp[i - 1] = selectedXFMR.rawNorm[row][i];
+                    dt_Equipment.Rows.Add(temp);
+                }
+            }
+            dg_EquipDisplay.DataSource = dt_Equipment;
+            //foreach (DataGridViewRow row in dg_EquipDisplay.Rows)
+            //    row.HeaderCell.Value = TOAExportLoader.headerNames[row.Index];*/
+
+            //Console.WriteLine("Header size: " + selectedXFMR.equipmentHeaders.Count);
+            //Console.WriteLine("Raw size:    " + selectedXFMR.rawXFMR.Length);
+            for (int col = 0; col < selectedXFMR.equipmentHeaders.Count; col++)
+                dt_Equipment.Columns.Add(selectedXFMR.equipmentHeaders[col]);
+            dt_Equipment.Rows.Add(selectedXFMR.rawXFMR);
+            dg_EquipDisplay.DataSource = dt_Equipment;
+        }
+
+        #region [Test Methods]
+        
+        #endregion
     }
 }
