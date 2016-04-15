@@ -12,10 +12,12 @@ namespace TransformerAssessment.Core.Managers {
 
         public string norm;
         public string manufacturer;
+        public string yearMade;
 
         public Diverter(string[] div) {
-            norm = div[TOAExportLoader.norm_nameIndex];
-            manufacturer = div[TOAExportLoader.mfrIndex];
+            norm = div[EquipmentLoader.norm_nameIndex];
+            manufacturer = div[EquipmentLoader.mfrIndex];
+            yearMade = div[EquipmentLoader.year_mfgIndex];
         }
 
         public void addData(string[] data) {

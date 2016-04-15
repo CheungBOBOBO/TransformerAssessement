@@ -20,12 +20,13 @@ namespace TransformerAssessment {
             
             // Get list of files in Sub-folders
             NormLoader.initializeNorms();
-            TOAExportLoader.initializeTOAExports();
+            EquipmentLoader.initializeEquipment();
+            TestDataLoader.initializeTestData();
 
             normDir = NormLoader.getNormsDir();
             string[] normList = NormLoader.getNormsPathList();
-            exportsDir = TOAExportLoader.getExportsDir();
-            string[] toaExportsList = TOAExportLoader.getTOAExportsList();
+            exportsDir = EquipmentLoader.getEquipmentDir();
+            string[] toaExportsList = EquipmentLoader.getEquipmentPathList();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -14,6 +14,7 @@ namespace TransformerAssessment.Core.Managers {
         private string designation;
         public string norm;
         public string manufacturer;
+        public string yearMade;
         public string[] rawXFMR;
 
         public List<string> equipmentHeaders = null;
@@ -27,34 +28,32 @@ namespace TransformerAssessment.Core.Managers {
         public bool hasDIV;
 
         public Transformer(string[] transformer) {
-            equipID = transformer[TOAExportLoader.equipnumIndex];
-            substn_name = transformer[TOAExportLoader.substn_nameIndex];
-            designation = transformer[TOAExportLoader.designationIndex];
-            manufacturer = transformer[TOAExportLoader.mfrIndex];
-            equipmentHeaders = TOAExportLoader.headerNames;
+            equipID = transformer[EquipmentLoader.equipnumIndex];
+            substn_name = transformer[EquipmentLoader.substn_nameIndex];
+            designation = transformer[EquipmentLoader.designationIndex];
+            manufacturer = transformer[EquipmentLoader.mfrIndex];
+            yearMade = transformer[EquipmentLoader.year_mfgIndex];
+            norm = transformer[EquipmentLoader.norm_nameIndex];
+            equipmentHeaders = EquipmentLoader.headers;
         }
 
         public Transformer(string[] transformer, string[] ltc, string[] sel, string[] div) {
-            equipID = transformer[TOAExportLoader.equipnumIndex];
-            substn_name = transformer[TOAExportLoader.substn_nameIndex];
-            designation = transformer[TOAExportLoader.designationIndex];
-            manufacturer = transformer[TOAExportLoader.mfrIndex];
-            equipmentHeaders = TOAExportLoader.headerNames;
+            equipID = transformer[EquipmentLoader.equipnumIndex];
+            substn_name = transformer[EquipmentLoader.substn_nameIndex];
+            designation = transformer[EquipmentLoader.designationIndex];
+            manufacturer = transformer[EquipmentLoader.mfrIndex];
+            yearMade = transformer[EquipmentLoader.year_mfgIndex];
+            norm = transformer[EquipmentLoader.norm_nameIndex];
+            equipmentHeaders = EquipmentLoader.headers;
 
             rawXFMR = transformer;
             //Console.WriteLine("Creating transformer: {0}, {1} {2}", equipID, substn_name, designation);
-            if (ltc.Length > 0) { 
-                //Console.WriteLine("\t-adding LTC (row length: {0})", ltc.Length);
+            if (ltc.Length > 0)
                 addLTC(ltc);
-            }
-            if (sel.Length > 0) {
-                //Console.WriteLine("\t-adding SEL (row length: {0})", sel.Length);
+            if (sel.Length > 0)
                 addSEL(sel);
-            }
-            if (div.Length > 0) {
-                //Console.WriteLine("\t-adding DIV (row length: {0})", div.Length);
+            if (div.Length > 0)
                 addDIV(div);
-            }
         }
 
         /// <summary>Adds data[] to Tranformer instance.
@@ -63,15 +62,15 @@ namespace TransformerAssessment.Core.Managers {
         public void addData(string[] data) {
             //Console.WriteLine("Adding data to {0} {1} {2}", substn_name, designation, data[TOAExportLoader.data_apprtypeIndex]);
             // if data is LTC, add to ltc
-            if (hasLTC && data[TOAExportLoader.apprtypeIndex].Equals("LTC"))
+            if (hasLTC && data[TestDataLoader.apprtypeIndex].Equals("LTC"))
                 ltc.addData(data);
             // if data is SEL, add to sel
-            else if (hasSEL && data[TOAExportLoader.apprtypeIndex].Equals("SEL"))
+            else if (hasSEL && data[TestDataLoader.apprtypeIndex].Equals("SEL"))
                 sel.addData(data);
             // if data is DIV, add to div
-            else if (hasDIV && data[TOAExportLoader.apprtypeIndex].Equals("DIV"))
+            else if (hasDIV && data[TestDataLoader.apprtypeIndex].Equals("DIV"))
                 div.addData(data);
-            else if (data[TOAExportLoader.apprtypeIndex].Equals("XFMR"))
+            else if (data[TestDataLoader.apprtypeIndex].Equals("XFMR"))
                 addXFMRData(data);
         }
 

@@ -12,10 +12,12 @@ namespace TransformerAssessment.Core.Managers {
 
         public string norm;
         public string manufacturer;
+        public string yearMade;
 
         public TapChanger(string[] ltc) {
-            norm = ltc[TOAExportLoader.norm_nameIndex];
-            manufacturer = ltc[TOAExportLoader.mfrIndex];
+            norm = ltc[EquipmentLoader.norm_nameIndex];
+            manufacturer = ltc[EquipmentLoader.mfrIndex];
+            yearMade = ltc[EquipmentLoader.year_mfgIndex];
         }
 
         public void addData(string[] data) {

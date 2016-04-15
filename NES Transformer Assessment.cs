@@ -17,16 +17,21 @@ namespace TransformerAssessment {
     public partial class FormHome : Form {
         // DATA_SOURCES
         Norm[] _norms = NormLoader.getNorms();
-        List<Transformer> _xfmrs = TOAExportLoader.getTransformers();
+        List<Transformer> _xfmrs = EquipmentLoader.getTransformers();
 
         DataTable dt_Norms = new DataTable();
+
         DataTable dt_Equipment = new DataTable();
+        //BindingSource EquipmentSource = new BindingSource();
 
         public FormHome() {
             InitializeComponent();
         }
 
         private void FormHome_Load(object sender, EventArgs e) {
+            //EquipmentSource.DataSource = dt_Equipment;
+            //dgv_EquipDisplay.DataSource = EquipmentSource;
+
             tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
             tb_ExportsFolder_BG.Text = TransformerAssessment.exportsDir;
             updateNormsListLB();
@@ -50,7 +55,7 @@ namespace TransformerAssessment {
 
         private void button_TOAExportsFolder_Click(object sender, EventArgs e) {
             TransformerAssessment.exportsDir = chooseExportsFolder();
-            TOAExportLoader.updateTOAExports(TransformerAssessment.exportsDir);
+            EquipmentLoader.updateEquipment(TransformerAssessment.exportsDir);
             //chooseExportsFolder();
         }
 
@@ -117,9 +122,9 @@ namespace TransformerAssessment {
         // update Transformer selection Combo Boxes in Equipment tab
         private void updateXFMR_CB() {
             cb_xfmrSelection.Items.Clear();
-            for (int i = 0; i < TOAExportLoader.getXFMRNameList().Length; i++)
-                cb_xfmrSelection.Items.Add(TOAExportLoader.getXFMRNameList()[i]);
-            _xfmrs = TOAExportLoader.getTransformers();
+            for (int i = 0; i < EquipmentLoader.getXFMRNameList().Length; i++)
+                cb_xfmrSelection.Items.Add(EquipmentLoader.getXFMRNameList()[i]);
+            _xfmrs = EquipmentLoader.getTransformers();
             if (cb_xfmrSelection.Items.Count > 0)
                 cb_xfmrSelection.SelectedIndex = 0;
         }
@@ -139,6 +144,7 @@ namespace TransformerAssessment {
             bringContentToFront(panel_Analyze);
         }
 
+        // When user selects a different norm index on Config Tab
         private void lb_NormSelect_SelectedIndexChanged(object sender, EventArgs e) {
             int selectedIndex = lb_NormSelect.SelectedIndex;
             string selectedNormName = _norms[selectedIndex].name;
@@ -183,8 +189,7 @@ namespace TransformerAssessment {
             if (cb_xfmrEquipSelect.Items.Count > 0)
                 cb_xfmrEquipSelect.SelectedIndex = 0;
 
-            // update the data table
-            updateEquipmentDataTable(cb_xfmrSelection.SelectedIndex, cb_xfmrEquipSelect.SelectedIndex);
+            // When this is executed, the EquipmentType Index also changes, so no need to call an update to the DataGrid in this method
         }
 
         private void cb_xfmrEquipSelect_SelectedIndexChanged(object sender, EventArgs e) {
@@ -194,35 +199,32 @@ namespace TransformerAssessment {
 
         private void updateEquipmentDataTable(int xfmrIndex, int xfmrEquipIndex) {
             Transformer selectedXFMR = _xfmrs[xfmrIndex];
+            string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
 
-            // edit GataGridView
-            dt_Equipment.Columns.Clear();
-            dt_Equipment.Rows.Clear();
-            dt_Equipment.Clear();
-            /*for (int row = 0; row < selectedXFMR.rawNorm.Count; row++) {
-                if (row == 0)
-                    for (int col = 1; col < selectedXFMR.equipmentHeaders.Count; col++)
-                        dt_Equipment.Columns.Add(selectedXFMR.equipmentHeaders[col]);
-                else {
-                    string[] temp = new string[selectedXFMR.rawNorm[row].Length - 1];
-                    for (int i = 1; i < selectedXFMR.rawNorm[row].Length; i++)
-                        temp[i - 1] = selectedXFMR.rawNorm[row][i];
-                    dt_Equipment.Rows.Add(temp);
-                }
-            }
-            dg_EquipDisplay.DataSource = dt_Equipment;
-            //foreach (DataGridViewRow row in dg_EquipDisplay.Rows)
-            //    row.HeaderCell.Value = TOAExportLoader.headerNames[row.Index];*/
+            //Console.WriteLine("Updating Equipment Table");
 
-            // add headers to top of dataGridView
-            for (int col = 0; col < TOAExportLoader.dataHeaders.Length; col++)
-                dt_Equipment.Columns.Add(TOAExportLoader.dataHeaders[col]);
+            dt_Equipment = new DataTable();
+            dt_Equipment.Clear();   // clear DataTable
+            for (int col = 0; col < TestDataLoader.headers.Length; col++)
+                dt_Equipment.Columns.Add(TestDataLoader.headers[col]);
             // add rows of data to the grid (determine if selected index is XFMR, LTC, SEL, or DIV)
-            //Console.WriteLine("Selected Index Count: {0}", selectedXFMR.data.Count);
-            for (int row = 0; row < selectedXFMR.data.Count; row++) {
-                dt_Equipment.Rows.Add(selectedXFMR.data[row].rawData);
-            }
-            dg_EquipDisplay.DataSource = dt_Equipment;
+            // Selected XFMR
+            if (equipmentType.Equals("XFMR"))
+                for (int row = 0; row < selectedXFMR.data.Count; row++)
+                    dt_Equipment.Rows.Add(selectedXFMR.data[row].rawData);
+            // Selected LTC
+            else if (equipmentType.Equals("LTC"))
+                for (int row = 0; row < selectedXFMR.ltc.data.Count; row++)
+                    dt_Equipment.Rows.Add(selectedXFMR.ltc.data[row].rawData);
+            // Selected SEL
+            else if (equipmentType.Equals("SEL"))
+                for (int row = 0; row < selectedXFMR.sel.data.Count; row++)
+                    dt_Equipment.Rows.Add(selectedXFMR.sel.data[row].rawData);
+            // Selected DIV
+            else if (equipmentType.Equals("DIV"))
+                for (int row = 0; row < selectedXFMR.div.data.Count; row++)
+                    dt_Equipment.Rows.Add(selectedXFMR.div.data[row].rawData);
+            dgv_EquipDisplay.DataSource = dt_Equipment;
         }
 
         #region [Test Methods]
