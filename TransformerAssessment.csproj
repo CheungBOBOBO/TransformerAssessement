@@ -73,7 +73,6 @@
     <Compile Include="Core\Managers\Selector.cs" />
     <Compile Include="Core\Managers\Transformer.cs" />
     <Compile Include="Core\Managers\TestData.cs" />
-    <Compile Include="EasyCSV.cs" />
     <Compile Include="NES Transformer Assessment.cs">
       <SubType>Form</SubType>
     </Compile>
