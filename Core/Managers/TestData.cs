@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace TransformerAssessment.Core.Managers {
     class TestData {
         #region [Instance Variables]
+        public string[] rawData;
+
         public string date;
         public DateTime _date;
         public int opCount;     // operation count
@@ -34,7 +36,11 @@ namespace TransformerAssessment.Core.Managers {
         #endregion
 
         public TestData(string[] raw) {
-            
+            rawData = raw;
+        }
+
+        public string[] toStringArray() {
+            return new string[1];
         }
     }
 }

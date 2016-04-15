@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using TransformerAssessment.Core.Managers;
-using F = TransformerAssessment;
+using TransformerAssessment;
+using LumenWorks.Framework.IO.Csv;
 
 namespace TransformerAssessment.Core.Helpers {
     class TOAExportLoader {
@@ -45,8 +46,8 @@ namespace TransformerAssessment.Core.Helpers {
         private static List<int> normVarIndixes = new List<int>();
 
         #region [Instance Variables] Vars used for test data
-        public static List<string> dataHeaders = new List<string>();    // list of header names from 'test data.csv'
-        public static List<string[] > rawData = new List<string[]>();   // list of unparsed data rows
+        public static string[] dataHeaders;    // list of header names from 'test data.csv'
+        public static List<string[]> rawData = new List<string[]>();   // list of unparsed data rows
 
         public static int data_equipnumIndex;
         public static int data_apprtypeIndex;
@@ -61,7 +62,7 @@ namespace TransformerAssessment.Core.Helpers {
                 exportsDirectory = Path.Combine(PROG_PATH, @"TOAExports");
                 exportsPathList = Directory.GetFiles(exportsDirectory, "*.csv");
                 createEquipmentToParse(exportsDirectory + @"\equipment.csv");
-                createRawTestData(exportsDirectory + @"\test data.csv");
+                createRawTestData(exportsDirectory + @"\test_data.csv");
             } catch (Exception e) {
                 Console.WriteLine("EXCEPTION:\t" + e.Message);
                 throw;
@@ -85,25 +86,23 @@ namespace TransformerAssessment.Core.Helpers {
         private static void createRawTestData(string filePath) {
             // create list of TestData objects from 'test data.csv' and put in rawTestData
             bool isFirstLine = true;
-            char[] delimiters = new char[] { ',' };
-            using (StreamReader reader = new StreamReader(filePath)) {
-                while (true) {
-                    string line = reader.ReadLine();
-                    if (line == null)
-                        break;
-                    if (!string.IsNullOrWhiteSpace(line)) {
-                        string[] splitRow = line.Split(delimiters); // split csv row into array
-                        if (isFirstLine) {
-                            foreach (string header in splitRow) // add header values into List headerNames
-                                dataHeaders.Add(header);
-                            data_equipnumIndex = dataHeaders.IndexOf("equipnum");
-                            data_apprtypeIndex = dataHeaders.IndexOf("apprtype");
-                            data_norm_nameIndex = dataHeaders.IndexOf("norm_name");
-                            
-                            isFirstLine = false;
-                        }
-                        if (isValidData(splitRow))
-                            rawData.Add(splitRow);
+            // open the file "data.csv" which is a CSV file with headers
+            using (CsvReader csv = new CsvReader(new StreamReader(filePath), true)) {
+                csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty; // replace empty fields with ""
+                int fieldCount = csv.FieldCount;    // fieldCount = num columns/fields
+                dataHeaders = csv.GetFieldHeaders();   // string[] of column headers
+                while (csv.ReadNextRecord()) {
+                    if (isFirstLine) {
+                        data_equipnumIndex = csv.GetFieldIndex("equipnum");
+                        data_apprtypeIndex = csv.GetFieldIndex("apprtype");
+                        data_norm_nameIndex = csv.GetFieldIndex("norm_used");
+                        isFirstLine = false;
+                    }
+                    if (!isFirstLine && isValidData(csv)) {
+                        string[] tempRow = new string[fieldCount];
+                        for (int j = 0; j < tempRow.Length; j++)
+                            tempRow[j] = csv[j];
+                        rawData.Add(tempRow);
                     }
                 }
             }
@@ -115,7 +114,7 @@ namespace TransformerAssessment.Core.Helpers {
             // cycle through rawData list and for each one, go through equipment and add it to the xfmr
             for (int i = 0; i < rawData.Count; i++) {
                 for (int j = 0; j < equipment.Count; j++) {
-                    if (rawData[i][data_equipnumIndex] == equipment[j].getID()) {
+                    if (rawData[i][data_equipnumIndex].Contains(equipment[j].getID())) {
                         equipment[j].addData(rawData[i]);
                         break;
                     }
@@ -178,6 +177,10 @@ namespace TransformerAssessment.Core.Helpers {
             return xfmrsContains(dataRow[data_equipnumIndex]);
         }
 
+        private static bool isValidData(CsvReader csvRow) {
+            return xfmrsContains(csvRow[data_equipnumIndex]);
+        }
+
         private static void parseRawEquiment() {
             /*Console.WriteLine("Number of rows added to 'xfmrs' = " + xfmrs.Count);
             Console.WriteLine("Number of rows added to 'ltcs' = " + ltcs.Count);
@@ -235,8 +238,8 @@ namespace TransformerAssessment.Core.Helpers {
         }
 
         private static bool xfmrsContains(string id) {
-            for (int i = 0; i < xfmrs.Count; i++)
-                if (xfmrs[i][equipnumIndex].Equals(id))
+            for (int i = 0; i < equipment.Count; i++)
+                if (id.Contains(equipment[i].getID()))
                     return true;
             return false;
         }

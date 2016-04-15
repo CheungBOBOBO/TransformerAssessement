@@ -47,6 +47,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LumenWorks.Framework.IO">
+      <HintPath>..\packages\LumenWorksCsvReader.3.9.1\lib\net20\LumenWorks.Framework.IO.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,6 +73,7 @@
     <Compile Include="Core\Managers\Selector.cs" />
     <Compile Include="Core\Managers\Transformer.cs" />
     <Compile Include="Core\Managers\TestData.cs" />
+    <Compile Include="EasyCSV.cs" />
     <Compile Include="NES Transformer Assessment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +118,7 @@
     <None Include="Norms\TRN_IEEE_INC_69_288KV.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\TransformerAssessment.Core.Managers.Norm.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -127,7 +132,7 @@
     <None Include="TOAExports\equipment.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="TOAExports\test data.csv">
+    <None Include="TOAExports\test_data.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

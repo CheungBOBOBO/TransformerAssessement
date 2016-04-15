@@ -61,7 +61,7 @@ namespace TransformerAssessment.Core.Managers {
         /// <param name="data">string[] from 'data.csv' row</param>
         /// </summary>
         public void addData(string[] data) {
-            Console.WriteLine("Adding data to {0} {1} {2}", substn_name, designation, data[TOAExportLoader.data_apprtypeIndex]);
+            //Console.WriteLine("Adding data to {0} {1} {2}", substn_name, designation, data[TOAExportLoader.data_apprtypeIndex]);
             // if data is LTC, add to ltc
             if (hasLTC && data[TOAExportLoader.apprtypeIndex].Equals("LTC"))
                 ltc.addData(data);

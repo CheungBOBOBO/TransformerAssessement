@@ -215,11 +215,12 @@ namespace TransformerAssessment {
             //    row.HeaderCell.Value = TOAExportLoader.headerNames[row.Index];*/
 
             // add headers to top of dataGridView
-            for (int col = 0; col < TOAExportLoader.dataHeaders.Count; col++)
+            for (int col = 0; col < TOAExportLoader.dataHeaders.Length; col++)
                 dt_Equipment.Columns.Add(TOAExportLoader.dataHeaders[col]);
             // add rows of data to the grid (determine if selected index is XFMR, LTC, SEL, or DIV)
+            //Console.WriteLine("Selected Index Count: {0}", selectedXFMR.data.Count);
             for (int row = 0; row < selectedXFMR.data.Count; row++) {
-                dt_Equipment.Rows.Add(selectedXFMR.data[row]);
+                dt_Equipment.Rows.Add(selectedXFMR.data[row].rawData);
             }
             dg_EquipDisplay.DataSource = dt_Equipment;
         }
