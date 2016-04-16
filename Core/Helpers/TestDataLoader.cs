@@ -14,16 +14,10 @@ using LumenWorks.Framework.IO.Csv;
 namespace TransformerAssessment.Core.Helpers {
     class TestDataLoader {
         #region [Variables] Class variables
-        private static string[] testDataPathList;// array of file name + extention ("equipment.csv")
-        private static string testDataDirectory; // folder location selected by default or by user
-        private static string[] xfmrNameList;   // file names without extention ("equipment", "test data")
-        private static TestData[] testData;     // list of TestData objects, each representing an individual test
-        private static List<TestData> rawTestData;      // raw TestData read from 'test data.csv'
-
+        private static string testDataFile;   // file path (".....\test_data.csv")
         // vars used for index of variables in Norms
         private static List<int> normVarIndixes = new List<int>();
 
-        #region [Instance Variables] Vars used for test data
         public static string[] headers;    // list of header names from 'test data.csv'
         public static List<string[]> rawData = new List<string[]>();   // list of unparsed data rows
 
@@ -32,19 +26,22 @@ namespace TransformerAssessment.Core.Helpers {
         public static int norm_nameIndex;
         public static int sampledateIndex;
         #endregion
-        #endregion
 
         public static void initializeTestData() {
             // try to load TOA Exports from default path "PROG_PATH/TOAExports"
             string PROG_PATH = Application.StartupPath;
             try {
-                testDataDirectory = Path.Combine(PROG_PATH, @"TOAExports");
-                testDataPathList = Directory.GetFiles(testDataDirectory, "*.csv");
-                createRawTestData(testDataDirectory + @"\test_data.csv");
+                testDataFile = TransformerAssessment.testDataFile;
+                createRawTestData(testDataFile);
             } catch (Exception e) {
                 Console.WriteLine("EXCEPTION:\t" + e.Message);
                 throw;
             }
+        }
+
+        public static void updateTestData() {
+            testDataFile = TransformerAssessment.testDataFile;
+            createRawTestData(testDataFile);
         }
 
         private static void createRawTestData(string filePath) {
@@ -60,6 +57,7 @@ namespace TransformerAssessment.Core.Helpers {
                         equipnumIndex = csv.GetFieldIndex("equipnum");
                         apprtypeIndex = csv.GetFieldIndex("apprtype");
                         norm_nameIndex = csv.GetFieldIndex("norm_used");
+                        sampledateIndex = csv.GetFieldIndex("sampledate");
                         isFirstLine = false;
                     }
                     if (!isFirstLine && isValidData(csv)) {
@@ -118,9 +116,7 @@ namespace TransformerAssessment.Core.Helpers {
         }
 
         #region [Methods] Getters
-        public static string[] getTestDataPathList() { return testDataPathList; }
-        public static string getTestDataDir() { return testDataDirectory; }
-        public static TestData[] getTestData() { return testData; }
+        public static string getTestDataPath() { return testDataFile; }
         #endregion
     }
 }

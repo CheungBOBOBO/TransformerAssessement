@@ -10,23 +10,30 @@ using TransformerAssessment.Core.Helpers;
 namespace TransformerAssessment {
     static class TransformerAssessment {
         public static string normDir;
-        public static string exportsDir;
+        public static string equipmentFile;
+        public static string testDataFile;
+        public static string PROGRAM_PATH;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main() {
-            string PROGRAM_PATH = Application.StartupPath;
-            
+            PROGRAM_PATH = Application.StartupPath;
+            //Console.WriteLine("Program path: {0}", PROGRAM_PATH);
+
+
             // Get list of files in Sub-folders
+            equipmentFile = Properties.Settings.Default.EquipmentFilePath;
+            testDataFile = Properties.Settings.Default.TestDataFilePath;
+
             NormLoader.initializeNorms();
-            EquipmentLoader.initializeEquipment();
+            if (!string.IsNullOrWhiteSpace(equipmentFile))
+                EquipmentLoader.initializeEquipment();
+            if (!string.IsNullOrWhiteSpace(testDataFile))
             TestDataLoader.initializeTestData();
 
             normDir = NormLoader.getNormsDir();
-            string[] normList = NormLoader.getNormsPathList();
-            exportsDir = EquipmentLoader.getEquipmentDir();
-            string[] toaExportsList = EquipmentLoader.getEquipmentPathList();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -12,6 +12,7 @@ using TransformerAssessment;
 using TransformerAssessment.Core.Helpers;
 using TransformerAssessment.Core.Managers;
 using System.IO;
+using LumenWorks.Framework.IO.Csv;
 
 namespace TransformerAssessment {
     public partial class FormHome : Form {
@@ -29,18 +30,27 @@ namespace TransformerAssessment {
         }
 
         private void FormHome_Load(object sender, EventArgs e) {
-            //EquipmentSource.DataSource = dt_Equipment;
-            //dgv_EquipDisplay.DataSource = EquipmentSource;
+            NormLoader.initializeNorms();
+            if (!string.IsNullOrWhiteSpace(TransformerAssessment.equipmentFile))
+                EquipmentLoader.initializeEquipment();
+            if (!string.IsNullOrWhiteSpace(TransformerAssessment.equipmentFile) && !string.IsNullOrWhiteSpace(TransformerAssessment.testDataFile))
+                TestDataLoader.initializeTestData();
+            else
+                System.Windows.Forms.MessageBox.Show("Equipment and/or Test Data files are not valid. Please choose a valid file.");
+
+            TransformerAssessment.normDir = NormLoader.getNormsDir();
+            //string[] normList = NormLoader.getNormsPathList();
 
             tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
-            tb_ExportsFolder_BG.Text = TransformerAssessment.exportsDir;
+            tb_EquipmentFile_BG.Text = TransformerAssessment.equipmentFile;
+            tb_TestDataFile_BG.Text = TransformerAssessment.testDataFile;
             updateNormsListLB();
             updateXFMR_CB();
         }
 
-        private void menu_Quit_Click(object sender, EventArgs e) { 
-
-            Application.Exit();
+        private void menu_Quit_Click(object sender, EventArgs e) {
+            Close();
+            //Application.Exit();
         }
 
         private void menu_FolderSettings_Click(object sender, EventArgs e) {
@@ -53,33 +63,65 @@ namespace TransformerAssessment {
             updateNormsListLB();
         }
 
-        private void button_TOAExportsFolder_Click(object sender, EventArgs e) {
-            TransformerAssessment.exportsDir = chooseExportsFolder();
-            EquipmentLoader.updateEquipment(TransformerAssessment.exportsDir);
+        private void button_EquipmentFile_Click(object sender, EventArgs e) {
+            TransformerAssessment.equipmentFile = chooseEquipmentFile();
+            EquipmentLoader.updateEquipment();
+            //chooseExportsFolder();
+        }
+
+        private void button_TestDataFile_Click(object sender, EventArgs e) {
+            TransformerAssessment.testDataFile = chooseTestDataFile();
+            EquipmentLoader.updateEquipment();
             //chooseExportsFolder();
         }
 
         #region [Methods] - form support methods
+        FolderBrowserDialog openFolderDialog = new FolderBrowserDialog();
         // brings up folder selection for location of Norm csv's
         public string chooseNormFolder() {
-            DialogResult dr = openFolderDia.ShowDialog();
-            if (dr == DialogResult.OK && validNormFolder(openFolderDia.SelectedPath))
-                tb_NormsFolder_BG.Text = openFolderDia.SelectedPath;
+            DialogResult dr = openFolderDialog.ShowDialog();
+            if (dr == DialogResult.OK && validNormFolder(openFolderDialog.SelectedPath))
+                tb_NormsFolder_BG.Text = openFolderDialog.SelectedPath;
             else
                 tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
             return tb_NormsFolder_BG.Text;
         }
 
-        // brings up folder selection for location of TOA Exports csv's
-        public string chooseExportsFolder()  {
-            DialogResult dr = openFolderDia.ShowDialog();
-            if (dr == DialogResult.OK && validExportsFolder(openFolderDia.SelectedPath))
-                tb_ExportsFolder_BG.Text = openFolderDia.SelectedPath;
-            else
-                tb_ExportsFolder_BG.Text = TransformerAssessment.exportsDir;
-            return tb_ExportsFolder_BG.Text;
+        // brings up file selection for location of Equipment csv
+        public string chooseEquipmentFile() {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.Multiselect = false;
+            openFileDialog.InitialDirectory = TransformerAssessment.PROGRAM_PATH;
+            openFileDialog.Title = "Choose an Equipment CSV";
+            DialogResult dr = openFileDialog.ShowDialog();
+            if (dr == DialogResult.OK && validEquipmentFile(openFileDialog.FileName)) {
+                tb_EquipmentFile_BG.Text = openFileDialog.FileName;
+                Properties.Settings.Default.EquipmentFilePath = openFileDialog.FileName;
+                TransformerAssessment.equipmentFile = Properties.Settings.Default.EquipmentFilePath;
+            }
+            return tb_EquipmentFile_BG.Text;
         }
 
+        // brings up file selection for location of Test Data csv
+        public string chooseTestDataFile() {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.Multiselect = false;
+            openFileDialog.InitialDirectory = TransformerAssessment.PROGRAM_PATH;
+            openFileDialog.Title = "Choose a Test Data CSV";
+            DialogResult dr = openFileDialog.ShowDialog();
+            if (dr == DialogResult.OK && validTestDataFile(openFileDialog.FileName)) {
+                tb_TestDataFile_BG.Text = openFileDialog.FileName;
+                Properties.Settings.Default.TestDataFilePath = openFileDialog.FileName;
+                TransformerAssessment.testDataFile = Properties.Settings.Default.TestDataFilePath;
+            }
+            return tb_TestDataFile_BG.Text;
+        }
+
+        #region [Methods] Folder/File Validation
         // returns false if no .csv files from selected folder
         public bool validNormFolder(string selectedPath) {
             string[] files = Directory.GetFiles(selectedPath, "*.csv");
@@ -90,20 +132,22 @@ namespace TransformerAssessment {
             return true;
         }
 
-        public bool validExportsFolder(string selectedPath) {
-            string[] files = Directory.GetFiles(selectedPath, "*.csv");
-            if (files.Length < 2) {
-                MessageBox.Show("Selected folder does not contain the required files\n   equipment.csv\n   test files.csv");
-                return false;
+        public bool validEquipmentFile(string filePath) {
+            // open the file "data.csv" which is a CSV file with headers
+            using (CsvReader csv = new CsvReader(new StreamReader(filePath), true)) {
+                string[] headers = csv.GetFieldHeaders();   // string[] of column headers
+                return headers.Contains("region_name");   // if first row and column entry == equipnum, return true, else return false
             }
-            for (int i = 0; i < files.Length; i++)
-                files[i] = Path.GetFileNameWithoutExtension(files[i]);
-            if (!files.Contains("equipment") || !files.Contains("test data")) {
-                MessageBox.Show("Selected folder does not contain the required files\n   equipment.csv\n   test files.csv");
-                return false;
-            }
-                return true;
         }
+
+        public bool validTestDataFile(string filePath) {
+            // open the file "data.csv" which is a CSV file with headers
+            using (CsvReader csv = new CsvReader(new StreamReader(filePath), true)) {
+                string[] headers = csv.GetFieldHeaders();   // string[] of column headers
+                return headers.Contains("labtestdate");   // if first row and column entry == equipnum, return true, else return false
+            }
+        }
+        #endregion
 
         private void bringContentToFront(Panel p) {
             p.BringToFront();
@@ -170,6 +214,7 @@ namespace TransformerAssessment {
                 row.HeaderCell.Value = selectedNorm.rawNorm[row.Index+1][0];
         }
 
+        #region [Methods] Equipment DataGridView updates
         // when new XFMR is selected on Equipment tab, clear the XFMR Equipment combo box
         // and populate with the selected XFMR's equipment
         private void cb_xfmrSelection_SelectedIndexChanged(object sender, EventArgs e) {
@@ -224,7 +269,13 @@ namespace TransformerAssessment {
             else if (equipmentType.Equals("DIV"))
                 for (int row = 0; row < selectedXFMR.div.data.Count; row++)
                     dt_Equipment.Rows.Add(selectedXFMR.div.data[row].rawData);
+            // set DataGridView to the new equipment's table
             dgv_EquipDisplay.DataSource = dt_Equipment;
+        }
+        #endregion
+
+        private void FormHome_FormClosing(object sender, FormClosingEventArgs e) {
+            Properties.Settings.Default.Save();
         }
 
         #region [Test Methods]

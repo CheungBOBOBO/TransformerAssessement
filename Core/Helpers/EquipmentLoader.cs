@@ -12,7 +12,7 @@ using System.IO;
 namespace TransformerAssessment.Core.Helpers {
     class EquipmentLoader {
         #region [Variables] Class variables
-        private static string[] equipmentPathList;// array of file name + extention ("equipment.csv")
+        private static string equipmentFile;    // file path (".....\equipment.csv")
         private static string equipmentDirectory; // folder location selected by default or by user
         private static string[] xfmrNameList;   // file names without extention ("equipment", "test data")
         private static TestData[] testData;     // list of TestData objects, each representing an individual test
@@ -50,22 +50,17 @@ namespace TransformerAssessment.Core.Helpers {
             string PROG_PATH = Application.StartupPath;
             try {
                 equipmentDirectory = Path.Combine(PROG_PATH, @"TOAExports");
-                equipmentPathList = Directory.GetFiles(equipmentDirectory, "*.csv");
-                createEquipmentToParse(equipmentDirectory + @"\equipment.csv");
+                equipmentFile = TransformerAssessment.equipmentFile;
+                createEquipmentToParse(equipmentFile);
             } catch (Exception e) {
                 Console.WriteLine("EXCEPTION:\t" + e.Message);
                 throw;
             }
         }
 
-        public static void updateEquipment(string folder) {
-            equipmentDirectory = folder;
-            equipmentPathList = Directory.GetFiles(equipmentDirectory, "*.csv");
-            /*fileNameList = new string[equipmentPathList.Length];
-                for (int i = 0; i < equipmentPathList.Length; i++)
-                    fileNameList[i] = Path.GetFileNameWithoutExtension(equipmentPathList[i]);
-            * */
-            //createTOAExports();
+        public static void updateEquipment() {
+            equipmentFile = TransformerAssessment.equipmentFile;
+            createEquipmentToParse(equipmentFile);
         }
 
         private static void createEquipmentToParse(string filePath) {
@@ -159,7 +154,7 @@ namespace TransformerAssessment.Core.Helpers {
         }
 
         #region [Methods] Getters
-        public static string[] getEquipmentPathList() { return equipmentPathList; }
+        public static string getEquipmentFile() { return equipmentFile; }
         public static string getEquipmentDir() { return equipmentDirectory; }
         public static string[] getXFMRNameList() { return xfmrNameList; }
         public static List<Transformer> getTransformers() { return equipment; }
