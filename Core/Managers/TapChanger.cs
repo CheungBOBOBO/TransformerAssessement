@@ -22,6 +22,7 @@ namespace TransformerAssessment.Core.Managers {
 
         public void addData(string[] data) {
             this.data.Add(new TestData(data));
+            this.data = this.data.OrderByDescending(m => m._date).ToList();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace TransformerAssessment.Core.Helpers {
             // try to load TOA Exports from default path "PROG_PATH/Norms"
             string PROG_PATH = Application.StartupPath;
             try {
-                normsDirectory = Path.Combine(PROG_PATH, @"Norms");
+                normsDirectory = TransformerAssessment.normDir;
                 normsPathList = Directory.GetFiles(normsDirectory, "*.csv");
                 fileNameList = new string[normsPathList.Length];
                 for (int i = 0; i < normsPathList.Length; i++)

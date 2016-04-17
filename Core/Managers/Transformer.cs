@@ -76,6 +76,7 @@ namespace TransformerAssessment.Core.Managers {
 
         private void addXFMRData(string[] data) {
             this.data.Add(new TestData(data));
+            this.data = this.data.OrderByDescending(m => m._date).ToList();
         }
 
         public void addLTC(string[] equipment) {

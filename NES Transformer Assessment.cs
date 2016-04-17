@@ -30,7 +30,11 @@ namespace TransformerAssessment {
         }
 
         private void FormHome_Load(object sender, EventArgs e) {
-            NormLoader.initializeNorms();
+            if (!string.IsNullOrWhiteSpace(TransformerAssessment.normDir))
+                NormLoader.initializeNorms();
+            else
+                System.Windows.Forms.MessageBox.Show("Norm folder is not valid. Please choose a valid folder.");
+
             if (!string.IsNullOrWhiteSpace(TransformerAssessment.equipmentFile))
                 EquipmentLoader.initializeEquipment();
             if (!string.IsNullOrWhiteSpace(TransformerAssessment.equipmentFile) && !string.IsNullOrWhiteSpace(TransformerAssessment.testDataFile))
@@ -45,7 +49,7 @@ namespace TransformerAssessment {
             tb_EquipmentFile_BG.Text = TransformerAssessment.equipmentFile;
             tb_TestDataFile_BG.Text = TransformerAssessment.testDataFile;
             updateNormsListLB();
-            updateXFMR_CB();
+            initializeEquipmentSelect();
         }
 
         private void menu_Quit_Click(object sender, EventArgs e) {
@@ -66,13 +70,11 @@ namespace TransformerAssessment {
         private void button_EquipmentFile_Click(object sender, EventArgs e) {
             TransformerAssessment.equipmentFile = chooseEquipmentFile();
             EquipmentLoader.updateEquipment();
-            //chooseExportsFolder();
         }
 
         private void button_TestDataFile_Click(object sender, EventArgs e) {
             TransformerAssessment.testDataFile = chooseTestDataFile();
             EquipmentLoader.updateEquipment();
-            //chooseExportsFolder();
         }
 
         #region [Methods] - form support methods
@@ -80,10 +82,11 @@ namespace TransformerAssessment {
         // brings up folder selection for location of Norm csv's
         public string chooseNormFolder() {
             DialogResult dr = openFolderDialog.ShowDialog();
-            if (dr == DialogResult.OK && validNormFolder(openFolderDialog.SelectedPath))
+            if (dr == DialogResult.OK && validNormFolder(openFolderDialog.SelectedPath)) {
                 tb_NormsFolder_BG.Text = openFolderDialog.SelectedPath;
-            else
-                tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
+                Properties.Settings.Default.NormFolderPath = openFolderDialog.SelectedPath;
+                TransformerAssessment.equipmentFile = Properties.Settings.Default.NormFolderPath;
+            }
             return tb_NormsFolder_BG.Text;
         }
 
@@ -218,39 +221,50 @@ namespace TransformerAssessment {
         // when new XFMR is selected on Equipment tab, clear the XFMR Equipment combo box
         // and populate with the selected XFMR's equipment
         private void cb_xfmrSelection_SelectedIndexChanged(object sender, EventArgs e) {
-            cb_xfmrEquipSelect.Items.Clear();
-            int selectedIndex = cb_xfmrSelection.SelectedIndex;
 
-            List<string> xfmrEquipment = new List<string>();
-            cb_xfmrEquipSelect.Items.Add("XFMR");
-            if (_xfmrs[selectedIndex].hasLTC)
-                cb_xfmrEquipSelect.Items.Add("LTC");
-            if (_xfmrs[selectedIndex].hasSEL)
-                cb_xfmrEquipSelect.Items.Add("SEL");
-            if (_xfmrs[selectedIndex].hasDIV)
-                cb_xfmrEquipSelect.Items.Add("DIV");
-
-            // reset xfmr equipment index to zero
-            if (cb_xfmrEquipSelect.Items.Count > 0)
-                cb_xfmrEquipSelect.SelectedIndex = 0;
-
-            // When this is executed, the EquipmentType Index also changes, so no need to call an update to the DataGrid in this method
         }
 
         private void cb_xfmrEquipSelect_SelectedIndexChanged(object sender, EventArgs e) {
+            int xfmrIndex = cb_xfmrSelection.SelectedIndex;
+            int xfmrEquipIndex = cb_xfmrEquipSelect.SelectedIndex;
+
+            // update Selected Equipment text on Data tab
+            l_SelectedEquipment.Text = string.Format("{0}  -  {1}  -  {2}", _xfmrs[xfmrIndex].getLocation(), _xfmrs[xfmrIndex].getPosition(), cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString());
             // update the data table
-            updateEquipmentDataTable(cb_xfmrSelection.SelectedIndex, cb_xfmrEquipSelect.SelectedIndex);
+            updateEquipmentDataTable(xfmrIndex, xfmrEquipIndex);
         }
 
         private void updateEquipmentDataTable(int xfmrIndex, int xfmrEquipIndex) {
             Transformer selectedXFMR = _xfmrs[xfmrIndex];
             string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
 
-            //Console.WriteLine("Updating Equipment Table");
-
             dt_Equipment = new DataTable();
             dt_Equipment.Clear();   // clear DataTable
-            for (int col = 0; col < TestDataLoader.headers.Length; col++)
+
+            for (int col = 0; col < TestDataLoader.wantedIndices.Length; col++)
+                dt_Equipment.Columns.Add(TestDataLoader.headers[TestDataLoader.wantedIndices[col]]);
+            // add rows of data to the grid (determine if selected index is XFMR, LTC, SEL, or DIV)
+            // Selected XFMR
+            if (equipmentType.Equals("XFMR"))
+                for (int row = 0; row < selectedXFMR.data.Count; row++)
+                    dt_Equipment.Rows.Add(selectedXFMR.data[row].toStringArray());
+            // Selected LTC
+            else if (equipmentType.Equals("LTC"))
+                for (int row = 0; row < selectedXFMR.ltc.data.Count; row++)
+                    dt_Equipment.Rows.Add(selectedXFMR.ltc.data[row].toStringArray());
+            // Selected SEL
+            else if (equipmentType.Equals("SEL"))
+                for (int row = 0; row < selectedXFMR.sel.data.Count; row++)
+                    dt_Equipment.Rows.Add(selectedXFMR.sel.data[row].toStringArray());
+            // Selected DIV
+            else if (equipmentType.Equals("DIV"))
+                for (int row = 0; row < selectedXFMR.div.data.Count; row++)
+                    dt_Equipment.Rows.Add(selectedXFMR.div.data[row].toStringArray());
+            
+            
+            
+            
+            /*for (int col = 0; col < TestDataLoader.headers.Length; col++)
                 dt_Equipment.Columns.Add(TestDataLoader.headers[col]);
             // add rows of data to the grid (determine if selected index is XFMR, LTC, SEL, or DIV)
             // Selected XFMR
@@ -269,8 +283,27 @@ namespace TransformerAssessment {
             else if (equipmentType.Equals("DIV"))
                 for (int row = 0; row < selectedXFMR.div.data.Count; row++)
                     dt_Equipment.Rows.Add(selectedXFMR.div.data[row].rawData);
+             * */
             // set DataGridView to the new equipment's table
             dgv_EquipDisplay.DataSource = dt_Equipment;
+        }
+
+        public void initializeEquipmentSelect() {
+            updateXFMR_CB();
+
+            // fill in XFMR Equipment combobox
+            cb_xfmrEquipSelect.Items.Clear();
+            cb_xfmrEquipSelect.Items.Add("XFMR");
+            if (_xfmrs[0].hasLTC)
+                cb_xfmrEquipSelect.Items.Add("LTC");
+            if (_xfmrs[0].hasSEL)
+                cb_xfmrEquipSelect.Items.Add("SEL");
+            if (_xfmrs[0].hasDIV)
+                cb_xfmrEquipSelect.Items.Add("DIV");
+            cb_xfmrEquipSelect.SelectedIndex = 0;
+
+            // update DataGridView
+            updateEquipmentDataTable(0, 0);
         }
         #endregion
 

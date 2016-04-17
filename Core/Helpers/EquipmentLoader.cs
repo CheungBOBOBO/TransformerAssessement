@@ -13,23 +13,18 @@ namespace TransformerAssessment.Core.Helpers {
     class EquipmentLoader {
         #region [Variables] Class variables
         private static string equipmentFile;    // file path (".....\equipment.csv")
-        private static string equipmentDirectory; // folder location selected by default or by user
         private static string[] xfmrNameList;   // file names without extention ("equipment", "test data")
-        private static TestData[] testData;     // list of TestData objects, each representing an individual test
-        public static List<Transformer> equipment = new List<Transformer>();   // list of Equipment objects, each representing an individual piece of equipment
-        //  (one transformer and respective LTC/SEL/DIV
-        private static List<TestData> rawTestData;      // raw TestData read from 'test data.csv'
-        private static List<string[]> equipmentToParse = new List<string[]>();    // raw Equipment read from 'equipment.csv'
+        private static List<string[]> equipmentToParse = new List<string[]>();  // raw Equipment read from 'equipment.csv'
 
+        public static List<Transformer> equipment = new List<Transformer>();    // list of Equipment objects, each representing an individual piece of equipment
+                                                                                //  (one transformer and respective LTC/SEL/DIV
         public static List<string> headers = new List<string>();    // list of header names from 'equipment.csv' (row 1 values)
-
         // vars to separate equipment types before combining into Tranformer objects
         public static List<string[]> xfmrs = new List<string[]>();
         public static List<string[]> divs = new List<string[]>();
         public static List<string[]> sels = new List<string[]>();
         public static List<string[]> ltcs = new List<string[]>();
-
-        // vars used to improve performance
+        // vars used to access equipment values
         public static int equipnumIndex;
         public static int region_nameIndex;
         public static int owner_nameIndex;
@@ -46,10 +41,10 @@ namespace TransformerAssessment.Core.Helpers {
         #endregion
 
         public static void initializeEquipment() {
+            equipment = new List<Transformer>();
             // try to load TOA Exports from default path "PROG_PATH/TOAExports"
             string PROG_PATH = Application.StartupPath;
             try {
-                equipmentDirectory = Path.Combine(PROG_PATH, @"TOAExports");
                 equipmentFile = TransformerAssessment.equipmentFile;
                 createEquipmentToParse(equipmentFile);
             } catch (Exception e) {
@@ -59,11 +54,15 @@ namespace TransformerAssessment.Core.Helpers {
         }
 
         public static void updateEquipment() {
+            // reset equipment
+            equipment = new List<Transformer>();
             equipmentFile = TransformerAssessment.equipmentFile;
             createEquipmentToParse(equipmentFile);
         }
 
         private static void createEquipmentToParse(string filePath) {
+            // reset equipmentToParse List
+            equipmentToParse = new List<string[]>();
             // create list of string[] and add them to the list to parse after file is read
             bool isFirstLine = true;
             char[] delimiters = new char[] { ',' };
@@ -155,7 +154,7 @@ namespace TransformerAssessment.Core.Helpers {
 
         #region [Methods] Getters
         public static string getEquipmentFile() { return equipmentFile; }
-        public static string getEquipmentDir() { return equipmentDirectory; }
+        //public static string getEquipmentDir() { return equipmentDirectory; }
         public static string[] getXFMRNameList() { return xfmrNameList; }
         public static List<Transformer> getTransformers() { return equipment; }
         #endregion

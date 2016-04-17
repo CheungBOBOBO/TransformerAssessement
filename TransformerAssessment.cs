@@ -26,6 +26,7 @@ namespace TransformerAssessment {
             // Get list of files in Sub-folders
             equipmentFile = Properties.Settings.Default.EquipmentFilePath;
             testDataFile = Properties.Settings.Default.TestDataFilePath;
+            normDir = Properties.Settings.Default.NormFolderPath;
 
             NormLoader.initializeNorms();
             if (!string.IsNullOrWhiteSpace(equipmentFile))

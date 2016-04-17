@@ -46,5 +46,17 @@ namespace TransformerAssessment.Properties {
                 this["TestDataFilePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NormFolderPath {
+            get {
+                return ((string)(this["NormFolderPath"]));
+            }
+            set {
+                this["NormFolderPath"] = value;
+            }
+        }
     }
 }
