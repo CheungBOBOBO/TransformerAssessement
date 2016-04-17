@@ -102,6 +102,7 @@ namespace TransformerAssessment {
                 tb_EquipmentFile_BG.Text = openFileDialog.FileName;
                 Properties.Settings.Default.EquipmentFilePath = openFileDialog.FileName;
                 TransformerAssessment.equipmentFile = Properties.Settings.Default.EquipmentFilePath;
+                EquipmentLoader.updateEquipment();
             }
             return tb_EquipmentFile_BG.Text;
         }
@@ -119,6 +120,7 @@ namespace TransformerAssessment {
                 tb_TestDataFile_BG.Text = openFileDialog.FileName;
                 Properties.Settings.Default.TestDataFilePath = openFileDialog.FileName;
                 TransformerAssessment.testDataFile = Properties.Settings.Default.TestDataFilePath;
+                TestDataLoader.updateTestData();
             }
             return tb_TestDataFile_BG.Text;
         }

@@ -28,13 +28,14 @@ namespace TransformerAssessment {
             testDataFile = Properties.Settings.Default.TestDataFilePath;
             normDir = Properties.Settings.Default.NormFolderPath;
 
-            NormLoader.initializeNorms();
+            /*NormLoader.initializeNorms();
             if (!string.IsNullOrWhiteSpace(equipmentFile))
                 EquipmentLoader.initializeEquipment();
             if (!string.IsNullOrWhiteSpace(testDataFile))
             TestDataLoader.initializeTestData();
+            */
 
-            normDir = NormLoader.getNormsDir();
+            //normDir = NormLoader.getNormsDir();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

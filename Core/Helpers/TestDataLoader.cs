@@ -139,7 +139,6 @@ namespace TransformerAssessment.Core.Helpers {
                     }
                 }
             }
-            Console.WriteLine("#items in euqipment: {0}", EquipmentLoader.equipment.Count);
             // add rawData to the transformers
             // cycle through rawData list and for each one, go through equipment and add it to the xfmr
             for (int i = 0; i < rawData.Count; i++) {
