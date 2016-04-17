@@ -236,7 +236,8 @@ namespace TransformerAssessment {
             if (cb_xfmrEquipSelect.Items.Count > 0)
                 cb_xfmrEquipSelect.SelectedIndex = 0;
 
-            // When this is executed, the EquipmentType Index also changes, so no need to call an update to the DataGrid in this method
+            // update DataGridView
+            updateEquipmentDataTable(selectedIndex, cb_xfmrEquipSelect.SelectedIndex);
         }
 
         private void cb_xfmrEquipSelect_SelectedIndexChanged(object sender, EventArgs e) {
@@ -307,14 +308,17 @@ namespace TransformerAssessment {
 
         private void b_RefreshNorms_Click(object sender, EventArgs e) {
             NormLoader.updateNorms();
+            updateNormsListLB();
         }
 
         private void b_RefreshEquipment_Click(object sender, EventArgs e) {
+            EquipmentLoader.updateEquipment();
             EquipmentLoader.updateEquipment();
         }
 
         private void b_RefreshTestData_Click(object sender, EventArgs e) {
             TestDataLoader.updateTestData();
+            EquipmentLoader.updateEquipment();
         }
 
         #region [Test Methods]

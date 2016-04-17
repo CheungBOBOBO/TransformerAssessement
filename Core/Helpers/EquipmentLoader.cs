@@ -8,6 +8,7 @@ using TransformerAssessment.Core.Managers;
 using TransformerAssessment;
 using System.Windows.Forms;
 using System.IO;
+using LumenWorks.Framework.IO.Csv;
 
 namespace TransformerAssessment.Core.Helpers {
     class EquipmentLoader {
@@ -17,7 +18,7 @@ namespace TransformerAssessment.Core.Helpers {
         
         public static List<Transformer> equipment = new List<Transformer>();    // list of Equipment objects, each representing an individual piece of equipment
                                                                                 //  (one transformer and respective LTC/SEL/DIV
-        public static List<string> headers = new List<string>();    // list of header names from 'equipment.csv' (row 1 values)
+        public static string[] headers; // list of header names from 'equipment.csv' (row 1 values)
         // vars to separate equipment types before combining into Tranformer objects
         public static List<string[]> xfmrs = new List<string[]>();
         public static List<string[]> divs = new List<string[]>();
@@ -70,42 +71,40 @@ namespace TransformerAssessment.Core.Helpers {
         private static void createEquipmentToParse(string filePath) {
             // reset equipmentToParse List
             equipment = new List<Transformer>();
-            // create list of string[] and add them to the list to parse after file is read
             bool isFirstLine = true;
-            char[] delimiters = new char[] { ',' };
-            using (StreamReader reader = new StreamReader(filePath)) {
-                while (true) {
-                    string line = reader.ReadLine();
-                    if (line == null)
-                        break;
-                    if (!string.IsNullOrWhiteSpace(line)) {
-                        string[] splitRow = line.Split(delimiters); // split csv row into array
-                        if (isFirstLine) {
-                            foreach (string header in splitRow) // add header values into List headers
-                                headers.Add(header);
-                            equipnumIndex = headers.IndexOf("equipnum");
-                            region_nameIndex = headers.IndexOf("region_name");
-                            owner_nameIndex = headers.IndexOf("owner_name");
-                            apprtypeIndex = headers.IndexOf("apprtype");
-                            designationIndex = headers.IndexOf("designation");
-                            substn_nameIndex = headers.IndexOf("substn_name");
-                            norm_nameIndex = headers.IndexOf("norm_name");
-                            mfrIndex = headers.IndexOf("mfr");
-                            year_mfgIndex = headers.IndexOf("year_mfg");
-
-                            isFirstLine = false;
-                        }
-                        if (isValidEquipment(splitRow))
-                            if (splitRow[apprtypeIndex].Equals("XFMR"))
-                                xfmrs.Add(splitRow);
-                            else if (splitRow[apprtypeIndex].Equals("LTC"))
-                                ltcs.Add(splitRow);
-                            else if (splitRow[apprtypeIndex].Equals("SEL"))
-                                sels.Add(splitRow);
-                            else if (splitRow[apprtypeIndex].Equals("DIV"))
-                                divs.Add(splitRow);
-                            else
-                                Console.WriteLine("EQUIPMENT apprtype doesn't match:]\t{0}", splitRow[apprtypeIndex]);
+            // open the equipment file which is a CSV file with headers
+            using (CsvReader csv = new CsvReader(new StreamReader(filePath), true)) {
+                csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty; // replace empty fields with ""
+                int fieldCount = csv.FieldCount;    // fieldCount = num columns/fields
+                headers = csv.GetFieldHeaders();   // string[] of column headers
+                while (csv.ReadNextRecord()) {
+                    if (isFirstLine) {
+                        equipnumIndex = csv.GetFieldIndex("equipnum");
+                        region_nameIndex = csv.GetFieldIndex("region_name");
+                        owner_nameIndex = csv.GetFieldIndex("owner_name");
+                        apprtypeIndex = csv.GetFieldIndex("apprtype");
+                        designationIndex = csv.GetFieldIndex("designation");
+                        substn_nameIndex = csv.GetFieldIndex("substn_name");
+                        norm_nameIndex = csv.GetFieldIndex("norm_name");
+                        mfrIndex = csv.GetFieldIndex("mfr");
+                        year_mfgIndex = csv.GetFieldIndex("year_mfg");
+                        
+                        isFirstLine = false;
+                    }
+                    if (!isFirstLine && isValidEquipment(csv)) {
+                        string[] tempRow = new string[fieldCount];
+                        for (int i = 0; i < tempRow.Length; i++)
+                            tempRow[i] = csv[i];
+                        if (csv[apprtypeIndex].Contains("XFMR"))
+                            xfmrs.Add(tempRow);
+                        else if (csv[apprtypeIndex].Contains("LTC"))
+                            ltcs.Add(tempRow);
+                        else if (csv[apprtypeIndex].Contains("SEL"))
+                            sels.Add(tempRow);
+                        else if (csv[apprtypeIndex].Contains("DIV"))
+                            divs.Add(tempRow);
+                        else
+                            Console.WriteLine("EQUIPMENT apprtype doesn't match:]\t{0}", csv[apprtypeIndex]);
                     }
                 }
             }
@@ -150,13 +149,13 @@ namespace TransformerAssessment.Core.Helpers {
                 xfmrNameList[i] = equipment[i].getLocation() + " " + equipment[i].getPosition();
         }
 
-        private static bool isValidEquipment(string[] equipmentRow) {
-            return (equipmentRow[region_nameIndex].Equals("OLTC") || equipmentRow[region_nameIndex].Equals("161/69"))
-                    && !equipmentRow[owner_nameIndex].Equals("Customer")
-                    && !equipmentRow[apprtypeIndex].Equals("OLTC REACTOR")
-                    && !equipmentRow[designationIndex].Contains("FAILED")
-                    && !equipmentRow[substn_nameIndex].Contains("FAILED")
-                    && !equipmentRow[substn_nameIndex].Contains("DISPOSED");
+        private static bool isValidEquipment(CsvReader csvRow) {
+            return (csvRow[region_nameIndex].Contains("OLTC") || csvRow[region_nameIndex].Contains("161/69"))
+                    && !csvRow[owner_nameIndex].Contains("Customer")
+                    && !csvRow[apprtypeIndex].Contains("OLTC REACTOR")
+                    && !csvRow[designationIndex].Contains("FAILED")
+                    && !csvRow[substn_nameIndex].Contains("FAILED")
+                    && !csvRow[substn_nameIndex].Contains("DISPOSED");
         }
 
         #region [Methods] Getters

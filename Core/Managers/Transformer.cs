@@ -17,7 +17,7 @@ namespace TransformerAssessment.Core.Managers {
         public string yearMade;
         public string[] rawXFMR;
 
-        public List<string> equipmentHeaders = null;
+        public string[] equipmentHeaders = null;
         public List<TestData> data = new List<TestData>();
         public TapChanger ltc;
         public Selector sel;
@@ -48,7 +48,6 @@ namespace TransformerAssessment.Core.Managers {
 
             rawXFMR = transformer;
             //Console.WriteLine("Creating transformer: {0}, {1} {2}", equipID, substn_name, designation);
-
             if (ltc.Length > 0)
                 addLTC(ltc);
             if (sel.Length > 0)

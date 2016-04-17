@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LumenWorks.Framework.IO.Csv;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -81,13 +82,6 @@ namespace TransformerAssessment.Core.Managers {
 
         public string[] toStringArray() {
             string[] dataRow = new string[TestDataLoader.wantedIndices.Length];
-
-            /*for (int i = 0; i < TestDataLoader.wantedIndices.Length; i++) {
-                if(rawData[TestDataLoader.wantedIndices[i]].ToString().Equals("-1"))
-                    dataRow[i] = "";
-                else
-                    dataRow[i] = rawData[TestDataLoader.wantedIndices[i]].ToString();
-            }*/
 
             dataRow[0] = date;
             dataRow[1] = "" + opCount;

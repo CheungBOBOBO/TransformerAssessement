@@ -72,7 +72,7 @@ namespace TransformerAssessment.Core.Helpers {
         private static void createRawTestData(string filePath) {
             // create list of TestData objects from 'test data.csv' and put in rawTestData
             bool isFirstLine = true;
-            // open the file "data.csv" which is a CSV file with headers
+            // open the test data file which is a CSV file with headers
             using (CsvReader csv = new CsvReader(new StreamReader(filePath), true)) {
                 csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty; // replace empty fields with ""
                 int fieldCount = csv.FieldCount;    // fieldCount = num columns/fields
@@ -139,6 +139,7 @@ namespace TransformerAssessment.Core.Helpers {
                     }
                 }
             }
+            Console.WriteLine("#items in euqipment: {0}", EquipmentLoader.equipment.Count);
             // add rawData to the transformers
             // cycle through rawData list and for each one, go through equipment and add it to the xfmr
             for (int i = 0; i < rawData.Count; i++) {
