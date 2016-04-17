@@ -14,8 +14,7 @@ namespace TransformerAssessment.Core.Helpers {
         #region [Variables] Class variables
         private static string equipmentFile;    // file path (".....\equipment.csv")
         private static string[] xfmrNameList;   // file names without extention ("equipment", "test data")
-        private static List<string[]> equipmentToParse = new List<string[]>();  // raw Equipment read from 'equipment.csv'
-
+        
         public static List<Transformer> equipment = new List<Transformer>();    // list of Equipment objects, each representing an individual piece of equipment
                                                                                 //  (one transformer and respective LTC/SEL/DIV
         public static List<string> headers = new List<string>();    // list of header names from 'equipment.csv' (row 1 values)
@@ -41,7 +40,7 @@ namespace TransformerAssessment.Core.Helpers {
         #endregion
 
         public static void initializeEquipment() {
-            equipment = new List<Transformer>();
+            resetEquipment();
             // try to load TOA Exports from default path "PROG_PATH/TOAExports"
             string PROG_PATH = Application.StartupPath;
             try {
@@ -55,14 +54,22 @@ namespace TransformerAssessment.Core.Helpers {
 
         public static void updateEquipment() {
             // reset equipment
-            equipment = new List<Transformer>();
+            resetEquipment();
             equipmentFile = TransformerAssessment.equipmentFile;
             createEquipmentToParse(equipmentFile);
         }
 
+        private static void resetEquipment() {
+            equipment = new List<Transformer>();
+            xfmrs = new List<string[]>();
+            divs = new List<string[]>();
+            sels = new List<string[]>();
+            ltcs = new List<string[]>();
+        }
+
         private static void createEquipmentToParse(string filePath) {
             // reset equipmentToParse List
-            equipmentToParse = new List<string[]>();
+            equipment = new List<Transformer>();
             // create list of string[] and add them to the list to parse after file is read
             bool isFirstLine = true;
             char[] delimiters = new char[] { ',' };
@@ -154,7 +161,6 @@ namespace TransformerAssessment.Core.Helpers {
 
         #region [Methods] Getters
         public static string getEquipmentFile() { return equipmentFile; }
-        //public static string getEquipmentDir() { return equipmentDirectory; }
         public static string[] getXFMRNameList() { return xfmrNameList; }
         public static List<Transformer> getTransformers() { return equipment; }
         #endregion

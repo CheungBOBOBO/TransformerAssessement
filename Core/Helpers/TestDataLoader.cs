@@ -63,6 +63,7 @@ namespace TransformerAssessment.Core.Helpers {
         }
 
         public static void updateTestData() {
+            // reset rawData List
             rawData = new List<string[]>();
             testDataFile = TransformerAssessment.testDataFile;
             createRawTestData(testDataFile);

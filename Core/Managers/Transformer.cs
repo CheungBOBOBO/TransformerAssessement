@@ -48,6 +48,7 @@ namespace TransformerAssessment.Core.Managers {
 
             rawXFMR = transformer;
             //Console.WriteLine("Creating transformer: {0}, {1} {2}", equipID, substn_name, designation);
+
             if (ltc.Length > 0)
                 addLTC(ltc);
             if (sel.Length > 0)

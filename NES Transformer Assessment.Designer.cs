@@ -53,8 +53,8 @@
             this.tb_EquipmentFile_BG = new System.Windows.Forms.TextBox();
             this.button_NormsFolder = new System.Windows.Forms.Button();
             this.tb_NormsFolder_BG = new System.Windows.Forms.TextBox();
-            this.tb_TestDataFile_BG = new System.Windows.Forms.TextBox();
             this.b_RefreshNorms = new System.Windows.Forms.Button();
+            this.tb_TestDataFile_BG = new System.Windows.Forms.TextBox();
             this.tlp_Config_normSelect = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lb_NormSelect = new System.Windows.Forms.ListBox();
@@ -69,7 +69,7 @@
             this.cb_xfmrEquipSelect = new System.Windows.Forms.ComboBox();
             this.dgv_EquipDisplay = new System.Windows.Forms.DataGridView();
             this.tp_Data = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tlp_Data = new System.Windows.Forms.TableLayoutPanel();
             this.l_SelectedEquipment = new System.Windows.Forms.Label();
             this.equipmentSource = new System.Windows.Forms.BindingSource(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -88,7 +88,7 @@
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_EquipDisplay)).BeginInit();
             this.tp_Data.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
+            this.tlp_Data.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,7 +100,7 @@
             this.menu_File});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(934, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1184, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -129,7 +129,7 @@
             this.panel_Config.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Config.Location = new System.Drawing.Point(0, 24);
             this.panel_Config.Name = "panel_Config";
-            this.panel_Config.Size = new System.Drawing.Size(934, 538);
+            this.panel_Config.Size = new System.Drawing.Size(1184, 738);
             this.panel_Config.TabIndex = 3;
             // 
             // panel_Analyze
@@ -138,7 +138,7 @@
             this.panel_Analyze.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Analyze.Location = new System.Drawing.Point(0, 0);
             this.panel_Analyze.Name = "panel_Analyze";
-            this.panel_Analyze.Size = new System.Drawing.Size(934, 538);
+            this.panel_Analyze.Size = new System.Drawing.Size(1184, 738);
             this.panel_Analyze.TabIndex = 6;
             // 
             // tp_Main
@@ -152,7 +152,7 @@
             this.tp_Main.Margin = new System.Windows.Forms.Padding(0);
             this.tp_Main.Name = "tp_Main";
             this.tp_Main.SelectedIndex = 0;
-            this.tp_Main.Size = new System.Drawing.Size(934, 538);
+            this.tp_Main.Size = new System.Drawing.Size(1184, 738);
             this.tp_Main.TabIndex = 0;
             // 
             // tp_Analyze
@@ -163,7 +163,7 @@
             this.tp_Analyze.Margin = new System.Windows.Forms.Padding(0);
             this.tp_Analyze.Name = "tp_Analyze";
             this.tp_Analyze.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Analyze.Size = new System.Drawing.Size(926, 512);
+            this.tp_Analyze.Size = new System.Drawing.Size(1176, 712);
             this.tp_Analyze.TabIndex = 0;
             this.tp_Analyze.Text = "Analyze";
             // 
@@ -177,7 +177,7 @@
             this.tp_Config.Margin = new System.Windows.Forms.Padding(0);
             this.tp_Config.Name = "tp_Config";
             this.tp_Config.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Config.Size = new System.Drawing.Size(926, 512);
+            this.tp_Config.Size = new System.Drawing.Size(1176, 712);
             this.tp_Config.TabIndex = 1;
             this.tp_Config.Text = "Config";
             // 
@@ -185,7 +185,7 @@
             // 
             this.tlp_Config_bg.ColumnCount = 3;
             this.tlp_Config_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlp_Config_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 907F));
+            this.tlp_Config_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 900F));
             this.tlp_Config_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlp_Config_bg.Controls.Add(this.tlp_Config_folderSelect, 1, 0);
             this.tlp_Config_bg.Controls.Add(this.tlp_Config_normSelect, 1, 1);
@@ -196,7 +196,7 @@
             this.tlp_Config_bg.RowCount = 2;
             this.tlp_Config_bg.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 89F));
             this.tlp_Config_bg.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlp_Config_bg.Size = new System.Drawing.Size(916, 502);
+            this.tlp_Config_bg.Size = new System.Drawing.Size(1166, 702);
             this.tlp_Config_bg.TabIndex = 12;
             // 
             // tlp_Config_folderSelect
@@ -215,35 +215,37 @@
             this.tlp_Config_folderSelect.Controls.Add(this.b_RefreshNorms, 2, 0);
             this.tlp_Config_folderSelect.Controls.Add(this.tb_TestDataFile_BG, 1, 2);
             this.tlp_Config_folderSelect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlp_Config_folderSelect.Location = new System.Drawing.Point(4, 0);
+            this.tlp_Config_folderSelect.Location = new System.Drawing.Point(133, 0);
             this.tlp_Config_folderSelect.Margin = new System.Windows.Forms.Padding(0);
             this.tlp_Config_folderSelect.Name = "tlp_Config_folderSelect";
             this.tlp_Config_folderSelect.RowCount = 3;
             this.tlp_Config_folderSelect.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tlp_Config_folderSelect.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tlp_Config_folderSelect.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_Config_folderSelect.Size = new System.Drawing.Size(907, 89);
+            this.tlp_Config_folderSelect.Size = new System.Drawing.Size(900, 89);
             this.tlp_Config_folderSelect.TabIndex = 0;
             // 
             // b_RefreshTestData
             // 
             this.b_RefreshTestData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_RefreshTestData.Location = new System.Drawing.Point(783, 61);
+            this.b_RefreshTestData.Location = new System.Drawing.Point(776, 61);
             this.b_RefreshTestData.Name = "b_RefreshTestData";
             this.b_RefreshTestData.Size = new System.Drawing.Size(121, 23);
             this.b_RefreshTestData.TabIndex = 10;
             this.b_RefreshTestData.Text = "Refresh Test Data";
             this.b_RefreshTestData.UseVisualStyleBackColor = true;
+            this.b_RefreshTestData.Click += new System.EventHandler(this.b_RefreshTestData_Click);
             // 
             // b_RefreshEquipment
             // 
             this.b_RefreshEquipment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_RefreshEquipment.Location = new System.Drawing.Point(783, 32);
+            this.b_RefreshEquipment.Location = new System.Drawing.Point(776, 32);
             this.b_RefreshEquipment.Name = "b_RefreshEquipment";
             this.b_RefreshEquipment.Size = new System.Drawing.Size(121, 23);
             this.b_RefreshEquipment.TabIndex = 9;
             this.b_RefreshEquipment.Text = "Refresh Equipment";
             this.b_RefreshEquipment.UseVisualStyleBackColor = true;
+            this.b_RefreshEquipment.Click += new System.EventHandler(this.b_RefreshEquipment_Click);
             // 
             // button_TestDataFile
             // 
@@ -277,7 +279,7 @@
             this.tb_EquipmentFile_BG.Enabled = false;
             this.tb_EquipmentFile_BG.Location = new System.Drawing.Point(133, 33);
             this.tb_EquipmentFile_BG.Name = "tb_EquipmentFile_BG";
-            this.tb_EquipmentFile_BG.Size = new System.Drawing.Size(644, 20);
+            this.tb_EquipmentFile_BG.Size = new System.Drawing.Size(634, 20);
             this.tb_EquipmentFile_BG.TabIndex = 5;
             this.tb_EquipmentFile_BG.Text = "Equipment File";
             // 
@@ -302,9 +304,20 @@
             this.tb_NormsFolder_BG.Location = new System.Drawing.Point(133, 4);
             this.tb_NormsFolder_BG.Name = "tb_NormsFolder_BG";
             this.tb_NormsFolder_BG.ReadOnly = true;
-            this.tb_NormsFolder_BG.Size = new System.Drawing.Size(644, 20);
+            this.tb_NormsFolder_BG.Size = new System.Drawing.Size(634, 20);
             this.tb_NormsFolder_BG.TabIndex = 4;
             this.tb_NormsFolder_BG.Text = "Norms Folder";
+            // 
+            // b_RefreshNorms
+            // 
+            this.b_RefreshNorms.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_RefreshNorms.Location = new System.Drawing.Point(776, 3);
+            this.b_RefreshNorms.Name = "b_RefreshNorms";
+            this.b_RefreshNorms.Size = new System.Drawing.Size(121, 23);
+            this.b_RefreshNorms.TabIndex = 8;
+            this.b_RefreshNorms.Text = "Refresh Norms";
+            this.b_RefreshNorms.UseVisualStyleBackColor = true;
+            this.b_RefreshNorms.Click += new System.EventHandler(this.b_RefreshNorms_Click);
             // 
             // tb_TestDataFile_BG
             // 
@@ -312,21 +325,11 @@
             this.tb_TestDataFile_BG.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.tb_TestDataFile_BG.CausesValidation = false;
             this.tb_TestDataFile_BG.Enabled = false;
-            this.tb_TestDataFile_BG.Location = new System.Drawing.Point(133, 67);
+            this.tb_TestDataFile_BG.Location = new System.Drawing.Point(133, 63);
             this.tb_TestDataFile_BG.Name = "tb_TestDataFile_BG";
-            this.tb_TestDataFile_BG.Size = new System.Drawing.Size(644, 20);
+            this.tb_TestDataFile_BG.Size = new System.Drawing.Size(634, 20);
             this.tb_TestDataFile_BG.TabIndex = 7;
             this.tb_TestDataFile_BG.Text = "Test Data File";
-            // 
-            // b_RefreshNorms
-            // 
-            this.b_RefreshNorms.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_RefreshNorms.Location = new System.Drawing.Point(783, 3);
-            this.b_RefreshNorms.Name = "b_RefreshNorms";
-            this.b_RefreshNorms.Size = new System.Drawing.Size(121, 23);
-            this.b_RefreshNorms.TabIndex = 8;
-            this.b_RefreshNorms.Text = "Refresh Norms";
-            this.b_RefreshNorms.UseVisualStyleBackColor = true;
             // 
             // tlp_Config_normSelect
             // 
@@ -336,12 +339,12 @@
             this.tlp_Config_normSelect.Controls.Add(this.tableLayoutPanel1, 0, 0);
             this.tlp_Config_normSelect.Controls.Add(this.dg_NormDisplay, 1, 0);
             this.tlp_Config_normSelect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlp_Config_normSelect.Location = new System.Drawing.Point(4, 89);
+            this.tlp_Config_normSelect.Location = new System.Drawing.Point(133, 89);
             this.tlp_Config_normSelect.Margin = new System.Windows.Forms.Padding(0);
             this.tlp_Config_normSelect.Name = "tlp_Config_normSelect";
             this.tlp_Config_normSelect.RowCount = 1;
             this.tlp_Config_normSelect.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlp_Config_normSelect.Size = new System.Drawing.Size(907, 413);
+            this.tlp_Config_normSelect.Size = new System.Drawing.Size(900, 613);
             this.tlp_Config_normSelect.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -357,7 +360,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(198, 413);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(198, 613);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // lb_NormSelect
@@ -418,7 +421,7 @@
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dg_NormDisplay.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dg_NormDisplay.Size = new System.Drawing.Size(703, 410);
+            this.dg_NormDisplay.Size = new System.Drawing.Size(696, 610);
             this.dg_NormDisplay.TabIndex = 11;
             // 
             // tp_Equipment
@@ -429,7 +432,7 @@
             this.tp_Equipment.Location = new System.Drawing.Point(4, 22);
             this.tp_Equipment.Name = "tp_Equipment";
             this.tp_Equipment.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Equipment.Size = new System.Drawing.Size(926, 512);
+            this.tp_Equipment.Size = new System.Drawing.Size(1176, 712);
             this.tp_Equipment.TabIndex = 2;
             this.tp_Equipment.Text = "Equipment";
             // 
@@ -445,7 +448,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(916, 502);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1166, 702);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -465,7 +468,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.61404F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54.38596F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(916, 57);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1166, 57);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // l_chooseXFMR
@@ -499,7 +502,7 @@
             this.cb_xfmrSelection.Name = "cb_xfmrSelection";
             this.cb_xfmrSelection.Size = new System.Drawing.Size(246, 21);
             this.cb_xfmrSelection.TabIndex = 2;
-            this.cb_xfmrSelection.SelectionChangeCommitted += new System.EventHandler(this.cb_xfmrEquipSelect_SelectedIndexChanged);
+            this.cb_xfmrSelection.SelectionChangeCommitted += new System.EventHandler(this.cb_xfmrSelection_SelectedIndexChanged);
             // 
             // cb_xfmrEquipSelect
             // 
@@ -540,44 +543,44 @@
             this.dgv_EquipDisplay.Name = "dgv_EquipDisplay";
             this.dgv_EquipDisplay.RowHeadersVisible = false;
             this.dgv_EquipDisplay.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_EquipDisplay.Size = new System.Drawing.Size(910, 439);
+            this.dgv_EquipDisplay.Size = new System.Drawing.Size(1160, 639);
             this.dgv_EquipDisplay.TabIndex = 1;
             // 
             // tp_Data
             // 
             this.tp_Data.BackColor = System.Drawing.SystemColors.ControlLight;
             this.tp_Data.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tp_Data.Controls.Add(this.tableLayoutPanel4);
+            this.tp_Data.Controls.Add(this.tlp_Data);
             this.tp_Data.Location = new System.Drawing.Point(4, 22);
             this.tp_Data.Name = "tp_Data";
             this.tp_Data.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Data.Size = new System.Drawing.Size(926, 512);
+            this.tp_Data.Size = new System.Drawing.Size(1176, 712);
             this.tp_Data.TabIndex = 3;
             this.tp_Data.Text = "Data";
             // 
-            // tableLayoutPanel4
+            // tlp_Data
             // 
-            this.tableLayoutPanel4.ColumnCount = 3;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 800F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.l_SelectedEquipment, 1, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(916, 502);
-            this.tableLayoutPanel4.TabIndex = 0;
+            this.tlp_Data.ColumnCount = 3;
+            this.tlp_Data.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Data.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 900F));
+            this.tlp_Data.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Data.Controls.Add(this.l_SelectedEquipment, 1, 0);
+            this.tlp_Data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlp_Data.Location = new System.Drawing.Point(3, 3);
+            this.tlp_Data.Margin = new System.Windows.Forms.Padding(0);
+            this.tlp_Data.Name = "tlp_Data";
+            this.tlp_Data.RowCount = 2;
+            this.tlp_Data.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            this.tlp_Data.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlp_Data.Size = new System.Drawing.Size(1166, 702);
+            this.tlp_Data.TabIndex = 0;
             // 
             // l_SelectedEquipment
             // 
             this.l_SelectedEquipment.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.l_SelectedEquipment.AutoSize = true;
             this.l_SelectedEquipment.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_SelectedEquipment.Location = new System.Drawing.Point(398, 6);
+            this.l_SelectedEquipment.Location = new System.Drawing.Point(523, 6);
             this.l_SelectedEquipment.Name = "l_SelectedEquipment";
             this.l_SelectedEquipment.Size = new System.Drawing.Size(120, 13);
             this.l_SelectedEquipment.TabIndex = 1;
@@ -593,7 +596,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(934, 562);
+            this.ClientSize = new System.Drawing.Size(1184, 762);
             this.Controls.Add(this.panel_Config);
             this.Controls.Add(this.menuStrip1);
             this.Name = "FormHome";
@@ -620,8 +623,8 @@
             this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_EquipDisplay)).EndInit();
             this.tp_Data.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
+            this.tlp_Data.ResumeLayout(false);
+            this.tlp_Data.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -663,7 +666,7 @@
         private System.Windows.Forms.ComboBox cb_xfmrEquipSelect;
         private System.Windows.Forms.DataGridView dgv_EquipDisplay;
         private System.Windows.Forms.TabPage tp_Data;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.TableLayoutPanel tlp_Data;
         private System.Windows.Forms.Label l_SelectedEquipment;
         private System.Windows.Forms.Button b_RefreshNorms;
         private System.Windows.Forms.Button b_RefreshTestData;

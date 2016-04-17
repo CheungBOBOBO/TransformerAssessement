@@ -30,8 +30,8 @@ namespace TransformerAssessment.Core.Helpers {
             }
         }
 
-        public static void updateNorms(string folder) {
-            normsDirectory = folder;
+        public static void updateNorms() {
+            normsDirectory = TransformerAssessment.normDir;
             normsPathList = Directory.GetFiles(normsDirectory, "*.csv");
             fileNameList = new string[normsPathList.Length];
             for (int i = 0; i < normsPathList.Length; i++)

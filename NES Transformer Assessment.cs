@@ -41,7 +41,6 @@ namespace TransformerAssessment {
                 TestDataLoader.initializeTestData();
             else
                 System.Windows.Forms.MessageBox.Show("Equipment and/or Test Data files are not valid. Please choose a valid file.");
-
             TransformerAssessment.normDir = NormLoader.getNormsDir();
             //string[] normList = NormLoader.getNormsPathList();
 
@@ -63,7 +62,7 @@ namespace TransformerAssessment {
 
         private void button_NormsFolder_Click(object sender, EventArgs e) {
             TransformerAssessment.normDir = chooseNormFolder();
-            NormLoader.updateNorms(TransformerAssessment.normDir);
+            NormLoader.updateNorms();
             updateNormsListLB();
         }
 
@@ -221,7 +220,23 @@ namespace TransformerAssessment {
         // when new XFMR is selected on Equipment tab, clear the XFMR Equipment combo box
         // and populate with the selected XFMR's equipment
         private void cb_xfmrSelection_SelectedIndexChanged(object sender, EventArgs e) {
+            cb_xfmrEquipSelect.Items.Clear();
+            int selectedIndex = cb_xfmrSelection.SelectedIndex;
 
+            List<string> xfmrEquipment = new List<string>();
+            cb_xfmrEquipSelect.Items.Add("XFMR");
+            if (_xfmrs[selectedIndex].hasLTC)
+                cb_xfmrEquipSelect.Items.Add("LTC");
+            if (_xfmrs[selectedIndex].hasSEL)
+                cb_xfmrEquipSelect.Items.Add("SEL");
+            if (_xfmrs[selectedIndex].hasDIV)
+                cb_xfmrEquipSelect.Items.Add("DIV");
+
+            // reset xfmr equipment index to zero
+            if (cb_xfmrEquipSelect.Items.Count > 0)
+                cb_xfmrEquipSelect.SelectedIndex = 0;
+
+            // When this is executed, the EquipmentType Index also changes, so no need to call an update to the DataGrid in this method
         }
 
         private void cb_xfmrEquipSelect_SelectedIndexChanged(object sender, EventArgs e) {
@@ -260,30 +275,6 @@ namespace TransformerAssessment {
             else if (equipmentType.Equals("DIV"))
                 for (int row = 0; row < selectedXFMR.div.data.Count; row++)
                     dt_Equipment.Rows.Add(selectedXFMR.div.data[row].toStringArray());
-            
-            
-            
-            
-            /*for (int col = 0; col < TestDataLoader.headers.Length; col++)
-                dt_Equipment.Columns.Add(TestDataLoader.headers[col]);
-            // add rows of data to the grid (determine if selected index is XFMR, LTC, SEL, or DIV)
-            // Selected XFMR
-            if (equipmentType.Equals("XFMR"))
-                for (int row = 0; row < selectedXFMR.data.Count; row++)
-                    dt_Equipment.Rows.Add(selectedXFMR.data[row].rawData);
-            // Selected LTC
-            else if (equipmentType.Equals("LTC"))
-                for (int row = 0; row < selectedXFMR.ltc.data.Count; row++)
-                    dt_Equipment.Rows.Add(selectedXFMR.ltc.data[row].rawData);
-            // Selected SEL
-            else if (equipmentType.Equals("SEL"))
-                for (int row = 0; row < selectedXFMR.sel.data.Count; row++)
-                    dt_Equipment.Rows.Add(selectedXFMR.sel.data[row].rawData);
-            // Selected DIV
-            else if (equipmentType.Equals("DIV"))
-                for (int row = 0; row < selectedXFMR.div.data.Count; row++)
-                    dt_Equipment.Rows.Add(selectedXFMR.div.data[row].rawData);
-             * */
             // set DataGridView to the new equipment's table
             dgv_EquipDisplay.DataSource = dt_Equipment;
         }
@@ -302,6 +293,9 @@ namespace TransformerAssessment {
                 cb_xfmrEquipSelect.Items.Add("DIV");
             cb_xfmrEquipSelect.SelectedIndex = 0;
 
+            // update Selected Equipment text on Data tab
+            l_SelectedEquipment.Text = string.Format("{0}  -  {1}  -  {2}", _xfmrs[0].getLocation(), _xfmrs[0].getPosition(), cb_xfmrEquipSelect.Items[0].ToString());
+
             // update DataGridView
             updateEquipmentDataTable(0, 0);
         }
@@ -309,6 +303,18 @@ namespace TransformerAssessment {
 
         private void FormHome_FormClosing(object sender, FormClosingEventArgs e) {
             Properties.Settings.Default.Save();
+        }
+
+        private void b_RefreshNorms_Click(object sender, EventArgs e) {
+            NormLoader.updateNorms();
+        }
+
+        private void b_RefreshEquipment_Click(object sender, EventArgs e) {
+            EquipmentLoader.updateEquipment();
+        }
+
+        private void b_RefreshTestData_Click(object sender, EventArgs e) {
+            TestDataLoader.updateTestData();
         }
 
         #region [Test Methods]
