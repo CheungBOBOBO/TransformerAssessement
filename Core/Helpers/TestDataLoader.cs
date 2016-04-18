@@ -33,16 +33,17 @@ namespace TransformerAssessment.Core.Helpers {
         public static int d1816_2_index;
         public static int furfural_index;
         public static int acidnum_index;
-        public static int relsat_index;
+        public static int relSat_index;
         public static int water_index;
         public static int visual_index;
         public static int color_index;
         public static int ift_index;
+        public static int sg_index;
         public static int c2h4_c2h2_index;
         public static int c2h6_ch4_index;
         public static int o2_n2_index;
         public static int temp_index;
-        public static int[] wantedIndices = new int[22];  // 22 indexes that we want 
+        public static int[] wantedIndices = new int[23];  // 23 indexes that we want 
 
 
         public static int equipnumIndex;
@@ -98,11 +99,12 @@ namespace TransformerAssessment.Core.Helpers {
                         d1816_2_index = csv.GetFieldIndex("d1816_2");
                         furfural_index = csv.GetFieldIndex("furfural"); // ignored in analysis
                         acidnum_index = csv.GetFieldIndex("acidnum");
-                        relsat_index = csv.GetFieldIndex("relsaturation");
+                        relSat_index = csv.GetFieldIndex("relsaturation");
                         water_index = csv.GetFieldIndex("water");
                         visual_index = csv.GetFieldIndex("visual");
                         color_index = csv.GetFieldIndex("color");
                         ift_index = csv.GetFieldIndex("ift");
+                        sg_index = csv.GetFieldIndex("sg");
                         c2h4_c2h2_index = csv.GetFieldIndex("c2h4/c2h2");
                         c2h6_ch4_index = csv.GetFieldIndex("c2h6/ch4");
                         o2_n2_index = csv.GetFieldIndex("o2/n2");
@@ -122,7 +124,7 @@ namespace TransformerAssessment.Core.Helpers {
                         wantedIndices[11] = d1816_2_index;
                         wantedIndices[12] = furfural_index;
                         wantedIndices[13] = acidnum_index;
-                        wantedIndices[14] = relsat_index;
+                        wantedIndices[14] = relSat_index;
                         wantedIndices[15] = water_index;
                         wantedIndices[16] = visual_index;
                         wantedIndices[17] = color_index;

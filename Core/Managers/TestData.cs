@@ -30,16 +30,17 @@ namespace TransformerAssessment.Core.Managers {
         public int c2h2 = -1;        // acetylene
         public int d1816_2 = -1;     // dielectric breakdown
         public int furfural = -1;    // furan (IGNORED)
-        public int relsat = -1;      // relative saturation
+        public int relSat = -1;      // relative saturation
         public int water = -1;       // water (ppm)
         public string visual;        // visual
-        public double acidnum = -1;     // acid number
+        public double acidnum = -1;  // acid number
         public double color = -1;    // color
         public double ift = -1;      // interfacial tension
+        public double spGrav = -1;   // specific gravity
         public double c2h4_c2h2 = -1;// ethylene to acetylene ratio
         public double c2h6_ch4 = -1; // ethane to methane ratio
         public double o2_n2 = -1;    // oxygen to nitrogen ratio
-        public double temp = -1;        // fluid temperature
+        public double temp = -1;     // fluid temperature
         #endregion
 
         public TestData(string[] raw) {
@@ -64,12 +65,13 @@ namespace TransformerAssessment.Core.Managers {
             c2h2 = Convert.ToInt32(rawData[TestDataLoader.c2h2_index]);
             d1816_2 = Convert.ToInt32(rawData[TestDataLoader.d1816_2_index]);
             furfural = Convert.ToInt32(rawData[TestDataLoader.furfural_index]);
-            relsat = Convert.ToInt32(rawData[TestDataLoader.relsat_index]);
+            relSat = Convert.ToInt32(rawData[TestDataLoader.relSat_index]);
             water = Convert.ToInt32(rawData[TestDataLoader.water_index]);
             visual = rawData[TestDataLoader.visual_index];
             acidnum = Convert.ToDouble(rawData[TestDataLoader.acidnum_index]);
             color = Convert.ToDouble(rawData[TestDataLoader.color_index]);
             ift = Convert.ToDouble(rawData[TestDataLoader.ift_index]);
+            spGrav = Convert.ToDouble(rawData[TestDataLoader.sg_index]);
             if (c2h2 == 0)
                 c2h4_c2h2 = Double.PositiveInfinity;
             else if (c2h2 < 0)
@@ -119,14 +121,15 @@ namespace TransformerAssessment.Core.Managers {
             dataRow[11] = "" + d1816_2;
             dataRow[12] = "" + furfural;
             dataRow[13] = string.Format("{0:0.000}", acidnum);
-            dataRow[14] = "" + relsat;
+            dataRow[14] = "" + relSat;
             dataRow[15] = "" + water;
             dataRow[16] = visual;
             dataRow[17] = "" + color;
             dataRow[18] = "" + ift;
-            dataRow[19] = string.Format("{0:0.000}", c2h4_c2h2);
-            dataRow[20] = string.Format("{0:0.000}", c2h6_ch4);
-            dataRow[21] = string.Format("{0:0.000}", o2_n2);
+            dataRow[19] = "" + spGrav;
+            dataRow[20] = string.Format("{0:0.000}", c2h4_c2h2);
+            dataRow[21] = string.Format("{0:0.000}", c2h6_ch4);
+            dataRow[22] = string.Format("{0:0.000}", o2_n2);
 
             for (int i = 0; i < dataRow.Length; i++)
                 if (dataRow[i].Equals("-1") || dataRow[i].Equals("-1.000"))

@@ -25,6 +25,8 @@ namespace TransformerAssessment {
         DataTable dt_Equipment = new DataTable();
 
         Label[][] gasLabels = new Label[5][];
+        Label[][] fqLabels = new Label[5][];
+        Label[][] moistLabels = new Label[5][];
 
         public FormHome() {
             InitializeComponent();
@@ -50,7 +52,6 @@ namespace TransformerAssessment {
             tb_TestDataFile_BG.Text = TransformerAssessment.testDataFile;
             updateNormsListLB();
             initializeEquipmentSelect();
-            createGasLabels();
         }
 
         private void menu_Quit_Click(object sender, EventArgs e) {
@@ -303,7 +304,12 @@ namespace TransformerAssessment {
 
             // update DataGridView & TOA tab
             updateEquipmentDataTable(0, 0);
-            updateTOA(0, 0);
+            // create labels for TOA tables and then update them to the default XFMR
+            createGasLabels();
+            createFQLabels();
+            createMoistureLabels();
+            if (_xfmrs.Count > 0)
+                updateTOA(0, 0);
         }
         #endregion
 
@@ -367,12 +373,10 @@ namespace TransformerAssessment {
         // Update GAS ANALYSIS table
         private void updateGasAnalysis(int xfmrIndex, int xfmrEquipIndex) {
             string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
-            
-            TestData[] testsToDisplay = new TestData[5];
             // Selected XFMR
             if (equipmentType.Equals("XFMR")) {
                 if (_xfmrs[xfmrIndex].data.Count == 0) {
-                    resetGasLabels();
+                    resetTOALabels();
                     return;
                 }
                 int gasColIndex = 0;
@@ -381,12 +385,12 @@ namespace TransformerAssessment {
                     // if we've run out of tests... 
                     if (xfmrDataIndex >= _xfmrs[xfmrIndex].data.Count) {
                         for (int row = 0; row < gasLabels[gasColIndex].Length; row++)
-                            gasLabels[gasColIndex][row] = "";
+                            gasLabels[gasColIndex][row].Text = "";
                         gasColIndex++;
                     } else {
                         // not out of tests...
                         // is test that has Gas Data
-                        if (_xfrms[xfmrIndex].data[xfmrDataIndex].hasGasData) {
+                        if (_xfmrs[xfmrIndex].data[xfmrDataIndex].hasGasData) {
                             gasLabels[gasColIndex][0].Text = _xfmrs[xfmrIndex].data[xfmrDataIndex].date;
                             gasLabels[gasColIndex][1].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].temp);
                             gasLabels[gasColIndex][2].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].h2);
@@ -398,96 +402,419 @@ namespace TransformerAssessment {
                             gasLabels[gasColIndex][8].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].co2);
                             gasLabels[gasColIndex][9].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].o2);
                             gasLabels[gasColIndex][10].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].n2);
-                            gasLabels[gasColIndex][11].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].o2_n2);
-                            Console.WriteLine("im adding to the table");
+                            gasLabels[gasColIndex][11].Text = string.Format("{0:0.000}",_xfmrs[xfmrIndex].data[xfmrDataIndex].o2_n2);
                             // go to next column on gas analysis
                             gasColIndex++;
                         }
-                    xfmrDataIndex++;
                     }
+                    xfmrDataIndex++;
                 }
-                /*for (int i = 0; i < _xfmrs[xfmrIndex].data.Count; i++) {
+            } // Selected LTC
+            else if (equipmentType.Equals("LTC")) {
+                if (_xfmrs[xfmrIndex].ltc.data.Count == 0) {
+                    resetTOALabels();
+                    return;
+                }
+                int gasColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (gasColIndex < 5) {
                     // if we've run out of tests... 
-                    if (i >= _xfmrs[xfmrIndex].data.Count) {
-                        for (int row = 0; row < gasLabels[i].Length; row++)
-                            gasLabels[i][row].Text = "";
-                        // go to next column on gas analysis
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].ltc.data.Count) {
+                        for (int row = 0; row < gasLabels[gasColIndex].Length; row++)
+                            gasLabels[gasColIndex][row].Text = "";
                         gasColIndex++;
                     } else {
                         // not out of tests...
                         // is test that has Gas Data
-                        if (_xfmrs[xfmrIndex].data[i].hasGasData) {
-                            gasLabels[gasColIndex][0].Text = _xfmrs[xfmrIndex].data[i].date;
-                            gasLabels[gasColIndex][1].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].temp);
-                            gasLabels[gasColIndex][2].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].h2);
-                            gasLabels[gasColIndex][3].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].ch4);
-                            gasLabels[gasColIndex][4].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].c2h6);
-                            gasLabels[gasColIndex][5].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].c2h4);
-                            gasLabels[gasColIndex][6].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].c2h2);
-                            gasLabels[gasColIndex][7].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].co);
-                            gasLabels[gasColIndex][8].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].co2);
-                            gasLabels[gasColIndex][9].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].o2);
-                            gasLabels[gasColIndex][10].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].n2);
-                            gasLabels[gasColIndex][11].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].o2_n2);
+                        if (_xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].hasGasData) {
+                            gasLabels[gasColIndex][0].Text = _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].date;
+                            gasLabels[gasColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].temp);
+                            gasLabels[gasColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].h2);
+                            gasLabels[gasColIndex][3].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].ch4);
+                            gasLabels[gasColIndex][4].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].c2h6);
+                            gasLabels[gasColIndex][5].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].c2h4);
+                            gasLabels[gasColIndex][6].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].c2h2);
+                            gasLabels[gasColIndex][7].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].co);
+                            gasLabels[gasColIndex][8].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].co2);
+                            gasLabels[gasColIndex][9].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].o2);
+                            gasLabels[gasColIndex][10].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].n2);
+                            gasLabels[gasColIndex][11].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].o2_n2);
                             // go to next column on gas analysis
-                            Console.WriteLine("im adding to the table");
                             gasColIndex++;
-                        } else {
-                            // does not have valid gas data
-                            // do nothing, let i increment to next TestData
                         }
                     }
-                }*/
-            } // Selected LTC
-            else if (equipmentType.Equals("LTC")) {
-                if (_xfmrs[xfmrIndex].ltc.data.Count == 0)
-                    return;
+                    xfmrDataIndex++;
+                }
             } // Selected SEL
             else if (equipmentType.Equals("SEL")) {
-                if (_xfmrs[xfmrIndex].sel.data.Count == 0)
+                if (_xfmrs[xfmrIndex].sel.data.Count == 0) {
+                    resetTOALabels();
                     return;
+                }
+                int gasColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (gasColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].sel.data.Count) {
+                        for (int row = 0; row < gasLabels[gasColIndex].Length; row++)
+                            gasLabels[gasColIndex][row].Text = "";
+                        gasColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].sel.data[xfmrDataIndex].hasGasData) {
+                            gasLabels[gasColIndex][0].Text = _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].date;
+                            gasLabels[gasColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].temp);
+                            gasLabels[gasColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].h2);
+                            gasLabels[gasColIndex][3].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].ch4);
+                            gasLabels[gasColIndex][4].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].c2h6);
+                            gasLabels[gasColIndex][5].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].c2h4);
+                            gasLabels[gasColIndex][6].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].c2h2);
+                            gasLabels[gasColIndex][7].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].co);
+                            gasLabels[gasColIndex][8].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].co2);
+                            gasLabels[gasColIndex][9].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].o2);
+                            gasLabels[gasColIndex][10].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].n2);
+                            gasLabels[gasColIndex][11].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].o2_n2);
+                            // go to next column on gas analysis
+                            gasColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
             } // Selected DIV
             else if (equipmentType.Equals("DIV")) {
-                if (_xfmrs[xfmrIndex].div.data.Count == 0)
+                if (_xfmrs[xfmrIndex].div.data.Count == 0) {
+                    resetTOALabels();
                     return;
+                }
+                int gasColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (gasColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].div.data.Count) {
+                        for (int row = 0; row < gasLabels[gasColIndex].Length; row++)
+                            gasLabels[gasColIndex][row].Text = "";
+                        gasColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].div.data[xfmrDataIndex].hasGasData) {
+                            gasLabels[gasColIndex][0].Text = _xfmrs[xfmrIndex].div.data[xfmrDataIndex].date;
+                            gasLabels[gasColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].temp);
+                            gasLabels[gasColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].h2);
+                            gasLabels[gasColIndex][3].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].ch4);
+                            gasLabels[gasColIndex][4].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].c2h6);
+                            gasLabels[gasColIndex][5].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].c2h4);
+                            gasLabels[gasColIndex][6].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].c2h2);
+                            gasLabels[gasColIndex][7].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].co);
+                            gasLabels[gasColIndex][8].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].co2);
+                            gasLabels[gasColIndex][9].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].o2);
+                            gasLabels[gasColIndex][10].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].n2);
+                            gasLabels[gasColIndex][11].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].o2_n2);
+                            // go to next column on gas analysis
+                            gasColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
+            }
+            // Turn any '-1' into an empty string
+            for (int col = 0; col < gasLabels.Length; col++) {
+                for (int row = 0; row < gasLabels[0].Length; row++) {
+                    if (gasLabels[col][row].Text.Equals("-1"))
+                        gasLabels[col][row].Text = "";
+                }
             }
         }
 
         // Update FLUID QUALITY table
         private void updateFluidQuality(int xfmrIndex, int xfmrEquipIndex) {
             string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
-
-            string[] testsToDisplay = new string[5];
-
-
+            // Selected XFMR
+            if (equipmentType.Equals("XFMR")) {
+                if (_xfmrs[xfmrIndex].data.Count == 0) {
+                    resetTOALabels();
+                    return;
+                }
+                int fqColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (fqColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].data.Count) {
+                        for (int row = 0; row < fqLabels[fqColIndex].Length; row++)
+                            fqLabels[fqColIndex][row].Text = "";
+                        fqColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].data[xfmrDataIndex].hasFQData) {
+                            fqLabels[fqColIndex][0].Text = _xfmrs[xfmrIndex].data[xfmrDataIndex].date;
+                            fqLabels[fqColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].data[xfmrDataIndex].temp);
+                            fqLabels[fqColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].data[xfmrDataIndex].d1816_2);
+                            fqLabels[fqColIndex][3].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].data[xfmrDataIndex].acidnum);
+                            fqLabels[fqColIndex][4].Text = string.Format("{0:0.0}", _xfmrs[xfmrIndex].data[xfmrDataIndex].ift);
+                            fqLabels[fqColIndex][5].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].data[xfmrDataIndex].spGrav);
+                            fqLabels[fqColIndex][6].Text = string.Format("{0:0.0}", _xfmrs[xfmrIndex].data[xfmrDataIndex].color);
+                            fqLabels[fqColIndex][7].Text = string.Format("{0}", _xfmrs[xfmrIndex].data[xfmrDataIndex].visual);
+                            fqLabels[fqColIndex][8].Text = string.Format("{0}", _xfmrs[xfmrIndex].data[xfmrDataIndex].water);
+                            // go to next column on gas analysis
+                            fqColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
+            } // Selected LTC
+            else if (equipmentType.Equals("LTC")) {
+                if (_xfmrs[xfmrIndex].ltc.data.Count == 0) {
+                    resetTOALabels();
+                    return;
+                }
+                int fqColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (fqColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].ltc.data.Count) {
+                        for (int row = 0; row < fqLabels[fqColIndex].Length; row++)
+                            fqLabels[fqColIndex][row].Text = "";
+                        fqColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].hasFQData) {
+                            fqLabels[fqColIndex][0].Text = _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].date;
+                            fqLabels[fqColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].temp);
+                            fqLabels[fqColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].d1816_2);
+                            fqLabels[fqColIndex][3].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].acidnum);
+                            fqLabels[fqColIndex][4].Text = string.Format("{0:0.0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].ift);
+                            fqLabels[fqColIndex][5].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].spGrav);
+                            fqLabels[fqColIndex][6].Text = string.Format("{0:0.0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].color);
+                            fqLabels[fqColIndex][7].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].visual);
+                            fqLabels[fqColIndex][8].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].water);
+                            // go to next column on gas analysis
+                            fqColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
+            } // Selected SEL
+            else if (equipmentType.Equals("SEL")) {
+                if (_xfmrs[xfmrIndex].sel.data.Count == 0) {
+                    resetTOALabels();
+                    return;
+                }
+                int fqColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (fqColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].sel.data.Count) {
+                        for (int row = 0; row < fqLabels[fqColIndex].Length; row++)
+                            fqLabels[fqColIndex][row].Text = "";
+                        fqColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].sel.data[xfmrDataIndex].hasFQData) {
+                            fqLabels[fqColIndex][0].Text = _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].date;
+                            fqLabels[fqColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].temp);
+                            fqLabels[fqColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].d1816_2);
+                            fqLabels[fqColIndex][3].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].acidnum);
+                            fqLabels[fqColIndex][4].Text = string.Format("{0:0.0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].ift);
+                            fqLabels[fqColIndex][5].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].spGrav);
+                            fqLabels[fqColIndex][6].Text = string.Format("{0:0.0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].color);
+                            fqLabels[fqColIndex][7].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].visual);
+                            fqLabels[fqColIndex][8].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].water);
+                            // go to next column on gas analysis
+                            fqColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
+            } // Selected DIV
+            else if (equipmentType.Equals("DIV")) {
+                if (_xfmrs[xfmrIndex].div.data.Count == 0) {
+                    resetTOALabels();
+                    return;
+                }
+                int fqColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (fqColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].div.data.Count) {
+                        for (int row = 0; row < fqLabels[fqColIndex].Length; row++)
+                            fqLabels[fqColIndex][row].Text = "";
+                        fqColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].div.data[xfmrDataIndex].hasGasData) {
+                            fqLabels[fqColIndex][0].Text = _xfmrs[xfmrIndex].div.data[xfmrDataIndex].date;
+                            fqLabels[fqColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].temp);
+                            fqLabels[fqColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].d1816_2);
+                            fqLabels[fqColIndex][3].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].acidnum);
+                            fqLabels[fqColIndex][4].Text = string.Format("{0:0.0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].ift);
+                            fqLabels[fqColIndex][5].Text = string.Format("{0:0.000}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].spGrav);
+                            fqLabels[fqColIndex][6].Text = string.Format("{0:0.0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].color);
+                            fqLabels[fqColIndex][7].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].visual);
+                            fqLabels[fqColIndex][8].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].water);
+                            // go to next column on gas analysis
+                            fqColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
+            }
+            // Turn any '-1' into an empty string
+            for (int col = 0; col < fqLabels.Length; col++) {
+                for (int row = 0; row < fqLabels[0].Length; row++) {
+                    if (fqLabels[col][row].Text.Equals("-1"))
+                        fqLabels[col][row].Text = "";
+                }
+            }
         }
 
         // Update MOISTURE table
         private void updateMoisture(int xfmrIndex, int xfmrEquipIndex) {
             string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
-
-            string[] testsToDisplay = new string[5];
-
-
+            // Selected XFMR
+            if (equipmentType.Equals("XFMR")) {
+                if (_xfmrs[xfmrIndex].data.Count == 0) {
+                    resetTOALabels();
+                    return;
+                }
+                int moistColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (moistColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].data.Count) {
+                        for (int row = 0; row < moistLabels[moistColIndex].Length; row++)
+                            moistLabels[moistColIndex][row].Text = "";
+                        moistColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].data[xfmrDataIndex].hasMoistureData) {
+                            moistLabels[moistColIndex][0].Text = _xfmrs[xfmrIndex].data[xfmrDataIndex].date;
+                            moistLabels[moistColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].data[xfmrDataIndex].temp);
+                            moistLabels[moistColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].data[xfmrDataIndex].water);
+                            moistLabels[moistColIndex][3].Text = string.Format("{0}", _xfmrs[xfmrIndex].data[xfmrDataIndex].relSat);
+                            // go to next column on gas analysis
+                            moistColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
+            } // Selected LTC
+            else if (equipmentType.Equals("LTC")) {
+                if (_xfmrs[xfmrIndex].ltc.data.Count == 0) {
+                    resetTOALabels();
+                    return;
+                }
+                int moistColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (moistColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].ltc.data.Count) {
+                        for (int row = 0; row < moistLabels[moistColIndex].Length; row++)
+                            moistLabels[moistColIndex][row].Text = "";
+                        moistColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].hasMoistureData) {
+                            moistLabels[moistColIndex][0].Text = _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].date;
+                            moistLabels[moistColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].temp);
+                            moistLabels[moistColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].water);
+                            moistLabels[moistColIndex][3].Text = string.Format("{0}", _xfmrs[xfmrIndex].ltc.data[xfmrDataIndex].relSat);
+                            // go to next column on gas analysis
+                            moistColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
+            } // Selected SEL
+            else if (equipmentType.Equals("SEL")) {
+                if (_xfmrs[xfmrIndex].sel.data.Count == 0) {
+                    resetTOALabels();
+                    return;
+                }
+                int moistColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (moistColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].sel.data.Count) {
+                        for (int row = 0; row < moistLabels[moistColIndex].Length; row++)
+                            moistLabels[moistColIndex][row].Text = "";
+                        moistColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].sel.data[xfmrDataIndex].hasMoistureData) {
+                            moistLabels[moistColIndex][0].Text = _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].date;
+                            moistLabels[moistColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].temp);
+                            moistLabels[moistColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].water);
+                            moistLabels[moistColIndex][3].Text = string.Format("{0}", _xfmrs[xfmrIndex].sel.data[xfmrDataIndex].relSat);
+                            // go to next column on gas analysis
+                            moistColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
+            } // Selected DIV
+            else if (equipmentType.Equals("DIV")) {
+                if (_xfmrs[xfmrIndex].div.data.Count == 0) {
+                    resetTOALabels();
+                    return;
+                }
+                int moistColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (moistColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].div.data.Count) {
+                        for (int row = 0; row < moistLabels[moistColIndex].Length; row++)
+                            moistLabels[moistColIndex][row].Text = "";
+                        moistColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].div.data[xfmrDataIndex].hasGasData) {
+                            moistLabels[moistColIndex][0].Text = _xfmrs[xfmrIndex].div.data[xfmrDataIndex].date;
+                            moistLabels[moistColIndex][1].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].temp);
+                            moistLabels[moistColIndex][2].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].water);
+                            moistLabels[moistColIndex][3].Text = string.Format("{0}", _xfmrs[xfmrIndex].div.data[xfmrDataIndex].relSat);
+                            // go to next column on gas analysis
+                            moistColIndex++;
+                        }
+                    }
+                    xfmrDataIndex++;
+                }
+            }
+            // Turn any '-1' into an empty string
+            for (int col = 0; col < moistLabels.Length; col++) {
+                for (int row = 1; row < moistLabels[0].Length; row++) {
+                    if (moistLabels[col][row].Text.Equals("") || Convert.ToInt32(moistLabels[col][row].Text) == -1)
+                        moistLabels[col][row].Text = "";
+                }
+            }
         }
 
-        // initialize gas labels in the TableLayoutPanel for Gas Analysis
+        // initialize GAS labels in the TableLayoutPanel for Gas Analysis
         private void createGasLabels() {
-            // create 12 labels to go with each column
+            int NUM_ROWS = 12;
+            // create labels to go with each column
             for (int i = 0; i < gasLabels.Length; i++) {
-                gasLabels[i] = new Label[12];
+                gasLabels[i] = new Label[NUM_ROWS];
             }
             // assign attributes to each label
             for (int col = 0; col < gasLabels.Length; col++) {
                 for (int row = 0; row < gasLabels[0].Length; row++) {
                     gasLabels[col][row] = new System.Windows.Forms.Label(); // create the label
                     if (row == 0) {
-                        gasLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.Left;
+                        gasLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.None;
                         gasLabels[col][row].AutoSize = true;
                         gasLabels[col][row].Text = string.Format("{0},{1}", col, row);
                         gasLabels[col][row].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                     } else {
-                        gasLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.Left;
+                        gasLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.Right;
                         gasLabels[col][row].AutoSize = true;
                         gasLabels[col][row].Text = string.Format("{0},{1}", col, row);
                         gasLabels[col][row].TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -497,10 +824,75 @@ namespace TransformerAssessment {
             }
         }
 
-        private void resetGasLabels() {
+        // initialize FLUID QUALITY labels in the TableLayoutPanel for FQ Analysis
+        private void createFQLabels() {
+            int NUM_ROWS = 9;
+            // create labels to go with each column
+            for (int i = 0; i < fqLabels.Length; i++) {
+                fqLabels[i] = new Label[NUM_ROWS];
+            }
+            // assign attributes to each label
+            for (int col = 0; col < fqLabels.Length; col++) {
+                for (int row = 0; row < fqLabels[0].Length; row++) {
+                    fqLabels[col][row] = new System.Windows.Forms.Label(); // create the label
+                    if (row == 0) {
+                        fqLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.None;
+                        fqLabels[col][row].AutoSize = true;
+                        fqLabels[col][row].Text = string.Format("{0},{1}", col, row);
+                        fqLabels[col][row].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                    } else {
+                        fqLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.Right;
+                        fqLabels[col][row].AutoSize = true;
+                        fqLabels[col][row].Text = string.Format("{0},{1}", col, row);
+                        fqLabels[col][row].TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+                    }
+                    tlp_TOA_FluidQuality.Controls.Add(fqLabels[col][row], col + 1, row);  // assign it to a spot on the gas analysis chart
+                }
+            }
+        }
+
+        // initialize MOISTURE labels in the TableLayoutPanel for Moisture Analysis
+        private void createMoistureLabels() {
+            int NUM_ROWS = 4;
+            // create labels to go with each column
+            for (int i = 0; i < moistLabels.Length; i++) {
+                moistLabels[i] = new Label[NUM_ROWS];
+            }
+            // assign attributes to each label
+            for (int col = 0; col < moistLabels.Length; col++) {
+                for (int row = 0; row < moistLabels[0].Length; row++) {
+                    moistLabels[col][row] = new System.Windows.Forms.Label(); // create the label
+                    if (row == 0) {
+                        moistLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.None;
+                        moistLabels[col][row].AutoSize = true;
+                        moistLabels[col][row].Text = string.Format("{0},{1}", col, row);
+                        moistLabels[col][row].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                    } else {
+                        moistLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.Right;
+                        moistLabels[col][row].AutoSize = true;
+                        moistLabels[col][row].Text = string.Format("{0},{1}", col, row);
+                        moistLabels[col][row].TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+                    }
+                    tlp_TOA_Moisture.Controls.Add(moistLabels[col][row], col + 1, row);  // assign it to a spot on the gas analysis chart
+                }
+            }
+        }
+
+        // reset the labels in the TOA tab tables
+        private void resetTOALabels() {
             for (int col = 0; col < gasLabels.Length; col++) {
                 for (int row = 0; row < gasLabels.Length; row++) {
                     gasLabels[col][row].Text = "";
+                }
+            }
+            for (int col = 0; col < fqLabels.Length; col++) {
+                for (int row = 0; row < fqLabels.Length; row++) {
+                    fqLabels[col][row].Text = "";
+                }
+            }
+            for (int col = 0; col < moistLabels.Length; col++) {
+                for (int row = 0; row < moistLabels.Length; row++) {
+                    moistLabels[col][row].Text = "";
                 }
             }
         }
