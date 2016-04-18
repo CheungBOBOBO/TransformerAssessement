@@ -376,6 +376,36 @@ namespace TransformerAssessment {
                     return;
                 }
                 int gasColIndex = 0;
+                int xfmrDataIndex = 0;
+                while (gasColIndex < 5) {
+                    // if we've run out of tests... 
+                    if (xfmrDataIndex >= _xfmrs[xfmrIndex].data.Count) {
+                        for (int row = 0; row < gasLabels[gasColIndex].Length; row++)
+                            gasLabels[gasColIndex][row] = "";
+                        gasColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfrms[xfmrIndex].data[xfmrDataIndex].hasGasData) {
+                            gasLabels[gasColIndex][0].Text = _xfmrs[xfmrIndex].data[xfmrDataIndex].date;
+                            gasLabels[gasColIndex][1].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].temp);
+                            gasLabels[gasColIndex][2].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].h2);
+                            gasLabels[gasColIndex][3].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].ch4);
+                            gasLabels[gasColIndex][4].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].c2h6);
+                            gasLabels[gasColIndex][5].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].c2h4);
+                            gasLabels[gasColIndex][6].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].c2h2);
+                            gasLabels[gasColIndex][7].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].co);
+                            gasLabels[gasColIndex][8].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].co2);
+                            gasLabels[gasColIndex][9].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].o2);
+                            gasLabels[gasColIndex][10].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].n2);
+                            gasLabels[gasColIndex][11].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[xfmrDataIndex].o2_n2);
+                            Console.WriteLine("im adding to the table");
+                            // go to next column on gas analysis
+                            gasColIndex++;
+                        }
+                    xfmrDataIndex++;
+                    }
+                }
                 /*for (int i = 0; i < _xfmrs[xfmrIndex].data.Count; i++) {
                     // if we've run out of tests... 
                     if (i >= _xfmrs[xfmrIndex].data.Count) {
