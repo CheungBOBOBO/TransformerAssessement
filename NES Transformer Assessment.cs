@@ -348,7 +348,7 @@ namespace TransformerAssessment {
                 l_model.Text = _xfmrs[xfmrIndex].ltc.model;
                 l_oilPresType.Text = _xfmrs[xfmrIndex].ltc.oilPresType;
                 l_remarks.Text = _xfmrs[xfmrIndex].ltc.remarks;
-                l_opsCount.Text = "Not Yet Implemented";   // come back and have this look for the most recent opCount
+                l_opsCount.Text = string.Format("{0:N0}", _xfmrs[xfmrIndex].ltc.data[0].opCount);
             } // Selected SEL
             else if (equipmentType.Equals("SEL")) {
                 l_norm.Text = _xfmrs[xfmrIndex].sel.norm;
@@ -357,7 +357,7 @@ namespace TransformerAssessment {
                 l_model.Text = _xfmrs[xfmrIndex].sel.model;
                 l_oilPresType.Text = _xfmrs[xfmrIndex].sel.oilPresType;
                 l_remarks.Text = _xfmrs[xfmrIndex].sel.remarks;
-                l_opsCount.Text = "Not Yet Implemented";   // come back and have this look for the most recent opCount
+                l_opsCount.Text = string.Format("{0:N0}", _xfmrs[xfmrIndex].sel.data[0].opCount);
             } // Selected DIV
             else if (equipmentType.Equals("DIV")) {
                 l_norm.Text = _xfmrs[xfmrIndex].div.norm;
@@ -366,8 +366,10 @@ namespace TransformerAssessment {
                 l_model.Text = _xfmrs[xfmrIndex].div.model;
                 l_oilPresType.Text = _xfmrs[xfmrIndex].div.oilPresType;
                 l_remarks.Text = _xfmrs[xfmrIndex].div.remarks;
-                l_opsCount.Text = "Not Yet Implemented";   // come back and have this look for the most recent opCount
+                l_opsCount.Text = string.Format("{0:N0}", _xfmrs[xfmrIndex].div.data[0].opCount);
             }
+            if (l_opsCount.Text.Equals("-1"))
+                l_opsCount.Text = "Not Recorded";
         }
 
         // Update GAS ANALYSIS table

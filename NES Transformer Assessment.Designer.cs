@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menu_File = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_Quit = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +75,11 @@
             this.l_SelectedEquipment = new System.Windows.Forms.Label();
             this.panel_TOA_center = new System.Windows.Forms.Panel();
             this.tlp_Data_centerColumn = new System.Windows.Forms.TableLayoutPanel();
+            this.tlp_TOA_Moisture = new System.Windows.Forms.TableLayoutPanel();
+            this.l_moist_date = new System.Windows.Forms.Label();
+            this.l_moist_temp = new System.Windows.Forms.Label();
+            this.l_moist_moisture = new System.Windows.Forms.Label();
+            this.l_moist_relSat = new System.Windows.Forms.Label();
             this.tlp_TOA_FluidQuality = new System.Windows.Forms.TableLayoutPanel();
             this.l_fq_date = new System.Windows.Forms.Label();
             this.l_fq_temp = new System.Windows.Forms.Label();
@@ -123,11 +128,6 @@
             this.l_FAR_equipmentRemarks = new System.Windows.Forms.Label();
             this.equipmentSource = new System.Windows.Forms.BindingSource(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tlp_TOA_Moisture = new System.Windows.Forms.TableLayoutPanel();
-            this.l_moist_date = new System.Windows.Forms.Label();
-            this.l_moist_temp = new System.Windows.Forms.Label();
-            this.l_moist_moisture = new System.Windows.Forms.Label();
-            this.l_moist_relSat = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel_Config.SuspendLayout();
             this.panel_Analyze.SuspendLayout();
@@ -148,11 +148,11 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.panel_TOA_center.SuspendLayout();
             this.tlp_Data_centerColumn.SuspendLayout();
+            this.tlp_TOA_Moisture.SuspendLayout();
             this.tlp_TOA_FluidQuality.SuspendLayout();
             this.tlp_TOA_gasAnalysis.SuspendLayout();
             this.tlp_TOA_fluidAnalysisReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).BeginInit();
-            this.tlp_TOA_Moisture.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -469,40 +469,40 @@
             this.dg_NormDisplay.AllowUserToDeleteRows = false;
             this.dg_NormDisplay.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dg_NormDisplay.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dg_NormDisplay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dg_NormDisplay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dg_NormDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dg_NormDisplay.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dg_NormDisplay.DefaultCellStyle = dataGridViewCellStyle2;
             this.dg_NormDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dg_NormDisplay.Location = new System.Drawing.Point(198, 0);
             this.dg_NormDisplay.Margin = new System.Windows.Forms.Padding(0);
             this.dg_NormDisplay.Name = "dg_NormDisplay";
             this.dg_NormDisplay.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dg_NormDisplay.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dg_NormDisplay.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dg_NormDisplay.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dg_NormDisplay.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dg_NormDisplay.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dg_NormDisplay.Size = new System.Drawing.Size(702, 619);
             this.dg_NormDisplay.TabIndex = 11;
             // 
@@ -609,23 +609,23 @@
             this.dgv_EquipDisplay.AllowUserToResizeRows = false;
             this.dgv_EquipDisplay.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgv_EquipDisplay.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_EquipDisplay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_EquipDisplay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgv_EquipDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_EquipDisplay.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_EquipDisplay.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgv_EquipDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_EquipDisplay.Location = new System.Drawing.Point(136, 57);
             this.dgv_EquipDisplay.Margin = new System.Windows.Forms.Padding(0);
@@ -740,6 +740,80 @@
             this.tlp_Data_centerColumn.Size = new System.Drawing.Size(883, 983);
             this.tlp_Data_centerColumn.TabIndex = 2;
             this.tlp_Data_centerColumn.MouseEnter += new System.EventHandler(this.tlp_Data_MouseEnter);
+            // 
+            // tlp_TOA_Moisture
+            // 
+            this.tlp_TOA_Moisture.AutoSize = true;
+            this.tlp_TOA_Moisture.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tlp_TOA_Moisture.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tlp_TOA_Moisture.ColumnCount = 6;
+            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlp_TOA_Moisture.Controls.Add(this.l_moist_date, 0, 0);
+            this.tlp_TOA_Moisture.Controls.Add(this.l_moist_temp, 0, 1);
+            this.tlp_TOA_Moisture.Controls.Add(this.l_moist_moisture, 0, 2);
+            this.tlp_TOA_Moisture.Controls.Add(this.l_moist_relSat, 0, 3);
+            this.tlp_TOA_Moisture.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            this.tlp_TOA_Moisture.Location = new System.Drawing.Point(51, 786);
+            this.tlp_TOA_Moisture.Margin = new System.Windows.Forms.Padding(10, 3, 0, 0);
+            this.tlp_TOA_Moisture.Name = "tlp_TOA_Moisture";
+            this.tlp_TOA_Moisture.RowCount = 4;
+            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_TOA_Moisture.Size = new System.Drawing.Size(207, 85);
+            this.tlp_TOA_Moisture.TabIndex = 7;
+            // 
+            // l_moist_date
+            // 
+            this.l_moist_date.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.l_moist_date.AutoSize = true;
+            this.l_moist_date.Location = new System.Drawing.Point(4, 4);
+            this.l_moist_date.Name = "l_moist_date";
+            this.l_moist_date.Size = new System.Drawing.Size(71, 13);
+            this.l_moist_date.TabIndex = 0;
+            this.l_moist_date.Text = "Sample Date:";
+            // 
+            // l_moist_temp
+            // 
+            this.l_moist_temp.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.l_moist_temp.AutoSize = true;
+            this.l_moist_temp.Location = new System.Drawing.Point(4, 25);
+            this.l_moist_temp.Name = "l_moist_temp";
+            this.l_moist_temp.Size = new System.Drawing.Size(95, 13);
+            this.l_moist_temp.TabIndex = 1;
+            this.l_moist_temp.Text = "Fluid Temperature:";
+            this.l_moist_temp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // l_moist_moisture
+            // 
+            this.l_moist_moisture.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.l_moist_moisture.AutoSize = true;
+            this.l_moist_moisture.Location = new System.Drawing.Point(4, 46);
+            this.l_moist_moisture.Name = "l_moist_moisture";
+            this.l_moist_moisture.Size = new System.Drawing.Size(50, 13);
+            this.l_moist_moisture.TabIndex = 2;
+            this.l_moist_moisture.Text = "Moisture:";
+            // 
+            // l_moist_relSat
+            // 
+            this.l_moist_relSat.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.l_moist_relSat.AutoSize = true;
+            this.l_moist_relSat.Location = new System.Drawing.Point(4, 67);
+            this.l_moist_relSat.Name = "l_moist_relSat";
+            this.l_moist_relSat.Size = new System.Drawing.Size(100, 13);
+            this.l_moist_relSat.TabIndex = 3;
+            this.l_moist_relSat.Text = "Relative Saturation:";
             // 
             // tlp_TOA_FluidQuality
             // 
@@ -1088,6 +1162,7 @@
             // 
             // tlp_TOA_fluidAnalysisReport
             // 
+            this.tlp_TOA_fluidAnalysisReport.AutoSize = true;
             this.tlp_TOA_fluidAnalysisReport.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tlp_TOA_fluidAnalysisReport.ColumnCount = 2;
             this.tlp_TOA_fluidAnalysisReport.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
@@ -1123,7 +1198,7 @@
             this.tlp_TOA_fluidAnalysisReport.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlp_TOA_fluidAnalysisReport.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlp_TOA_fluidAnalysisReport.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_fluidAnalysisReport.Size = new System.Drawing.Size(400, 190);
+            this.tlp_TOA_fluidAnalysisReport.Size = new System.Drawing.Size(221, 190);
             this.tlp_TOA_fluidAnalysisReport.TabIndex = 4;
             // 
             // l_remarks
@@ -1311,80 +1386,6 @@
             this.openFileDialog.FileName = "openFileDialog";
             this.openFileDialog.InitialDirectory = "Application.StartupPath";
             // 
-            // tlp_TOA_Moisture
-            // 
-            this.tlp_TOA_Moisture.AutoSize = true;
-            this.tlp_TOA_Moisture.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tlp_TOA_Moisture.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tlp_TOA_Moisture.ColumnCount = 6;
-            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlp_TOA_Moisture.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlp_TOA_Moisture.Controls.Add(this.l_moist_date, 0, 0);
-            this.tlp_TOA_Moisture.Controls.Add(this.l_moist_temp, 0, 1);
-            this.tlp_TOA_Moisture.Controls.Add(this.l_moist_moisture, 0, 2);
-            this.tlp_TOA_Moisture.Controls.Add(this.l_moist_relSat, 0, 3);
-            this.tlp_TOA_Moisture.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tlp_TOA_Moisture.Location = new System.Drawing.Point(51, 786);
-            this.tlp_TOA_Moisture.Margin = new System.Windows.Forms.Padding(10, 3, 0, 0);
-            this.tlp_TOA_Moisture.Name = "tlp_TOA_Moisture";
-            this.tlp_TOA_Moisture.RowCount = 4;
-            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_Moisture.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlp_TOA_Moisture.Size = new System.Drawing.Size(207, 85);
-            this.tlp_TOA_Moisture.TabIndex = 7;
-            // 
-            // l_moist_date
-            // 
-            this.l_moist_date.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.l_moist_date.AutoSize = true;
-            this.l_moist_date.Location = new System.Drawing.Point(4, 4);
-            this.l_moist_date.Name = "l_moist_date";
-            this.l_moist_date.Size = new System.Drawing.Size(71, 13);
-            this.l_moist_date.TabIndex = 0;
-            this.l_moist_date.Text = "Sample Date:";
-            // 
-            // l_moist_temp
-            // 
-            this.l_moist_temp.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.l_moist_temp.AutoSize = true;
-            this.l_moist_temp.Location = new System.Drawing.Point(4, 25);
-            this.l_moist_temp.Name = "l_moist_temp";
-            this.l_moist_temp.Size = new System.Drawing.Size(95, 13);
-            this.l_moist_temp.TabIndex = 1;
-            this.l_moist_temp.Text = "Fluid Temperature:";
-            this.l_moist_temp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // l_moist_moisture
-            // 
-            this.l_moist_moisture.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.l_moist_moisture.AutoSize = true;
-            this.l_moist_moisture.Location = new System.Drawing.Point(4, 46);
-            this.l_moist_moisture.Name = "l_moist_moisture";
-            this.l_moist_moisture.Size = new System.Drawing.Size(50, 13);
-            this.l_moist_moisture.TabIndex = 2;
-            this.l_moist_moisture.Text = "Moisture:";
-            // 
-            // l_moist_relSat
-            // 
-            this.l_moist_relSat.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.l_moist_relSat.AutoSize = true;
-            this.l_moist_relSat.Location = new System.Drawing.Point(4, 67);
-            this.l_moist_relSat.Name = "l_moist_relSat";
-            this.l_moist_relSat.Size = new System.Drawing.Size(100, 13);
-            this.l_moist_relSat.TabIndex = 3;
-            this.l_moist_relSat.Text = "Relative Saturation:";
-            // 
             // FormHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1425,6 +1426,8 @@
             this.panel_TOA_center.PerformLayout();
             this.tlp_Data_centerColumn.ResumeLayout(false);
             this.tlp_Data_centerColumn.PerformLayout();
+            this.tlp_TOA_Moisture.ResumeLayout(false);
+            this.tlp_TOA_Moisture.PerformLayout();
             this.tlp_TOA_FluidQuality.ResumeLayout(false);
             this.tlp_TOA_FluidQuality.PerformLayout();
             this.tlp_TOA_gasAnalysis.ResumeLayout(false);
@@ -1432,8 +1435,6 @@
             this.tlp_TOA_fluidAnalysisReport.ResumeLayout(false);
             this.tlp_TOA_fluidAnalysisReport.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).EndInit();
-            this.tlp_TOA_Moisture.ResumeLayout(false);
-            this.tlp_TOA_Moisture.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
