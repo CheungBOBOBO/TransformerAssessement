@@ -86,7 +86,7 @@ namespace TransformerAssessment {
             if (dr == DialogResult.OK && validNormFolder(openFolderDialog.SelectedPath)) {
                 tb_NormsFolder_BG.Text = openFolderDialog.SelectedPath;
                 Properties.Settings.Default.NormFolderPath = openFolderDialog.SelectedPath;
-                TransformerAssessment.equipmentFile = Properties.Settings.Default.NormFolderPath;
+                TransformerAssessment.normDir = Properties.Settings.Default.NormFolderPath;
             }
             return tb_NormsFolder_BG.Text;
         }
