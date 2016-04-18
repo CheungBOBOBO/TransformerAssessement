@@ -26,14 +26,18 @@ namespace TransformerAssessment.Core.Helpers {
         public static List<string[]> ltcs = new List<string[]>();
         // vars used to access equipment values
         public static int equipnumIndex;
+        public static int serialnumIndex;
+        public static int norm_nameIndex;
+        public static int mfrIndex;
+        public static int year_mfgIndex;
+        public static int modelIndex;
+        public static int oilpresIndex;
+        public static int eqp_remarksIndex;
+        public static int designationIndex;
+        public static int substn_nameIndex;
         public static int region_nameIndex;
         public static int owner_nameIndex;
         public static int apprtypeIndex;
-        public static int designationIndex;
-        public static int substn_nameIndex;
-        public static int mfrIndex;
-        public static int norm_nameIndex;
-        public static int year_mfgIndex;
 
         // vars used for index of variables in Norms
         private static List<int> normVarIndixes = new List<int>();
@@ -80,14 +84,18 @@ namespace TransformerAssessment.Core.Helpers {
                 while (csv.ReadNextRecord()) {
                     if (isFirstLine) {
                         equipnumIndex = csv.GetFieldIndex("equipnum");
-                        region_nameIndex = csv.GetFieldIndex("region_name");
-                        owner_nameIndex = csv.GetFieldIndex("owner_name");
-                        apprtypeIndex = csv.GetFieldIndex("apprtype");
-                        designationIndex = csv.GetFieldIndex("designation");
-                        substn_nameIndex = csv.GetFieldIndex("substn_name");
+                        serialnumIndex = csv.GetFieldIndex("serialnum");
                         norm_nameIndex = csv.GetFieldIndex("norm_name");
                         mfrIndex = csv.GetFieldIndex("mfr");
                         year_mfgIndex = csv.GetFieldIndex("year_mfg");
+                        modelIndex = csv.GetFieldIndex("model");
+                        oilpresIndex = csv.GetFieldIndex("oilpres");
+                        eqp_remarksIndex = csv.GetFieldIndex("eqp_remarks");
+                        designationIndex = csv.GetFieldIndex("designation");
+                        substn_nameIndex = csv.GetFieldIndex("substn_name");
+                        region_nameIndex = csv.GetFieldIndex("region_name");
+                        owner_nameIndex = csv.GetFieldIndex("owner_name");
+                        apprtypeIndex = csv.GetFieldIndex("apprtype");
                         
                         isFirstLine = false;
                     }

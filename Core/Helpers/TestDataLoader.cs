@@ -41,6 +41,7 @@ namespace TransformerAssessment.Core.Helpers {
         public static int c2h4_c2h2_index;
         public static int c2h6_ch4_index;
         public static int o2_n2_index;
+        public static int temp_index;
         public static int[] wantedIndices = new int[22];  // 22 indexes that we want 
 
 
@@ -105,6 +106,7 @@ namespace TransformerAssessment.Core.Helpers {
                         c2h4_c2h2_index = csv.GetFieldIndex("c2h4/c2h2");
                         c2h6_ch4_index = csv.GetFieldIndex("c2h6/ch4");
                         o2_n2_index = csv.GetFieldIndex("o2/n2");
+                        temp_index = csv.GetFieldIndex("fluidtempc");
 
                         wantedIndices[0] = date_index;
                         wantedIndices[1] = opCount_index;

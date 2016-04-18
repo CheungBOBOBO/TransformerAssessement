@@ -8,15 +8,20 @@ using TransformerAssessment.Core.Helpers;
 namespace TransformerAssessment.Core.Managers {
     class TapChanger {
         public List<TestData> data = new List<TestData>();
-
         public string norm;
         public string manufacturer;
         public string yearMade;
+        public string oilPresType;
+        public string remarks;
+        public string model;
 
         public TapChanger(string[] ltc) {
             norm = ltc[EquipmentLoader.norm_nameIndex];
             manufacturer = ltc[EquipmentLoader.mfrIndex];
             yearMade = ltc[EquipmentLoader.year_mfgIndex];
+            oilPresType = ltc[EquipmentLoader.oilpresIndex];
+            remarks = ltc[EquipmentLoader.eqp_remarksIndex];
+            model = ltc[EquipmentLoader.modelIndex];
         }
 
         public void addData(string[] data) {

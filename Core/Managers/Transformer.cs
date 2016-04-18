@@ -10,11 +10,14 @@ using TransformerAssessment.Core.Helpers;
 namespace TransformerAssessment.Core.Managers {
     class Transformer {
         private string equipID;
-        private string substn_name;
-        private string designation;
+        public string serialNum;
         public string norm;
         public string manufacturer;
         public string yearMade;
+        public string oilPresType;
+        public string remarks;
+        private string substn_name;
+        private string designation;
         public string[] rawXFMR;
 
         public string[] equipmentHeaders = null;
@@ -29,21 +32,29 @@ namespace TransformerAssessment.Core.Managers {
 
         public Transformer(string[] transformer) {
             equipID = transformer[EquipmentLoader.equipnumIndex];
-            substn_name = transformer[EquipmentLoader.substn_nameIndex];
-            designation = transformer[EquipmentLoader.designationIndex];
+            serialNum = transformer[EquipmentLoader.serialnumIndex];
+            norm = transformer[EquipmentLoader.norm_nameIndex];
             manufacturer = transformer[EquipmentLoader.mfrIndex];
             yearMade = transformer[EquipmentLoader.year_mfgIndex];
-            norm = transformer[EquipmentLoader.norm_nameIndex];
+            oilPresType = transformer[EquipmentLoader.oilpresIndex];
+            remarks = transformer[EquipmentLoader.eqp_remarksIndex];
+            substn_name = transformer[EquipmentLoader.substn_nameIndex];
+            designation = transformer[EquipmentLoader.designationIndex];
+
             equipmentHeaders = EquipmentLoader.headers;
         }
 
         public Transformer(string[] transformer, string[] ltc, string[] sel, string[] div) {
             equipID = transformer[EquipmentLoader.equipnumIndex];
-            substn_name = transformer[EquipmentLoader.substn_nameIndex];
-            designation = transformer[EquipmentLoader.designationIndex];
+            serialNum = transformer[EquipmentLoader.serialnumIndex];
+            norm = transformer[EquipmentLoader.norm_nameIndex];
             manufacturer = transformer[EquipmentLoader.mfrIndex];
             yearMade = transformer[EquipmentLoader.year_mfgIndex];
-            norm = transformer[EquipmentLoader.norm_nameIndex];
+            oilPresType = transformer[EquipmentLoader.oilpresIndex];
+            remarks = transformer[EquipmentLoader.eqp_remarksIndex];
+            substn_name = transformer[EquipmentLoader.substn_nameIndex];
+            designation = transformer[EquipmentLoader.designationIndex];
+
             equipmentHeaders = EquipmentLoader.headers;
 
             rawXFMR = transformer;

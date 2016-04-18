@@ -12,6 +12,10 @@ namespace TransformerAssessment.Core.Managers {
         #region [Instance Variables]
         public string[] rawData;
 
+        public bool hasGasData;
+        public bool hasFQData;
+        public bool hasMoistureData;
+
         public string date;
         public DateTime _date;
         public int opCount = -1;     // operation count
@@ -35,6 +39,7 @@ namespace TransformerAssessment.Core.Managers {
         public double c2h4_c2h2 = -1;// ethylene to acetylene ratio
         public double c2h6_ch4 = -1; // ethane to methane ratio
         public double o2_n2 = -1;    // oxygen to nitrogen ratio
+        public double temp = -1;        // fluid temperature
         #endregion
 
         public TestData(string[] raw) {
@@ -78,6 +83,23 @@ namespace TransformerAssessment.Core.Managers {
             else
                 c2h6_ch4 = (double)c2h6 / ch4;
             o2_n2 = Convert.ToDouble(rawData[TestDataLoader.o2_n2_index]);
+            temp = Convert.ToDouble(rawData[TestDataLoader.temp_index]);
+
+            hasGasData = hasGasTest();
+            hasFQData = hasFQTest();
+            hasMoistureData = hasMoistureTest();
+        }
+
+        private bool hasGasTest() {
+            return h2 >= 0;
+        }
+
+        private bool hasFQTest() {
+            return color >= 0;
+        }
+
+        private bool hasMoistureTest() {
+            return water >= 0;
         }
 
         public string[] toStringArray() {

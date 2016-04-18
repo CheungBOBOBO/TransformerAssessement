@@ -23,7 +23,8 @@ namespace TransformerAssessment {
         DataTable dt_Norms = new DataTable();
 
         DataTable dt_Equipment = new DataTable();
-        //BindingSource EquipmentSource = new BindingSource();
+
+        Label[][] gasLabels = new Label[5][];
 
         public FormHome() {
             InitializeComponent();
@@ -49,6 +50,7 @@ namespace TransformerAssessment {
             tb_TestDataFile_BG.Text = TransformerAssessment.testDataFile;
             updateNormsListLB();
             initializeEquipmentSelect();
+            createGasLabels();
         }
 
         private void menu_Quit_Click(object sender, EventArgs e) {
@@ -240,16 +242,16 @@ namespace TransformerAssessment {
 
             // update DataGridView
             updateEquipmentDataTable(selectedIndex, cb_xfmrEquipSelect.SelectedIndex);
+            updateTOA(selectedIndex, cb_xfmrEquipSelect.SelectedIndex);
         }
 
         private void cb_xfmrEquipSelect_SelectedIndexChanged(object sender, EventArgs e) {
             int xfmrIndex = cb_xfmrSelection.SelectedIndex;
             int xfmrEquipIndex = cb_xfmrEquipSelect.SelectedIndex;
 
-            // update Selected Equipment text on Data tab
-            l_SelectedEquipment.Text = string.Format("{0}  -  {1}  -  {2}", _xfmrs[xfmrIndex].getLocation(), _xfmrs[xfmrIndex].getPosition(), cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString());
             // update the data table
             updateEquipmentDataTable(xfmrIndex, xfmrEquipIndex);
+            updateTOA(xfmrIndex, xfmrEquipIndex);
         }
 
         private void updateEquipmentDataTable(int xfmrIndex, int xfmrEquipIndex) {
@@ -299,8 +301,178 @@ namespace TransformerAssessment {
             // update Selected Equipment text on Data tab
             l_SelectedEquipment.Text = string.Format("{0}  -  {1}  -  {2}", _xfmrs[0].getLocation(), _xfmrs[0].getPosition(), cb_xfmrEquipSelect.Items[0].ToString());
 
-            // update DataGridView
+            // update DataGridView & TOA tab
             updateEquipmentDataTable(0, 0);
+            updateTOA(0, 0);
+        }
+        #endregion
+
+        #region [Methods] Updating TOA tab info
+        private void updateTOA(int xfmrIndex, int xfmrEquipIndex) {
+            string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
+            // update Selected Equipment text on Data tab
+            l_SelectedEquipment.Text = string.Format("{0}  -  {1}  -  {2}", _xfmrs[xfmrIndex].getLocation(), _xfmrs[xfmrIndex].getPosition(), cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString());
+            
+            updateFluidReport(xfmrIndex, xfmrEquipIndex);
+            updateGasAnalysis(xfmrIndex, xfmrEquipIndex);
+            updateFluidQuality(xfmrIndex, xfmrEquipIndex);
+            updateMoisture(xfmrIndex, xfmrEquipIndex);
+        }
+
+        // Update FLUID ANALYSIS REPORT table
+        private void updateFluidReport(int xfmrIndex, int xfmrEquipIndex) {
+            string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
+
+            l_equipNum.Text = _xfmrs[xfmrIndex].getID();
+            l_serialNum.Text = _xfmrs[xfmrIndex].serialNum;
+            // Selected XFMR
+            if (equipmentType.Equals("XFMR")) {
+                l_norm.Text = _xfmrs[xfmrIndex].norm;
+                l_mfr.Text = _xfmrs[xfmrIndex].manufacturer;
+                l_yearMfg.Text = _xfmrs[xfmrIndex].yearMade;
+                l_model.Text = "";
+                l_oilPresType.Text = _xfmrs[xfmrIndex].oilPresType;
+                l_remarks.Text = _xfmrs[xfmrIndex].remarks;
+                l_opsCount.Text = "";
+            } // Selected LTC
+            else if (equipmentType.Equals("LTC")) {
+                l_norm.Text = _xfmrs[xfmrIndex].ltc.norm;
+                l_mfr.Text = _xfmrs[xfmrIndex].ltc.manufacturer;
+                l_yearMfg.Text = _xfmrs[xfmrIndex].ltc.yearMade;
+                l_model.Text = _xfmrs[xfmrIndex].ltc.model;
+                l_oilPresType.Text = _xfmrs[xfmrIndex].ltc.oilPresType;
+                l_remarks.Text = _xfmrs[xfmrIndex].ltc.remarks;
+                l_opsCount.Text = "Not Yet Implemented";   // come back and have this look for the most recent opCount
+            } // Selected SEL
+            else if (equipmentType.Equals("SEL")) {
+                l_norm.Text = _xfmrs[xfmrIndex].sel.norm;
+                l_mfr.Text = _xfmrs[xfmrIndex].sel.manufacturer;
+                l_yearMfg.Text = _xfmrs[xfmrIndex].sel.yearMade;
+                l_model.Text = _xfmrs[xfmrIndex].sel.model;
+                l_oilPresType.Text = _xfmrs[xfmrIndex].sel.oilPresType;
+                l_remarks.Text = _xfmrs[xfmrIndex].sel.remarks;
+                l_opsCount.Text = "Not Yet Implemented";   // come back and have this look for the most recent opCount
+            } // Selected DIV
+            else if (equipmentType.Equals("DIV")) {
+                l_norm.Text = _xfmrs[xfmrIndex].div.norm;
+                l_mfr.Text = _xfmrs[xfmrIndex].div.manufacturer;
+                l_yearMfg.Text = _xfmrs[xfmrIndex].div.yearMade;
+                l_model.Text = _xfmrs[xfmrIndex].div.model;
+                l_oilPresType.Text = _xfmrs[xfmrIndex].div.oilPresType;
+                l_remarks.Text = _xfmrs[xfmrIndex].div.remarks;
+                l_opsCount.Text = "Not Yet Implemented";   // come back and have this look for the most recent opCount
+            }
+        }
+
+        // Update GAS ANALYSIS table
+        private void updateGasAnalysis(int xfmrIndex, int xfmrEquipIndex) {
+            string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
+            
+            TestData[] testsToDisplay = new TestData[5];
+            // Selected XFMR
+            if (equipmentType.Equals("XFMR")) {
+                if (_xfmrs[xfmrIndex].data.Count == 0) {
+                    resetGasLabels();
+                    return;
+                }
+                int gasColIndex = 0;
+                /*for (int i = 0; i < _xfmrs[xfmrIndex].data.Count; i++) {
+                    // if we've run out of tests... 
+                    if (i >= _xfmrs[xfmrIndex].data.Count) {
+                        for (int row = 0; row < gasLabels[i].Length; row++)
+                            gasLabels[i][row].Text = "";
+                        // go to next column on gas analysis
+                        gasColIndex++;
+                    } else {
+                        // not out of tests...
+                        // is test that has Gas Data
+                        if (_xfmrs[xfmrIndex].data[i].hasGasData) {
+                            gasLabels[gasColIndex][0].Text = _xfmrs[xfmrIndex].data[i].date;
+                            gasLabels[gasColIndex][1].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].temp);
+                            gasLabels[gasColIndex][2].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].h2);
+                            gasLabels[gasColIndex][3].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].ch4);
+                            gasLabels[gasColIndex][4].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].c2h6);
+                            gasLabels[gasColIndex][5].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].c2h4);
+                            gasLabels[gasColIndex][6].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].c2h2);
+                            gasLabels[gasColIndex][7].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].co);
+                            gasLabels[gasColIndex][8].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].co2);
+                            gasLabels[gasColIndex][9].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].o2);
+                            gasLabels[gasColIndex][10].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].n2);
+                            gasLabels[gasColIndex][11].Text = string.Format("{0}",_xfmrs[xfmrIndex].data[i].o2_n2);
+                            // go to next column on gas analysis
+                            Console.WriteLine("im adding to the table");
+                            gasColIndex++;
+                        } else {
+                            // does not have valid gas data
+                            // do nothing, let i increment to next TestData
+                        }
+                    }
+                }*/
+            } // Selected LTC
+            else if (equipmentType.Equals("LTC")) {
+                if (_xfmrs[xfmrIndex].ltc.data.Count == 0)
+                    return;
+            } // Selected SEL
+            else if (equipmentType.Equals("SEL")) {
+                if (_xfmrs[xfmrIndex].sel.data.Count == 0)
+                    return;
+            } // Selected DIV
+            else if (equipmentType.Equals("DIV")) {
+                if (_xfmrs[xfmrIndex].div.data.Count == 0)
+                    return;
+            }
+        }
+
+        // Update FLUID QUALITY table
+        private void updateFluidQuality(int xfmrIndex, int xfmrEquipIndex) {
+            string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
+
+            string[] testsToDisplay = new string[5];
+
+
+        }
+
+        // Update MOISTURE table
+        private void updateMoisture(int xfmrIndex, int xfmrEquipIndex) {
+            string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
+
+            string[] testsToDisplay = new string[5];
+
+
+        }
+
+        // initialize gas labels in the TableLayoutPanel for Gas Analysis
+        private void createGasLabels() {
+            // create 12 labels to go with each column
+            for (int i = 0; i < gasLabels.Length; i++) {
+                gasLabels[i] = new Label[12];
+            }
+            // assign attributes to each label
+            for (int col = 0; col < gasLabels.Length; col++) {
+                for (int row = 0; row < gasLabels[0].Length; row++) {
+                    gasLabels[col][row] = new System.Windows.Forms.Label(); // create the label
+                    if (row == 0) {
+                        gasLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.Left;
+                        gasLabels[col][row].AutoSize = true;
+                        gasLabels[col][row].Text = string.Format("{0},{1}", col, row);
+                        gasLabels[col][row].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                    } else {
+                        gasLabels[col][row].Anchor = System.Windows.Forms.AnchorStyles.Left;
+                        gasLabels[col][row].AutoSize = true;
+                        gasLabels[col][row].Text = string.Format("{0},{1}", col, row);
+                        gasLabels[col][row].TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+                    }
+                    tlp_TOA_gasAnalysis.Controls.Add(gasLabels[col][row], col+1, row);  // assign it to a spot on the gas analysis chart
+                }
+            }
+        }
+
+        private void resetGasLabels() {
+            for (int col = 0; col < gasLabels.Length; col++) {
+                for (int row = 0; row < gasLabels.Length; row++) {
+                    gasLabels[col][row].Text = "";
+                }
+            }
         }
         #endregion
 
@@ -315,13 +487,18 @@ namespace TransformerAssessment {
 
         private void b_RefreshEquipment_Click(object sender, EventArgs e) {
             EquipmentLoader.updateEquipment();
-            EquipmentLoader.updateEquipment();
+            TestDataLoader.updateTestData();
+            _xfmrs = EquipmentLoader.getTransformers();
         }
 
         private void b_RefreshTestData_Click(object sender, EventArgs e) {
             TestDataLoader.updateTestData();
-            EquipmentLoader.updateEquipment();
         }
+
+        private void tlp_Data_MouseEnter(object sender, EventArgs e) {
+            panel_TOA_center.Focus();
+        }
+
 
         #region [Test Methods]
         
