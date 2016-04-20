@@ -33,25 +33,35 @@ namespace TransformerAssessment {
         }
 
         private void FormHome_Load(object sender, EventArgs e) {
-            if (!string.IsNullOrWhiteSpace(TransformerAssessment.normDir))
+            // create TOA tab labels
+            createGasLabels();
+            createFQLabels();
+            createMoistureLabels();
+            // try to load norms
+            if (!string.IsNullOrWhiteSpace(TransformerAssessment.normDir)) {
                 NormLoader.initializeNorms();
-            else
+                tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
+                updateNormsListLB();
+            } else {
                 System.Windows.Forms.MessageBox.Show("Norm folder is not valid. Please choose a valid folder.");
-
-            if (!string.IsNullOrWhiteSpace(TransformerAssessment.equipmentFile))
+                tb_NormsFolder_BG.Text = "";
+            }
+            // try to load equipment
+            if (!string.IsNullOrWhiteSpace(TransformerAssessment.equipmentFile)) {
                 EquipmentLoader.initializeEquipment();
-            if (!string.IsNullOrWhiteSpace(TransformerAssessment.equipmentFile) && !string.IsNullOrWhiteSpace(TransformerAssessment.testDataFile))
+                tb_EquipmentFile_BG.Text = TransformerAssessment.equipmentFile;
+            } else {
+                tb_EquipmentFile_BG.Text = "";
+            }
+            // try to load test data
+            if (!string.IsNullOrWhiteSpace(TransformerAssessment.equipmentFile) && !string.IsNullOrWhiteSpace(TransformerAssessment.testDataFile)) {
                 TestDataLoader.initializeTestData();
-            else
+                tb_TestDataFile_BG.Text = TransformerAssessment.testDataFile;
+                initializeEquipmentSelect();
+            } else {
                 System.Windows.Forms.MessageBox.Show("Equipment and/or Test Data files are not valid. Please choose a valid file.");
-            TransformerAssessment.normDir = NormLoader.getNormsDir();
-            //string[] normList = NormLoader.getNormsPathList();
-
-            tb_NormsFolder_BG.Text = TransformerAssessment.normDir;
-            tb_EquipmentFile_BG.Text = TransformerAssessment.equipmentFile;
-            tb_TestDataFile_BG.Text = TransformerAssessment.testDataFile;
-            updateNormsListLB();
-            initializeEquipmentSelect();
+                tb_TestDataFile_BG.Text = "";
+            }
         }
 
         private void menu_Quit_Click(object sender, EventArgs e) {
@@ -65,18 +75,14 @@ namespace TransformerAssessment {
 
         private void button_NormsFolder_Click(object sender, EventArgs e) {
             TransformerAssessment.normDir = chooseNormFolder();
-            NormLoader.updateNorms();
-            updateNormsListLB();
         }
 
         private void button_EquipmentFile_Click(object sender, EventArgs e) {
             TransformerAssessment.equipmentFile = chooseEquipmentFile();
-            EquipmentLoader.updateEquipment();
         }
 
         private void button_TestDataFile_Click(object sender, EventArgs e) {
             TransformerAssessment.testDataFile = chooseTestDataFile();
-            EquipmentLoader.updateEquipment();
         }
 
         #region [Methods] - form support methods
@@ -88,6 +94,8 @@ namespace TransformerAssessment {
                 tb_NormsFolder_BG.Text = openFolderDialog.SelectedPath;
                 Properties.Settings.Default.NormFolderPath = openFolderDialog.SelectedPath;
                 TransformerAssessment.normDir = Properties.Settings.Default.NormFolderPath;
+                NormLoader.updateNorms();
+                updateNormsListLB();
             }
             return tb_NormsFolder_BG.Text;
         }
@@ -126,6 +134,7 @@ namespace TransformerAssessment {
                 TestDataLoader.updateTestData();
             }
             return tb_TestDataFile_BG.Text;
+            initializeEquipmentSelect();
         }
 
         #region [Methods] Folder/File Validation
@@ -198,6 +207,9 @@ namespace TransformerAssessment {
         // When user selects a different norm index on Config Tab
         private void lb_NormSelect_SelectedIndexChanged(object sender, EventArgs e) {
             int selectedIndex = lb_NormSelect.SelectedIndex;
+            // return if index out of bounds
+            if (selectedIndex < 0 || selectedIndex >= _norms.Length)
+                return;
             string selectedNormName = _norms[selectedIndex].name;
             Norm selectedNorm = _norms[selectedIndex];
 
@@ -242,8 +254,10 @@ namespace TransformerAssessment {
                 cb_xfmrEquipSelect.SelectedIndex = 0;
 
             // update DataGridView
-            updateEquipmentDataTable(selectedIndex, cb_xfmrEquipSelect.SelectedIndex);
-            updateTOA(selectedIndex, cb_xfmrEquipSelect.SelectedIndex);
+            if (TestDataLoader.rawData.Count > 0) {
+                updateEquipmentDataTable(selectedIndex, cb_xfmrEquipSelect.SelectedIndex);
+                updateTOA(selectedIndex, cb_xfmrEquipSelect.SelectedIndex);
+            }
         }
 
         private void cb_xfmrEquipSelect_SelectedIndexChanged(object sender, EventArgs e) {
@@ -251,8 +265,10 @@ namespace TransformerAssessment {
             int xfmrEquipIndex = cb_xfmrEquipSelect.SelectedIndex;
 
             // update the data table
-            updateEquipmentDataTable(xfmrIndex, xfmrEquipIndex);
-            updateTOA(xfmrIndex, xfmrEquipIndex);
+            if (TestDataLoader.rawData.Count > 0) {
+                updateEquipmentDataTable(xfmrIndex, xfmrEquipIndex);
+                updateTOA(xfmrIndex, xfmrEquipIndex);
+            }
         }
 
         private void updateEquipmentDataTable(int xfmrIndex, int xfmrEquipIndex) {
@@ -287,7 +303,7 @@ namespace TransformerAssessment {
 
         public void initializeEquipmentSelect() {
             updateXFMR_CB();
-
+            _xfmrs = EquipmentLoader.getTransformers();
             // fill in XFMR Equipment combobox
             cb_xfmrEquipSelect.Items.Clear();
             cb_xfmrEquipSelect.Items.Add("XFMR");
@@ -303,13 +319,13 @@ namespace TransformerAssessment {
             l_SelectedEquipment.Text = string.Format("{0}  -  {1}  -  {2}", _xfmrs[0].getLocation(), _xfmrs[0].getPosition(), cb_xfmrEquipSelect.Items[0].ToString());
 
             // update DataGridView & TOA tab
-            updateEquipmentDataTable(0, 0);
+            if (TestDataLoader.rawData.Count > 0)
+                updateEquipmentDataTable(0, 0);
             // create labels for TOA tables and then update them to the default XFMR
-            createGasLabels();
-            createFQLabels();
-            createMoistureLabels();
-            if (_xfmrs.Count > 0)
+            if (TestDataLoader.rawData.Count > 0 && _xfmrs.Count > 0) {
+                updateEquipmentDataTable(0, 0);
                 updateTOA(0, 0);
+            }
         }
         #endregion
 
@@ -905,18 +921,26 @@ namespace TransformerAssessment {
         }
 
         private void b_RefreshNorms_Click(object sender, EventArgs e) {
-            NormLoader.updateNorms();
-            updateNormsListLB();
+            if (!string.IsNullOrWhiteSpace(TransformerAssessment.normDir)) {
+                NormLoader.updateNorms();
+                updateNormsListLB();
+            }
         }
 
         private void b_RefreshEquipment_Click(object sender, EventArgs e) {
-            EquipmentLoader.updateEquipment();
-            TestDataLoader.updateTestData();
-            _xfmrs = EquipmentLoader.getTransformers();
+            if (!string.IsNullOrWhiteSpace(TransformerAssessment.equipmentFile)) {
+                EquipmentLoader.updateEquipment();
+                if (TestDataLoader.rawData.Count > 0)
+                    TestDataLoader.updateTestData();
+                _xfmrs = EquipmentLoader.getTransformers();
+                initializeEquipmentSelect();
+            }
         }
 
         private void b_RefreshTestData_Click(object sender, EventArgs e) {
             TestDataLoader.updateTestData();
+            if (_xfmrs.Count > 0)
+                initializeEquipmentSelect();
         }
 
         private void tlp_Data_MouseEnter(object sender, EventArgs e) {
