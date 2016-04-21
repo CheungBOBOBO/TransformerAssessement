@@ -1,13 +1,7 @@
-﻿using LumenWorks.Framework.IO.Csv;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TransformerAssessment.Core.Helpers;
+﻿using System;
+using TransformerAssessment.Core.Loaders;
 
-namespace TransformerAssessment.Core.Managers {
+namespace TransformerAssessment.Core.Objects {
     class TestData {
         #region [Instance Variables]
         public string[] rawData;

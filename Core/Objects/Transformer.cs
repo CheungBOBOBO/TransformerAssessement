@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-using TransformerAssessment.Core.Helpers;
+using TransformerAssessment.Core.Loaders;
 
-namespace TransformerAssessment.Core.Managers {
+namespace TransformerAssessment.Core.Objects {
     class Transformer {
         private string equipID;
         public string serialNum;

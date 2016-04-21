@@ -1,14 +1,8 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NL = TransformerAssessment.Core.Helpers.NormLoader;
 
-namespace TransformerAssessment.Core.Managers {
+namespace TransformerAssessment.Core.Objects {
     class Norm {
         public string name;
         public string[] conditions;    // high, low, etc

@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using TransformerAssessment;
-using TransformerAssessment.Core.Helpers;
-using TransformerAssessment.Core.Managers;
+using TransformerAssessment.Core.Loaders;
 using System.IO;
 using LumenWorks.Framework.IO.Csv;
+using TransformerAssessment.Core.Objects;
 
 namespace TransformerAssessment {
     public partial class FormHome : Form {
@@ -133,8 +128,8 @@ namespace TransformerAssessment {
                 TransformerAssessment.testDataFile = Properties.Settings.Default.TestDataFilePath;
                 TestDataLoader.updateTestData();
             }
-            return tb_TestDataFile_BG.Text;
             initializeEquipmentSelect();
+            return tb_TestDataFile_BG.Text;
         }
 
         #region [Methods] Folder/File Validation
@@ -258,6 +253,7 @@ namespace TransformerAssessment {
                 updateEquipmentDataTable(selectedIndex, cb_xfmrEquipSelect.SelectedIndex);
                 updateTOA(selectedIndex, cb_xfmrEquipSelect.SelectedIndex);
             }
+            tlp_XfmrEquipSelect.Focus();
         }
 
         private void cb_xfmrEquipSelect_SelectedIndexChanged(object sender, EventArgs e) {
@@ -269,6 +265,7 @@ namespace TransformerAssessment {
                 updateEquipmentDataTable(xfmrIndex, xfmrEquipIndex);
                 updateTOA(xfmrIndex, xfmrEquipIndex);
             }
+            tlp_XfmrEquipSelect.Focus();
         }
 
         private void updateEquipmentDataTable(int xfmrIndex, int xfmrEquipIndex) {
@@ -330,6 +327,7 @@ namespace TransformerAssessment {
         #endregion
 
         #region [Methods] Updating TOA tab info
+        // Method called to update the TOA tab
         private void updateTOA(int xfmrIndex, int xfmrEquipIndex) {
             string equipmentType = cb_xfmrEquipSelect.Items[xfmrEquipIndex].ToString();
             // update Selected Equipment text on Data tab

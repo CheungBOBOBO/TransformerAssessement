@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TransformerAssessment.Core.Helpers;
+using TransformerAssessment.Core.Loaders;
 
-namespace TransformerAssessment.Core.Managers {
+namespace TransformerAssessment.Core.Objects{
     class Diverter {
         public List<TestData> data = new List<TestData>();
         public string norm;

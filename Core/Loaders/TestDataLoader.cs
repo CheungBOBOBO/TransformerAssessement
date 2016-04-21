@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using TransformerAssessment.Core.Managers;
-using TransformerAssessment.Core.Helpers;
-using TransformerAssessment;
 using LumenWorks.Framework.IO.Csv;
 
-namespace TransformerAssessment.Core.Helpers {
+namespace TransformerAssessment.Core.Loaders {
     class TestDataLoader {
         #region [Variables] Class variables
         private static string testDataFile;   // file path (".....\test_data.csv")

@@ -129,11 +129,16 @@
             this.l_FAR_equipmentRemarks = new System.Windows.Forms.Label();
             this.equipmentSource = new System.Windows.Forms.BindingSource(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.tp_coefficients = new System.Windows.Forms.TabPage();
+            this.tlp_Coeff_bg = new System.Windows.Forms.TableLayoutPanel();
+            this.tlp_Coeff_center = new System.Windows.Forms.TableLayoutPanel();
+            this.tlp_Analyze_center = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1.SuspendLayout();
             this.panel_Config.SuspendLayout();
             this.panel_Analyze.SuspendLayout();
             this.tp_Main.SuspendLayout();
             this.tp_Analyze.SuspendLayout();
+            this.tlp_Analyze_bg.SuspendLayout();
             this.tp_Config.SuspendLayout();
             this.tlp_Config_bg.SuspendLayout();
             this.tlp_Config_folderSelect.SuspendLayout();
@@ -154,6 +159,8 @@
             this.tlp_TOA_gasAnalysis.SuspendLayout();
             this.tlp_TOA_fluidAnalysisReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).BeginInit();
+            this.tp_coefficients.SuspendLayout();
+            this.tlp_Coeff_bg.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -211,6 +218,7 @@
             this.tp_Main.Controls.Add(this.tp_Config);
             this.tp_Main.Controls.Add(this.tp_EquipmentSelect_bg);
             this.tp_Main.Controls.Add(this.tp_TOA);
+            this.tp_Main.Controls.Add(this.tp_coefficients);
             this.tp_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tp_Main.Location = new System.Drawing.Point(0, 0);
             this.tp_Main.Margin = new System.Windows.Forms.Padding(0);
@@ -238,12 +246,12 @@
             this.tlp_Analyze_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlp_Analyze_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 900F));
             this.tlp_Analyze_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_bg.Controls.Add(this.tlp_Analyze_center, 1, 0);
             this.tlp_Analyze_bg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlp_Analyze_bg.Location = new System.Drawing.Point(0, 0);
             this.tlp_Analyze_bg.Margin = new System.Windows.Forms.Padding(0);
             this.tlp_Analyze_bg.Name = "tlp_Analyze_bg";
-            this.tlp_Analyze_bg.RowCount = 2;
-            this.tlp_Analyze_bg.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_bg.RowCount = 1;
             this.tlp_Analyze_bg.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlp_Analyze_bg.Size = new System.Drawing.Size(1172, 708);
             this.tlp_Analyze_bg.TabIndex = 0;
@@ -584,6 +592,7 @@
             // cb_xfmrSelection
             // 
             this.cb_xfmrSelection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cb_xfmrSelection.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cb_xfmrSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_xfmrSelection.FormattingEnabled = true;
             this.cb_xfmrSelection.Location = new System.Drawing.Point(151, 3);
@@ -1387,6 +1396,64 @@
             this.openFileDialog.FileName = "openFileDialog";
             this.openFileDialog.InitialDirectory = "Application.StartupPath";
             // 
+            // tp_coefficients
+            // 
+            this.tp_coefficients.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.tp_coefficients.Controls.Add(this.tlp_Coeff_bg);
+            this.tp_coefficients.Location = new System.Drawing.Point(4, 22);
+            this.tp_coefficients.Name = "tp_coefficients";
+            this.tp_coefficients.Size = new System.Drawing.Size(1176, 712);
+            this.tp_coefficients.TabIndex = 4;
+            this.tp_coefficients.Text = "Assessment Coefficients";
+            // 
+            // tlp_Coeff_bg
+            // 
+            this.tlp_Coeff_bg.ColumnCount = 3;
+            this.tlp_Coeff_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Coeff_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 900F));
+            this.tlp_Coeff_bg.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Coeff_bg.Controls.Add(this.tlp_Coeff_center, 1, 0);
+            this.tlp_Coeff_bg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlp_Coeff_bg.Location = new System.Drawing.Point(0, 0);
+            this.tlp_Coeff_bg.Margin = new System.Windows.Forms.Padding(0);
+            this.tlp_Coeff_bg.Name = "tlp_Coeff_bg";
+            this.tlp_Coeff_bg.RowCount = 1;
+            this.tlp_Coeff_bg.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Coeff_bg.Size = new System.Drawing.Size(1176, 712);
+            this.tlp_Coeff_bg.TabIndex = 0;
+            // 
+            // tlp_Coeff_center
+            // 
+            this.tlp_Coeff_center.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.tlp_Coeff_center.ColumnCount = 2;
+            this.tlp_Coeff_center.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Coeff_center.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Coeff_center.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlp_Coeff_center.Location = new System.Drawing.Point(138, 0);
+            this.tlp_Coeff_center.Margin = new System.Windows.Forms.Padding(0);
+            this.tlp_Coeff_center.Name = "tlp_Coeff_center";
+            this.tlp_Coeff_center.RowCount = 2;
+            this.tlp_Coeff_center.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Coeff_center.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Coeff_center.Size = new System.Drawing.Size(900, 712);
+            this.tlp_Coeff_center.TabIndex = 0;
+            // 
+            // tlp_Analyze_center
+            // 
+            this.tlp_Analyze_center.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.tlp_Analyze_center.ColumnCount = 2;
+            this.tlp_Analyze_center.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_center.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_center.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlp_Analyze_center.Location = new System.Drawing.Point(136, 0);
+            this.tlp_Analyze_center.Margin = new System.Windows.Forms.Padding(0);
+            this.tlp_Analyze_center.Name = "tlp_Analyze_center";
+            this.tlp_Analyze_center.RowCount = 2;
+            this.tlp_Analyze_center.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_center.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_center.Size = new System.Drawing.Size(900, 708);
+            this.tlp_Analyze_center.TabIndex = 0;
+            // 
             // FormHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1408,6 +1475,7 @@
             this.panel_Analyze.ResumeLayout(false);
             this.tp_Main.ResumeLayout(false);
             this.tp_Analyze.ResumeLayout(false);
+            this.tlp_Analyze_bg.ResumeLayout(false);
             this.tp_Config.ResumeLayout(false);
             this.tlp_Config_bg.ResumeLayout(false);
             this.tlp_Config_folderSelect.ResumeLayout(false);
@@ -1438,6 +1506,8 @@
             this.tlp_TOA_fluidAnalysisReport.ResumeLayout(false);
             this.tlp_TOA_fluidAnalysisReport.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).EndInit();
+            this.tp_coefficients.ResumeLayout(false);
+            this.tlp_Coeff_bg.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1538,7 +1608,10 @@
         private System.Windows.Forms.Label l_moist_temp;
         private System.Windows.Forms.Label l_moist_moisture;
         private System.Windows.Forms.Label l_moist_relSat;
-
+        private System.Windows.Forms.TabPage tp_coefficients;
+        private System.Windows.Forms.TableLayoutPanel tlp_Coeff_bg;
+        private System.Windows.Forms.TableLayoutPanel tlp_Coeff_center;
+        private System.Windows.Forms.TableLayoutPanel tlp_Analyze_center;
     }
 }
 

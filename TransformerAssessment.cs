@@ -5,8 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using TransformerAssessment.Core.Helpers;
-
 namespace TransformerAssessment {
     static class TransformerAssessment {
         public static string normDir;
