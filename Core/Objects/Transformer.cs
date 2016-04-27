@@ -12,8 +12,8 @@ namespace TransformerAssessment.Core.Objects {
         public string yearMade;
         public string oilPresType;
         public string remarks;
-        private string substn_name;
-        private string designation;
+        public string substn_name;
+        public string designation;
         public string[] rawXFMR;
 
         /// <summary>

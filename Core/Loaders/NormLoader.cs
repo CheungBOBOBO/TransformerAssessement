@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Linq;
 
 using TransformerAssessment.Core.Objects;
 
@@ -40,6 +41,7 @@ namespace TransformerAssessment.Core.Loaders {
             norms = new Norm[normsPathList.Length];
             for (int i = 0; i < norms.Length; i++)
                 norms[i] = new Norm(normsPathList[i]);
+            //norms = norms.OrderBy(x => x.name).ToList();
         }
 
         #region [Methods] Getters

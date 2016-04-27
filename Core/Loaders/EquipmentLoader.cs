@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using TransformerAssessment.Core.Objects;
 using System.Windows.Forms;
 using System.IO;
@@ -147,6 +147,8 @@ namespace TransformerAssessment.Core.Loaders {
                         DIV = divs[j];
                 equipment.Add(new Transformer(xfmrs[i], LTC, SEL, DIV));
             }
+            // Sort the Transformers alphabetically
+            equipment = equipment.OrderBy(x => x.substn_name).ThenBy(x => x.designation).ToList();
             // creat xfmrNameList (array of XFMR locations & designations)
             xfmrNameList = new string[equipment.Count];
             for (int i = 0; i < equipment.Count; i++)

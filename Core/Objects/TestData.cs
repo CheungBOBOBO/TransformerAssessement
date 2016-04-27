@@ -120,7 +120,7 @@ namespace TransformerAssessment.Core.Objects {
             dataRow[16] = visual;
             dataRow[17] = "" + color;
             dataRow[18] = "" + ift;
-            dataRow[19] = "" + spGrav;
+            dataRow[19] = string.Format("{0:0.00}", spGrav);
             dataRow[20] = string.Format("{0:0.000}", c2h4_c2h2);
             dataRow[21] = string.Format("{0:0.000}", c2h6_ch4);
             dataRow[22] = string.Format("{0:0.000}", o2_n2);
