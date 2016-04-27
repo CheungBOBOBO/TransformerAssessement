@@ -123,9 +123,10 @@ namespace TransformerAssessment.Core.Loaders {
                         wantedIndices[16] = visual_index;
                         wantedIndices[17] = color_index;
                         wantedIndices[18] = ift_index;
-                        wantedIndices[19] = c2h4_c2h2_index;
-                        wantedIndices[20] = c2h6_ch4_index;
-                        wantedIndices[21] = o2_n2_index;
+                        wantedIndices[19] = sg_index;
+                        wantedIndices[20] = c2h4_c2h2_index;
+                        wantedIndices[21] = c2h6_ch4_index;
+                        wantedIndices[22] = o2_n2_index;
 
                         isFirstLine = false;
                     }
