@@ -13,6 +13,11 @@ namespace TransformerAssessment.Core.Objects {
         public string remarks;
         public string model;
 
+        /// <summary>
+        /// Calculated health of the LTC object
+        /// </summary>
+        public double Health { get; set; }
+
         public TapChanger(string[] ltc) {
             norm = ltc[EquipmentLoader.norm_nameIndex];
             manufacturer = ltc[EquipmentLoader.mfrIndex];

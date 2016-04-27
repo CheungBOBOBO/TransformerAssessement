@@ -16,6 +16,11 @@ namespace TransformerAssessment.Core.Objects {
         private string designation;
         public string[] rawXFMR;
 
+        /// <summary>
+        /// Calculated health of the transformer object
+        /// </summary>
+        public double Health { get; set; }
+
         public string[] equipmentHeaders = null;
         public List<TestData> data = new List<TestData>();
         public TapChanger ltc;

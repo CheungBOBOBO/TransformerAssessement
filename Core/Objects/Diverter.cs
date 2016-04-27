@@ -13,6 +13,11 @@ namespace TransformerAssessment.Core.Objects{
         public string remarks;
         public string model;
 
+        /// <summary>
+        /// Calculated health of the DIV object
+        /// </summary>
+        public double Health { get; set; }
+
         public Diverter(string[] div) {
             norm = div[EquipmentLoader.norm_nameIndex];
             manufacturer = div[EquipmentLoader.mfrIndex];

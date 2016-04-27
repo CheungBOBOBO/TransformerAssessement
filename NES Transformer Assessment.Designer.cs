@@ -45,6 +45,7 @@
             this.tp_Main = new System.Windows.Forms.TabControl();
             this.tp_Analyze = new System.Windows.Forms.TabPage();
             this.tlp_Analyze_bg = new System.Windows.Forms.TableLayoutPanel();
+            this.tlp_Analyze_center = new System.Windows.Forms.TableLayoutPanel();
             this.tp_Config = new System.Windows.Forms.TabPage();
             this.tlp_Config_bg = new System.Windows.Forms.TableLayoutPanel();
             this.tlp_Config_folderSelect = new System.Windows.Forms.TableLayoutPanel();
@@ -127,12 +128,11 @@
             this.l_FAR_oilPresType = new System.Windows.Forms.Label();
             this.l_FAR_opsCount = new System.Windows.Forms.Label();
             this.l_FAR_equipmentRemarks = new System.Windows.Forms.Label();
-            this.equipmentSource = new System.Windows.Forms.BindingSource(this.components);
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tp_coefficients = new System.Windows.Forms.TabPage();
             this.tlp_Coeff_bg = new System.Windows.Forms.TableLayoutPanel();
             this.tlp_Coeff_center = new System.Windows.Forms.TableLayoutPanel();
-            this.tlp_Analyze_center = new System.Windows.Forms.TableLayoutPanel();
+            this.equipmentSource = new System.Windows.Forms.BindingSource(this.components);
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.panel_Config.SuspendLayout();
             this.panel_Analyze.SuspendLayout();
@@ -158,9 +158,9 @@
             this.tlp_TOA_FluidQuality.SuspendLayout();
             this.tlp_TOA_gasAnalysis.SuspendLayout();
             this.tlp_TOA_fluidAnalysisReport.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).BeginInit();
             this.tp_coefficients.SuspendLayout();
             this.tlp_Coeff_bg.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -255,6 +255,22 @@
             this.tlp_Analyze_bg.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlp_Analyze_bg.Size = new System.Drawing.Size(1172, 708);
             this.tlp_Analyze_bg.TabIndex = 0;
+            // 
+            // tlp_Analyze_center
+            // 
+            this.tlp_Analyze_center.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.tlp_Analyze_center.ColumnCount = 2;
+            this.tlp_Analyze_center.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_center.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_center.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlp_Analyze_center.Location = new System.Drawing.Point(136, 0);
+            this.tlp_Analyze_center.Margin = new System.Windows.Forms.Padding(0);
+            this.tlp_Analyze_center.Name = "tlp_Analyze_center";
+            this.tlp_Analyze_center.RowCount = 2;
+            this.tlp_Analyze_center.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_center.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Analyze_center.Size = new System.Drawing.Size(900, 708);
+            this.tlp_Analyze_center.TabIndex = 0;
             // 
             // tp_Config
             // 
@@ -512,6 +528,8 @@
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dg_NormDisplay.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dg_NormDisplay.RowTemplate.ReadOnly = true;
+            this.dg_NormDisplay.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dg_NormDisplay.Size = new System.Drawing.Size(702, 619);
             this.dg_NormDisplay.TabIndex = 11;
             // 
@@ -1391,11 +1409,6 @@
             this.l_FAR_equipmentRemarks.TabIndex = 8;
             this.l_FAR_equipmentRemarks.Text = "Equipment Remarks:";
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog";
-            this.openFileDialog.InitialDirectory = "Application.StartupPath";
-            // 
             // tp_coefficients
             // 
             this.tp_coefficients.BackColor = System.Drawing.SystemColors.ButtonShadow;
@@ -1438,21 +1451,10 @@
             this.tlp_Coeff_center.Size = new System.Drawing.Size(900, 712);
             this.tlp_Coeff_center.TabIndex = 0;
             // 
-            // tlp_Analyze_center
+            // openFileDialog
             // 
-            this.tlp_Analyze_center.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.tlp_Analyze_center.ColumnCount = 2;
-            this.tlp_Analyze_center.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlp_Analyze_center.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlp_Analyze_center.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlp_Analyze_center.Location = new System.Drawing.Point(136, 0);
-            this.tlp_Analyze_center.Margin = new System.Windows.Forms.Padding(0);
-            this.tlp_Analyze_center.Name = "tlp_Analyze_center";
-            this.tlp_Analyze_center.RowCount = 2;
-            this.tlp_Analyze_center.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlp_Analyze_center.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlp_Analyze_center.Size = new System.Drawing.Size(900, 708);
-            this.tlp_Analyze_center.TabIndex = 0;
+            this.openFileDialog.FileName = "openFileDialog";
+            this.openFileDialog.InitialDirectory = "Application.StartupPath";
             // 
             // FormHome
             // 
@@ -1505,9 +1507,9 @@
             this.tlp_TOA_gasAnalysis.PerformLayout();
             this.tlp_TOA_fluidAnalysisReport.ResumeLayout(false);
             this.tlp_TOA_fluidAnalysisReport.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).EndInit();
             this.tp_coefficients.ResumeLayout(false);
             this.tlp_Coeff_bg.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.equipmentSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

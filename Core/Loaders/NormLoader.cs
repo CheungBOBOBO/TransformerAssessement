@@ -42,6 +42,7 @@ namespace TransformerAssessment.Core.Loaders {
                 norms[i] = new Norm(normsPathList[i]);
         }
 
+        #region [Methods] Getters
         public static string[] getNormsPathList() { return normsPathList; }
 
         public static string getNormsDir() { return normsDirectory; }
@@ -49,5 +50,6 @@ namespace TransformerAssessment.Core.Loaders {
         public static string[] getFileNameList() { return fileNameList; }
 
         public static Norm[] getNorms() { return norms; }
+        #endregion
     }
 }

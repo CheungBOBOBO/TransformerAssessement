@@ -8,6 +8,8 @@ using TransformerAssessment.Core.Loaders;
 using System.IO;
 using LumenWorks.Framework.IO.Csv;
 using TransformerAssessment.Core.Objects;
+using System.Threading.Tasks;
+using TransformerAssessment.Core.Analyzers;
 
 namespace TransformerAssessment {
     public partial class FormHome : Form {
@@ -57,6 +59,9 @@ namespace TransformerAssessment {
                 System.Windows.Forms.MessageBox.Show("Equipment and/or Test Data files are not valid. Please choose a valid file.");
                 tb_TestDataFile_BG.Text = "";
             }
+
+            // Analyze data
+            OilAnalyzer.analyzeOil();
         }
 
         private void menu_Quit_Click(object sender, EventArgs e) {

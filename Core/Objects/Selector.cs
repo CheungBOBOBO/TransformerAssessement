@@ -13,6 +13,11 @@ namespace TransformerAssessment.Core.Objects {
         public string remarks;
         public string model;
 
+        /// <summary>
+        /// Calculated health of the SEL object
+        /// </summary>
+        public double Health { get; set; }
+
         public Selector(string[] sel) {
             norm = sel[EquipmentLoader.norm_nameIndex];
             manufacturer = sel[EquipmentLoader.mfrIndex];
