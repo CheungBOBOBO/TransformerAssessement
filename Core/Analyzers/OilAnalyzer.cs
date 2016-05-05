@@ -40,28 +40,28 @@ namespace TransformerAssessment.Core.Analyzers {
         }
 
         /// <summary>
-        /// Analyzes the 
+        /// Analyzes the transformer test data
         /// </summary>
         private void analyzeTransformers() {
 
         }
 
         /// <summary>
-        /// 
+        /// Analyzes the LTC test data
         /// </summary>
         private void analyzeTapChangers() {
 
         }
 
         /// <summary>
-        /// 
+        /// Analyzes the SEL test data
         /// </summary>
         private void analyzeSelectors() {
 
         }
 
         /// <summary>
-        /// 
+        /// Analyzes the DIV test data
         /// </summary>
         private void analyzeDiverters() {
 

@@ -25,6 +25,8 @@ namespace TransformerAssessment {
         Label[][] fqLabels = new Label[5][];
         Label[][] moistLabels = new Label[5][];
 
+        FolderBrowserDialog openFolderDialog = new FolderBrowserDialog();
+
         public FormHome() {
             InitializeComponent();
         }
@@ -66,7 +68,6 @@ namespace TransformerAssessment {
 
         private void menu_Quit_Click(object sender, EventArgs e) {
             Close();
-            //Application.Exit();
         }
 
         private void menu_FolderSettings_Click(object sender, EventArgs e) {
@@ -86,8 +87,10 @@ namespace TransformerAssessment {
         }
 
         #region [Methods] - form support methods
-        FolderBrowserDialog openFolderDialog = new FolderBrowserDialog();
-        // brings up folder selection for location of Norm csv's
+        /// <summary>
+        /// Called when the Norm Folder button is clicked. Allows user to select the folder that the Norms are located in.
+        /// </summary>
+        /// <returns>Returns the path to the updated Norm folder.</returns>
         public string chooseNormFolder() {
             DialogResult dr = openFolderDialog.ShowDialog();
             if (dr == DialogResult.OK && validNormFolder(openFolderDialog.SelectedPath)) {
@@ -100,7 +103,10 @@ namespace TransformerAssessment {
             return tb_NormsFolder_BG.Text;
         }
 
-        // brings up file selection for location of Equipment csv
+        /// <summary>
+        /// Called when the Equipment Location button is clicked. Allows user to select the file that has the Equipment data.
+        /// </summary>
+        /// <returns>Returns the path to the Equipment file.</returns>
         public string chooseEquipmentFile() {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "CSV files (*.csv)|*.csv";
@@ -118,7 +124,10 @@ namespace TransformerAssessment {
             return tb_EquipmentFile_BG.Text;
         }
 
-        // brings up file selection for location of Test Data csv
+        /// <summary>
+        /// Called when the Test Data Location button is clicked. Allows user to select the file that has the Test data.
+        /// </summary>
+        /// <returns>Returns the path to the Test Data file.</returns>
         public string chooseTestDataFile() {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "CSV files (*.csv)|*.csv";
@@ -138,7 +147,11 @@ namespace TransformerAssessment {
         }
 
         #region [Methods] Folder/File Validation
-        // returns false if no .csv files from selected folder
+        /// <summary>
+        /// Determines if input folder path is a valid Norm folder.
+        /// </summary>
+        /// <param name="selectedPath">Folder path string.</param>
+        /// <returns>Returns whether <para>selectedPath</para> is a valid Norm folder</returns>
         public bool validNormFolder(string selectedPath) {
             string[] files = Directory.GetFiles(selectedPath, "*.csv");
             if (files.Length == 0) {

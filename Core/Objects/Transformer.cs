@@ -31,6 +31,10 @@ namespace TransformerAssessment.Core.Objects {
         public bool hasSEL;
         public bool hasDIV;
 
+        /// <summary>
+        /// Creates a Transformer object only
+        /// </summary>
+        /// <param name="transformer">String array of transformer row from 'equipment.csv'</param>
         public Transformer(string[] transformer) {
             equipID = transformer[EquipmentLoader.equipnumIndex];
             serialNum = transformer[EquipmentLoader.serialnumIndex];
@@ -45,6 +49,13 @@ namespace TransformerAssessment.Core.Objects {
             equipmentHeaders = EquipmentLoader.headers;
         }
 
+        /// <summary>
+        /// Creates a Transformer object as well as any LTC, SEL, and/or DIV that it might have associated with it.
+        /// </summary>
+        /// <param name="transformer"></param>
+        /// <param name="ltc">String array of LTC row from 'equipment.csv'</param>
+        /// <param name="sel">String array of SEL row from 'equipment.csv'</param>
+        /// <param name="div">String array of DIV row from 'equipment.csv'</param>
         public Transformer(string[] transformer, string[] ltc, string[] sel, string[] div) {
             equipID = transformer[EquipmentLoader.equipnumIndex];
             serialNum = transformer[EquipmentLoader.serialnumIndex];
@@ -86,29 +97,50 @@ namespace TransformerAssessment.Core.Objects {
                 addXFMRData(data);
         }
 
+        /// <summary>
+        /// Adds XFMR test data to the Transformer object. Called by addData(string[] data).
+        /// </summary>
+        /// <param name="data">String array of test data row from 'test_data.csv'</param>
         private void addXFMRData(string[] data) {
             this.data.Add(new TestData(data));
             this.data = this.data.OrderByDescending(m => m._date).ToList();
         }
 
-        public void addLTC(string[] equipment) {
+        /// <summary>
+        /// Adds an LTC equipment object to the Transformer. Called by constructor.
+        /// </summary>
+        /// <param name="equipment">String array of LTC row from 'equipment.csv'</param>
+        private void addLTC(string[] equipment) {
             ltc = new TapChanger(equipment);
             hasLTC = true;
         }
 
-        public void addSEL(string[] equipment) {
+        /// <summary>
+        /// Adds an SEL equipment object to the Transformer. Called by constructor.
+        /// </summary>
+        /// <param name="equipment">String array of SEL row from 'equipment.csv'</param>
+        private void addSEL(string[] equipment) {
             sel = new Selector(equipment);
             hasSEL = true;
         }
 
-        public void addDIV(string[] equipment) {
+        /// <summary>
+        /// Adds an DIV equipment object to the Transformer. Called by constructor.
+        /// </summary>
+        /// <param name="equipment">String array of DIV row from 'equipment.csv'</param>
+        private void addDIV(string[] equipment) {
             div = new Diverter(equipment);
             hasDIV = true;
         }
 
         #region [Methods] Getters
+        /// <returns>Returns TOA Equipment ID.</returns>
         public string getID() { return equipID; }
+
+        /// <returns>Returns substation location.</returns>
         public string getLocation() { return substn_name; }
+
+        /// <returns>Returns position within substation.</returns>
         public string getPosition() { return designation; }
         #endregion
     }
